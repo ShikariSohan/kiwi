@@ -1,2 +1,15 @@
-package org.aviato.javafest.model;public class VerifyUser {
+package org.aviato.javafest.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+public class VerifyUser {
+    private String email;
+    private String code;
 }
