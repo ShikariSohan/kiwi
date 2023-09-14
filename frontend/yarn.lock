@@ -244,6 +244,14 @@
     react-remove-scroll "^2.5.5"
     react-textarea-autosize "8.3.4"
 
+"@mantine/form@^6.0.20":
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/@mantine/form/-/form-6.0.20.tgz#8c6b3f0b096a7bdc9c29614950f500d31a97a379"
+  integrity sha512-htwFVfo60nYEMNwuBiYyJpqArwNnXIU7H70l8lZ+ie9QWERZCHgS7JVUBwFpS3n3iYArKbFBG13PnQAzPHMg2w==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    klona "^2.0.5"
+
 "@mantine/hooks@^6.0.20":
   version "6.0.20"
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-6.0.20.tgz#b52b385ff3a92caba0711c6015899a112efe66fa"
@@ -1810,6 +1818,11 @@ keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
+klona@^2.0.5:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.6.tgz#85bffbf819c03b2f53270412420a4555ef882e22"
+  integrity sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==
+
 language-subtag-registry@~0.3.2:
   version "0.3.22"
   resolved "https://registry.yarnpkg.com/language-subtag-registry/-/language-subtag-registry-0.3.22.tgz#2e1500861b2e457eba7e7ae86877cbd08fa1fd1d"
@@ -2098,6 +2111,11 @@ prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
+
+prettier@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.3.tgz#432a51f7ba422d1469096c0fdc28e235db8f9643"
+  integrity sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==
 
 prop-types@^15.6.2, prop-types@^15.8.1:
   version "15.8.1"
