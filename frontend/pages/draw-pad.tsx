@@ -1,29 +1,53 @@
-import { Center } from '@mantine/core';
-import * as React from 'react';
-import { ReactSketchCanvas } from 'react-sketch-canvas';
+import { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { CanvasSketchTool  } from 'react-arts';
+import { useScreenshot, createFileName } from 'use-react-screenshot'
 
-const styles = {
-  border: '0.0625rem solid #9c9c9c',
-  borderRadius: '0.25rem',
-};
+import {
+  useMantineTheme,
+  Center,
+  Button,
+  Container,
+} from '@mantine/core';
+import React from 'react';
+export default function AppShellDemo(props: any) {
+  const theme = useMantineTheme();
+  const canvasRef = useRef(null)
+  const [image, takeScreenshot] = useScreenshot()
 
-const Canvas = () => {
+
+  useEffect(() => {
+    // Update the current ref
+    if (canvasRef.current) {
+      takeScreenshot(canvasRef.current);
+    }
+  }, [canvasRef, image, takeScreenshot]);
+
+
+
+  const onClick = (event) => {
+    if(canvasRef.current){
+      //instead of download put your logic
+    takeScreenshot(canvasRef.current).then(download)
+    }
+
+  }
   return (
-    <div style={{height:"100vh", width:"100vh"}}>
-        <Center style={{height:"100%", width:"100%"}}>
-        <ReactSketchCanvas
-            style={styles}
-            width="700"
-            height="700"
-            strokeWidth={4}
-            strokeColor="red"
-        />
+
+      <Center style={{height:"100vh", width:"100wh", flexFlow:"column"}}>
+      <Container ref = {canvasRef}>
+      <CanvasSketchTool
+        height={450}
+        width={750}
+    />
+    </Container>
+    <Button onClick={onClick} m="xl">Save</Button>
+
     </Center>
-
-    </div>
-
-
   );
+}
+const download = (image: string,{name = "img", extension = "jpg" } = {}) => {
+  const a = document.createElement("a");
+  a.href = image;
+  a.download = createFileName(extension, name);
+  a.click();
 };
-
-export default Canvas;

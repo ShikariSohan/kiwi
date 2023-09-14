@@ -6,17 +6,8 @@ export function CustomFonts() {
       styles={[
         {
           '@font-face': {
-            fontFamily: 'Greycliff CF',
+            fontFamily: 'Caveat',
             src: `format("ttf")`,
-            fontWeight: 700,
-            fontStyle: 'normal',
-          },
-        },
-        {
-          '@font-face': {
-            fontFamily: 'Greycliff CF',
-            src: `url('format("ttf")`,
-            fontWeight: 900,
             fontStyle: 'normal',
           },
         },

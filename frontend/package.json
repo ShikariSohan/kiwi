@@ -14,11 +14,17 @@
     "@mantine/form": "^6.0.20",
     "@mantine/hooks": "^6.0.20",
     "@mantine/notifications": "^6.0.20",
+    "@mdi/js": "^7.2.96",
+    "@mdi/react": "^1.6.1",
+    "@tabler/icons-react": "^2.34.0",
+    "html2canvas": "^1.4.1",
     "next": "13.4.19",
     "prettier": "^3.0.3",
     "react": "18.2.0",
+    "react-arts": "^0.0.3",
     "react-dom": "18.2.0",
-    "react-sketch-canvas": "^6.2.0"
+    "react-sketch-canvas": "^6.2.0",
+    "use-react-screenshot": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "20.6.0",
