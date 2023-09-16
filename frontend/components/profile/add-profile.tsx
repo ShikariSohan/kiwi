@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 export default function AddCard() {
   const router = useRouter();
-  const onClick = (e) => {
+  const onClick = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     router.push('profile-form');
   };
