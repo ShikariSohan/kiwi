@@ -31,12 +31,14 @@ export default function Home() {
       })
     });
 
-    if (!response.ok) {
+    if (!response) {
       setLoading(false);
-      throw new Error(response.statusText);
+      throw new Error(response);
     }
 
     const data = response.body;
+  
+    console.log(updatedMessages)
 
     if (!data) {
       return;
