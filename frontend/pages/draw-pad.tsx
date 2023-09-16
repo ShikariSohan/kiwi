@@ -1,7 +1,7 @@
 import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { CanvasSketchTool  } from 'react-arts';
 import { useScreenshot, createFileName } from 'use-react-screenshot'
-
+import axios from 'axios'
 import {
   useMantineTheme,
   Center,
@@ -28,6 +28,19 @@ export default function AppShellDemo(props: any) {
     if(canvasRef.current){
       //instead of download put your logic
     takeScreenshot(canvasRef.current).then(download)
+      const formData = new FormData();
+      formData.append("image", image);
+      const res = axios.post("/api/handwritten", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          },
+          })
+          .then((res) => {
+            console.log(res)
+          }
+          )
+          .catch((err) => console.log(err));
+      
     }
 
   }
@@ -49,5 +62,7 @@ const download = (image: string,{name = "img", extension = "jpg" } = {}) => {
   const a = document.createElement("a");
   a.href = image;
   a.download = createFileName(extension, name);
-  a.click();
+  const c = createFileName(extension, name);
+  console.log(typeof(c))
+  // a.click();
 };

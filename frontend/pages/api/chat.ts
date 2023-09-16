@@ -1,36 +1,32 @@
 import { Message } from "../../types";
-import { OpenAIStream } from "../../utils";
 
-export const config = {
-  runtime: "edge"
-};
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-const handler = async (req: Request): Promise<Response> => {
-  try {
-    const { messages } = (await req.json()) as {
-      messages: Message[];
-    };
-
-    const charLimit = 12000;
-    let charCount = 0;
-    let messagesToSend = [];
-
-    for (let i = 0; i < messages.length; i++) {
-      const message = messages[i];
-      if (charCount + message.content.length > charLimit) {
-        break;
+import axios from 'axios';
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<String>
+) {
+  const method = req.method;
+  switch(method)
+  {
+    case 'POST':
+      const { messages } = (req.body) as {
+        messages: Message[];
+      };
+      const resBody = {
+        "messages": messages,
+        "model" : "gpt-3.5-turbo"
       }
-      charCount += message.content.length;
-      messagesToSend.push(message);
-    }
-
-    const stream = await OpenAIStream(messagesToSend);
-
-    return new Response(stream);
-  } catch (error) {
-    console.error(error);
-    return new Response("Error", { status: 500 });
+      const botUrl = "http://localhost:8082/api/bot/complete";
+      const axiosRes = await axios.post(botUrl, resBody);
+      const botResponse = axiosRes.data;
+      return res.status(200).json(botResponse.toString());
+      break;
+    default:
+       res.status(405).end();
+      break;
   }
-};
-
-export default handler;
+  
+  
+}
