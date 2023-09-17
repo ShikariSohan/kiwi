@@ -1,6 +1,5 @@
-import { Message } from "../../types";
-
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { Message } from '../../types';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 import axios from 'axios';
 export default async function handler(
@@ -8,25 +7,22 @@ export default async function handler(
   res: NextApiResponse<String>
 ) {
   const method = req.method;
-  switch(method)
-  {
+  switch (method) {
     case 'POST':
-      const { messages } = (req.body) as {
+      const { messages } = req.body as {
         messages: Message[];
       };
       const resBody = {
-        "messages": messages,
-        "model" : "gpt-3.5-turbo"
-      }
-      const botUrl = "http://localhost:8082/api/bot/complete";
+        messages: messages,
+        model: 'gpt-3.5-turbo',
+      };
+      const botUrl = 'http://localhost:8082/api/bot/complete';
       const axiosRes = await axios.post(botUrl, resBody);
       const botResponse = axiosRes.data;
-      return res.status(200).json(botResponse.toString());
-      break;
+      console.log({ botResponse });
+      return res.status(200).json(botResponse);
     default:
-       res.status(405).end();
+      res.status(405).end();
       break;
   }
-  
-  
 }
