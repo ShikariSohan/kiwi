@@ -1,4 +1,6 @@
 import { useForm } from '@mantine/form';
+import axios from 'axios';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 export default function OTP() {
@@ -11,7 +13,7 @@ export default function OTP() {
       i4: '',
     },
   });
-  const onSubmit = (values: {
+  const onSubmit = async (values: {
     i1: string;
     i2: string;
     i3: string;
@@ -19,9 +21,20 @@ export default function OTP() {
   }) => {
     const otp = values.i1 + values.i2 + values.i3 + values.i4;
     const { id } = router.query;
-    console.log({ otp, id });
+    try {
+      const res = await axios.post('/api/verify', { code:otp, id });
+      window.location.href = '/login';
+    }
+    catch (err) {
+      alert('Error');
+      console.log(err);
+    }
   };
   return (
+    <>
+    <Head>
+    <title>KIWI - OTP</title>
+    </Head>
     <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
       <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
         <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
@@ -96,5 +109,6 @@ export default function OTP() {
         </div>
       </div>
     </div>
+    </>
   );
 }

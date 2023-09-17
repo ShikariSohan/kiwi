@@ -14,7 +14,7 @@ import {
   Card,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-
+import axios from 'axios';
 import React from 'react';
 
 export default function AuthenticationTitle() {
@@ -30,8 +30,18 @@ export default function AuthenticationTitle() {
     },
   });
 
-  const onSubmit = (values: { password: string; email: string }) => {
+  const onSubmit = async (values: { username:string, password: string; email: string }) => {
     console.log({ values });
+     try {
+      const res = await axios.post("/api/register", values);
+      window.location.href = `/otp/${res.data.id}`;
+
+     }
+     catch(err){
+      alert("Error");
+       console.log(err);
+     }
+
     //redirect to otp/[id] route after that
   };
   return (

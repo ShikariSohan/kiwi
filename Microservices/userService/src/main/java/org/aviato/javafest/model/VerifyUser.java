@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class VerifyUser {
-    private String email;
+    private String id;
     private String code;
 }
