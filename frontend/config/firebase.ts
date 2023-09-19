@@ -4,12 +4,12 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import fs from "fs";
 const firebaseConfig = {
-  apiKey: "AIzaSyCQIy6g2ppZYqugVFmeWU7v4VXjwton3gI",
-  authDomain: "shikaricv.firebaseapp.com",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   projectId: "shikaricv",
   storageBucket: "shikaricv.appspot.com",
   messagingSenderId: "496227029743",
-  appId: "1:496227029743:web:4817b74067c1dc7925c11a",
+  appId: process.env.FIREBASE_PROJECT_ID,
   measurementId: "G-XD6TKMNQD5"
 };
 

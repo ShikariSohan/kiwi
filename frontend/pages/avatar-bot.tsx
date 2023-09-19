@@ -13,14 +13,14 @@ const AvatarBot: React.FC = () => {
   const [botTalking, setBotTalking] = useState(false);
   const [humanTalking, setHumanTalking] = useState(false);
   const [botScript, setBotScript] = useState('');
-  // const [botVideos, setBotVideos] = useState(
-  //   Math.floor(Math.random() * 2) === 1
-  //     ? { type: 'monkey', phase: 3 }
-  //     : { type: 'baby', phase: 4 }
-  // );
-  const [botVideos, setBotVideos] = useState(  
-         { type: 'monkey', phase: 3 }
-    );
+  const [botVideos, setBotVideos] = useState(
+    Math.floor(Math.random() * 2) === 1
+      ? { type: 'monkey', phase: 3 }
+      : { type: 'baby', phase: 4 }
+  );
+  // const [botVideos, setBotVideos] = useState(  
+  //        { type: 'monkey', phase: 3 }
+  //   );
 
   const { transcript, resetTranscript } = useSpeechRecognition();
 
@@ -37,8 +37,6 @@ const AvatarBot: React.FC = () => {
 
         if (match) {
           const srcNumber = parseInt(match[1]);
-
-          // Define start times based on the src number
           if (srcNumber === 1) {
             startTime = 0;
           } else if (srcNumber === 2) {
@@ -46,6 +44,7 @@ const AvatarBot: React.FC = () => {
           } else if (srcNumber === 3) {
             startTime = 21;
           }
+
         }
 
         // Set the currentTime property to the desired start time in seconds
@@ -59,8 +58,23 @@ const AvatarBot: React.FC = () => {
       }
       const u = new SpeechSynthesisUtterance(botScript);
       const voices = synth.getVoices();
-      console.log({ voices });
-      u.voice = synth.getVoices()[0];
+      const dimitri = synth.getVoices().find(voice => voice.name.includes('Dmitry'));
+      ;
+      const child = synth.getVoices().find(voice => voice.name.includes('Nabanita'));
+
+      if(botVideos.type === 'baby')
+      {
+        u.voice = child || voices[0];
+        u.pitch = 1.5;
+        u.rate = 0.9;
+      }
+      else {
+        u.voice = dimitri || voices[0];
+        u.pitch = .9;
+        u.rate = 1;
+      }
+      
+
       synth.speak(u);
       videoRef.current?.play();
       resetTranscript();
