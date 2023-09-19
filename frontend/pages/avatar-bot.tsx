@@ -18,7 +18,7 @@ const AvatarBot: React.FC = () => {
       ? { type: 'monkey', phase: 3 }
       : { type: 'baby', phase: 4 }
   );
-  // const [botVideos, setBotVideos] = useState(  
+  // const [botVideos, setBotVideos] = useState(
   //        { type: 'monkey', phase: 3 }
   //   );
 
@@ -26,7 +26,7 @@ const AvatarBot: React.FC = () => {
 
   useEffect(() => {
     const synth = window.speechSynthesis;
-   
+
     if (botTalking) {
       const currentSrc = videoRef.current?.getAttribute('src');
 
@@ -44,7 +44,6 @@ const AvatarBot: React.FC = () => {
           } else if (srcNumber === 3) {
             startTime = 21;
           }
-
         }
 
         // Set the currentTime property to the desired start time in seconds
@@ -54,33 +53,36 @@ const AvatarBot: React.FC = () => {
           `${botVideos.type}-talking-v2.mp4`
         );
         // Play the video
-        
       }
       const u = new SpeechSynthesisUtterance(botScript);
-      const voices = synth.getVoices();
-      const dimitri = synth.getVoices().find(voice => voice.name.includes('Dmitry'));
-      ;
-      const child = synth.getVoices().find(voice => voice.name.includes('Nabanita'));
+      console.log({ voice: synth.getVoices() });
+      const dimitri = synth
+        .getVoices()
+        .find((voice) => voice.lang.includes('zh-TW'));
+      const child = synth
+        .getVoices()
+        .find((voice) => voice.name.includes('zh-TW'));
 
-      if(botVideos.type === 'baby')
-      {
-        u.voice = child || voices[0];
-        u.pitch = 1.5;
+      if (botVideos.type === 'baby') {
+        u.voice = synth
+          .getVoices()
+          .find((voice) => voice.lang.includes('zh-TW'));
+        u.pitch = 1.3;
         u.rate = 0.9;
-      }
-      else {
-        u.voice = dimitri || voices[0];
-        u.pitch = .9;
+      } else {
+        u.voice = synth
+          .getVoices()
+          .find((voice) => voice.lang.includes('en-US'));
+        u.pitch = 0.7;
         u.rate = 1;
       }
-      
 
       synth.speak(u);
-      videoRef.current?.play();
+      videoRef.current?.load();
       resetTranscript();
       u.onend = () => {
         setBotTalking(false);
-      }
+      };
     } else {
       synth.cancel();
       videoRef.current?.setAttribute(
@@ -94,9 +96,9 @@ const AvatarBot: React.FC = () => {
         }.mp4`
       );
 
-      videoRef.current?.play();
+      videoRef.current?.load();
     }
- 
+
     if (transcript === '') setBotTalking(false);
   }, [botTalking]);
 
@@ -115,7 +117,6 @@ const AvatarBot: React.FC = () => {
         messages: updatedMessages,
       }),
     });
-
 
     if (!response) {
       setLoading(false);
@@ -161,7 +162,7 @@ const AvatarBot: React.FC = () => {
       await handleSend({ role: 'user', content: transcript });
     }
   };
-  
+
   return (
     <Center style={{ height: '100vh', flexDirection: 'column' }}>
       <video

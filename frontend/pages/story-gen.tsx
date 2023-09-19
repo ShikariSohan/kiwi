@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import Header from '@/components/Header';
-import ContentEditor from '@/components/ContentEditor';
+import StoryEditor from '@/components/StoryEditor';
 
 export default function Home() {
   return (
@@ -17,9 +17,8 @@ export default function Home() {
       </Head>
       <Header />
       <main>
-        <ContentEditor />
+        <StoryEditor />
       </main>
-      {/* <Footer /> */}
     </div>
   );
 }
