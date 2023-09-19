@@ -36,48 +36,22 @@ export default function Home() {
       throw new Error(response);
     }
 
-    const data = response.body;
-
-    console.log(updatedMessages);
-
-    if (!data) {
-      return;
+    const content = await response.json();
+    
+    if (!content) {
+      setLoading(false);
+      throw new Error(content);
     }
 
     setLoading(false);
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-    let isFirst = true;
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      console.log({ chunkValue, value });
-
-      if (isFirst) {
-        isFirst = false;
-        setMessages((messages) => [
-          ...messages,
-          {
-            role: 'assistant',
-            content: chunkValue,
-          },
-        ]);
-      } else {
-        setMessages((messages) => {
-          const lastMessage = messages[messages.length - 1];
-          const updatedMessage = {
-            ...lastMessage,
-            content: lastMessage.content + chunkValue,
-          };
-          console.log({ lastMessage });
-          return [...messages.slice(0, -1), updatedMessage];
-        });
-      }
-    }
+    
+    setMessages((messages) => [
+      ...messages,
+      {
+        role: 'assistant',
+        content,
+      },
+    ]);
   };
 
   const handleReset = () => {
