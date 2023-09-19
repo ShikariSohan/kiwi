@@ -9,6 +9,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('flowbite/plugin')],
-  plugins: [],
+  plugins: [require('flowbite/plugin'), require('@tailwindcss/typography')],
 };
