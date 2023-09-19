@@ -16,7 +16,8 @@ export default async function handler(
         messages: messages,
         model: 'gpt-3.5-turbo',
       };
-      const botUrl = 'http://localhost:8082/api/bot/complete';
+      
+      const botUrl = process.env.BOT_SERVICE_BASEURL+'/api/bot/complete';
       const axiosRes = await axios.post(botUrl, resBody);
       const botResponse = axiosRes.data;
       console.log({ botResponse });

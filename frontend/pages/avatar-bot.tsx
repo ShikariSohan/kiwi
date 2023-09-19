@@ -18,12 +18,15 @@ const AvatarBot: React.FC = () => {
       ? { type: 'monkey', phase: 3 }
       : { type: 'baby', phase: 4 }
   );
+  // const [botVideos, setBotVideos] = useState(  
+  //        { type: 'monkey', phase: 3 }
+  //   );
 
   const { transcript, resetTranscript } = useSpeechRecognition();
 
   useEffect(() => {
     const synth = window.speechSynthesis;
-    console.log('src');
+   
     if (botTalking) {
       const currentSrc = videoRef.current?.getAttribute('src');
 
@@ -34,8 +37,6 @@ const AvatarBot: React.FC = () => {
 
         if (match) {
           const srcNumber = parseInt(match[1]);
-
-          // Define start times based on the src number
           if (srcNumber === 1) {
             startTime = 0;
           } else if (srcNumber === 2) {
@@ -43,22 +44,43 @@ const AvatarBot: React.FC = () => {
           } else if (srcNumber === 3) {
             startTime = 21;
           }
+
         }
 
         // Set the currentTime property to the desired start time in seconds
         videoRef.current.currentTime = startTime;
-        videoRef.current.setAttribute(
+        videoRef.current?.setAttribute(
           'src',
           `${botVideos.type}-talking-v2.mp4`
         );
-
         // Play the video
-        videoRef.current.play();
+        
       }
       const u = new SpeechSynthesisUtterance(botScript);
+      const voices = synth.getVoices();
+      const dimitri = synth.getVoices().find(voice => voice.name.includes('Dmitry'));
+      ;
+      const child = synth.getVoices().find(voice => voice.name.includes('Nabanita'));
+
+      if(botVideos.type === 'baby')
+      {
+        u.voice = child || voices[0];
+        u.pitch = 1.5;
+        u.rate = 0.9;
+      }
+      else {
+        u.voice = dimitri || voices[0];
+        u.pitch = .9;
+        u.rate = 1;
+      }
+      
+
       synth.speak(u);
+      videoRef.current?.play();
       resetTranscript();
-      console.log({ transcript });
+      u.onend = () => {
+        setBotTalking(false);
+      }
     } else {
       synth.cancel();
       videoRef.current?.setAttribute(
@@ -71,12 +93,15 @@ const AvatarBot: React.FC = () => {
             : 3
         }.mp4`
       );
+
       videoRef.current?.play();
     }
+ 
     if (transcript === '') setBotTalking(false);
   }, [botTalking]);
 
   const handleSend = async (message: Message) => {
+    console.log({ message });
     const updatedMessages = [...messages, message];
 
     setMessages(updatedMessages);
@@ -91,58 +116,31 @@ const AvatarBot: React.FC = () => {
       }),
     });
 
+
     if (!response) {
       setLoading(false);
       throw new Error(response);
     }
 
-    const data = response.body;
+    const content = await response.json();
 
-    console.log(updatedMessages);
+    console.log({ content });
 
-    if (!data) {
-      return;
+    if (!content) {
+      setLoading(false);
+      throw new Error(content);
     }
 
     setLoading(false);
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-    let isFirst = true;
+    setBotScript(content);
+    setMessages((messages) => [
+      ...messages,
+      {
+        role: 'assistant',
+        content,
+      },
+    ]);
     setBotTalking(true);
-    setTimeout(async () => {
-      console.log('out');
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        const chunkValue = decoder.decode(value);
-        console.log({ chunkValue, value });
-
-        if (isFirst) {
-          isFirst = false;
-          setMessages((messages) => [
-            ...messages,
-            {
-              role: 'assistant',
-              content: chunkValue,
-            },
-          ]);
-        } else {
-          setMessages((messages) => {
-            const lastMessage = messages[messages.length - 1];
-            const updatedMessage = {
-              ...lastMessage,
-              content: lastMessage.content + chunkValue,
-            };
-            console.log({ lastMessage });
-            return [...messages.slice(0, -1), updatedMessage];
-          });
-          const lastReply = messages[messages.length - 1]?.content + chunkValue;
-          setBotScript(lastReply);
-        }
-      }
-    }, 1000);
   };
   const handleBotListen = async () => {
     if (!humanTalking) {
@@ -163,6 +161,7 @@ const AvatarBot: React.FC = () => {
       await handleSend({ role: 'user', content: transcript });
     }
   };
+  
   return (
     <Center style={{ height: '100vh', flexDirection: 'column' }}>
       <video

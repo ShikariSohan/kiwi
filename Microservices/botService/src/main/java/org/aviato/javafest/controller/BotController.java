@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aviato.javafest.model.ChatRequest;
 import org.aviato.javafest.model.ChatResponse;
 import org.aviato.javafest.model.Message;
+import org.aviato.javafest.model.Pdf;
+import org.aviato.javafest.service.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,10 @@ import java.util.List;
 public class BotController {
     @Autowired
     private RestTemplate template;
+    private final PdfService pdfService;
+    public BotController(PdfService pdfService) {
+        this.pdfService = pdfService;
+    }
     @PostMapping("/complete")
     public ResponseEntity<String> completeMessageFromOpenAI(@RequestBody ChatRequest chatRequest){
         String apiUrl = "https://api.openai.com/v1/chat/completions";
@@ -33,5 +39,12 @@ public class BotController {
         String role = chatGptResponse.getChoices().get(0).getMessage().getRole();
 
         return ResponseEntity.ok(content);
+    }
+    @PostMapping("/pdf")
+    public ResponseEntity<String> saveToDb(@RequestBody Pdf pdf){
+        log.info("pdf: {}", pdf);
+        pdfService.createPdf(pdf);
+        return ResponseEntity.ok("Saved");
+
     }
 }
