@@ -27,10 +27,10 @@
 //   }
 // }
 
+
 import { Message } from '@/types';
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
 export type Correction = {
   original: string;
   corrected: string;
@@ -103,10 +103,13 @@ export default async function handler(
         };
         const botUrl = 'http://localhost:8082/api/bot/complete';
         const axiosRes = await axios.post(botUrl, resBody);
-        console.log({ data: axiosRes.data });
+        let data = axiosRes.data;
+        data = data.replace('Pretend that you are an English Grammar teacher. Correct the grammatical mistakes in this text. The output should be the corrected text only', '');
+        console.log({ data: data });
+    
         return res.status(200).json({
           result: {
-            corrections: axiosRes.data,
+            corrections: data,
           },
         });
     }

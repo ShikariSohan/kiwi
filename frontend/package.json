@@ -31,6 +31,7 @@
     "clsx": "^1.2.1",
     "core-js": "^3.32.2",
     "dexie": "^3.2.3",
+    "diff-match-patch-ts": "^0.3.0",
     "eventsource-parser": "^1.0.0",
     "firebase": "^10.4.0",
     "flowbite": "^1.8.1",
