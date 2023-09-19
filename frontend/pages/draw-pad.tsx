@@ -7,12 +7,14 @@ import {
   Center,
   Button,
   Container,
+  Text
 } from '@mantine/core';
 import React from 'react';
 export default function AppShellDemo(props: any) {
   const theme = useMantineTheme();
   const canvasRef = useRef(null)
   const [image, takeScreenshot] = useScreenshot()
+  const [genarated_text, setGenarated_text] = useState("")
 
 
   useEffect(() => {
@@ -24,30 +26,35 @@ export default function AppShellDemo(props: any) {
 
 
 
-  const onClick = (event) => {
+  const onClick = async () => {
     if(canvasRef.current){
       //instead of download put your logic
-    takeScreenshot(canvasRef.current).then(download)
-      const formData = new FormData();
-      formData.append("image", image);
-      const res = axios.post("/api/handwritten", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          },
-          })
-          .then((res) => {
-            console.log(res)
-          }
-          )
-          .catch((err) => console.log(err));
+      const func = async (image: string,{name = "img", extension = "jpg" } = {}) => {
+        const base64Image = image;
+     try{
+      const res = await axios.post("/api/handwritten", {
+        image : base64Image
+      });
+      // console.log      )
+      setGenarated_text(res.data[0].generated_text)
+    
+     }
+      catch(err){
+        console.log(err)
+      }
+      }
+    takeScreenshot(canvasRef.current).then(
+      (image: string) => func(image)
+    )
       
-    }
 
   }
+}
   return (
 
       <Center style={{height:"100vh", width:"100wh", flexFlow:"column"}}>
       <Container ref = {canvasRef}>
+        <Text>{genarated_text}</Text>
       <CanvasSketchTool
         height={450}
         width={750}
@@ -58,11 +65,13 @@ export default function AppShellDemo(props: any) {
     </Center>
   );
 }
-const download = (image: string,{name = "img", extension = "jpg" } = {}) => {
-  const a = document.createElement("a");
-  a.href = image;
-  a.download = createFileName(extension, name);
-  const c = createFileName(extension, name);
-  console.log(typeof(c))
-  // a.click();
-};
+
+// const download = (image: string,{name = "img", extension = "jpg" } = {}) => {
+//   const a = document.createElement("a");
+//   a.href = image;
+//   a.download = createFileName(extension, name);
+//   const c = createFileName(extension, name);
+//   console.log(typeof(c))
+//   a.click();
+
+// }

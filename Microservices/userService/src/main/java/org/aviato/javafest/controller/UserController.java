@@ -1,5 +1,6 @@
 package org.aviato.javafest.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aviato.javafest.model.RequestUser;
 import org.aviato.javafest.model.User;
 import org.aviato.javafest.model.VerifyUser;
@@ -17,6 +18,7 @@ import org.aviato.javafest.utils.codeGenarator;
 
 @RestController
 @RequestMapping("api/user")
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody RequestUser requestUser) {
+    public ResponseEntity<String> createUser(@RequestBody RequestUser requestUser) {
         if (bodyCheck(requestUser)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please fill all the fields");
         }
@@ -50,29 +52,33 @@ public class UserController {
         user.setVerified(false);
         userService.createUser(user);
         mailService.sendMail(user.getEmail(), "Kiwi - Verification Code", formatTheMessage(user.getCode()));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(user.getId());
     }
 
 
     @PostMapping("/verify")
     public ResponseEntity<Object> verifyUser(@RequestBody VerifyUser requestUser) {
-        if (!userService.checkUser(requestUser.getEmail())) {
+        if (!userService.checkUser(requestUser.getId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not exist");
         }
-        User user = userService.getUserByEmail(requestUser.getEmail());
+        User user = userService.getUserById(requestUser.getId());
+        log.info(user.getCode());
+        log.info(requestUser.getCode());
         if (user.getCode().equals(requestUser.getCode())) {
             user.setVerified(true);
             userService.updateUser(user);
             return ResponseEntity.status(HttpStatus.OK).body("User verified");
         }
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong verification code");
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody RequestUser requestUser) {
-        if (!userService.checkUser(requestUser.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not exist");
-        }
+//
+//        if (!userService.checkUser(requestUser.getEmail())) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not exist");
+//        }
         User user = userService.getUserByEmail(requestUser.getEmail());
         if (codeGenarator.checkPassword(requestUser.getPassword(), user.getPassword())) {
             String token = jwtUtils.generateToken(user.getId());

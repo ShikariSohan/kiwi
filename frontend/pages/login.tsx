@@ -14,8 +14,9 @@ import {
     Card,
   } from '@mantine/core';
   import { useForm } from '@mantine/form';
-
+import axios from 'axios';
 import React from 'react';
+
 
   export default function AuthenticationTitle() {
     const form = useForm({
@@ -28,9 +29,18 @@ import React from 'react';
         },
       });
 
-      const onSubmit = (values: {password: string, email: string}) => {
-        console.log({values})
-
+      const onSubmit = async (values: {password: string, email: string}) => {
+        
+        try {
+          const res = await axios.post("/api/login", values);
+          const {token} = res.data;
+          localStorage.setItem("token", token);
+          window.location.href = "/profiles";
+         }
+         catch(err){
+          alert("Error");
+           console.log(err);
+         }
       }
     return (
       <BackgroundImage

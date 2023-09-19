@@ -7,9 +7,8 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
-public class VerifyUser {
-    private String id;
-    private String code;
+@Setter
+public class ImageBody {
+    String image;
 }

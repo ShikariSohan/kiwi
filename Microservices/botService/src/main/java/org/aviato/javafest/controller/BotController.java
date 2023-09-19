@@ -28,6 +28,7 @@ public class BotController {
             return ResponseEntity.notFound().build();
         }
         String content = chatGptResponse.getChoices().get(0).getMessage().getContent();
+
         System.out.println(content);
         String role = chatGptResponse.getChoices().get(0).getMessage().getRole();
 

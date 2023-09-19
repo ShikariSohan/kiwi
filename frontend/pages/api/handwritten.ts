@@ -10,19 +10,20 @@ export default async function handler(
   switch(method)
   {
     case 'POST':
-      const {image} = (req.body) ;
-      console.log(image)
-      const botUrl = "http://localhost:8083/api";
+    
       try{
-        const axiosRes = await axios.post(botUrl, image,
-          {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                }
-          });
+        const {image} = req.body;
+        console.log(image);
+        
+        const url = process.env.WRITING_SERVICE_BASEURL + "/api";
+        const axiosRes = await axios.post(url,{
+          image
+        });
+          
         console.log(axiosRes.data);
         const botResponse = axiosRes.data;
-        return res.status(200).json(botResponse.toString());
+
+        return res.status(200).json(botResponse);
       }
         catch(err){
             console.log(err)
