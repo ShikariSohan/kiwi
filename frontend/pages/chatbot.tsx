@@ -55,6 +55,7 @@ export default function Home() {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       const chunkValue = decoder.decode(value);
+      console.log({ chunkValue, value });
 
       if (isFirst) {
         isFirst = false;
@@ -72,6 +73,7 @@ export default function Home() {
             ...lastMessage,
             content: lastMessage.content + chunkValue,
           };
+          console.log({ lastMessage });
           return [...messages.slice(0, -1), updatedMessage];
         });
       }
