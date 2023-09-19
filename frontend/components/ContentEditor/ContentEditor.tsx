@@ -5,6 +5,7 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 import LoadingDots from '../LoadingDots';
+import {DiffMatchPatch} from 'diff-match-patch-ts';
 
 const defaultContent = `<p>Biology is a really unique scient to study. There are alott of different aspects to it, such as ecology, genetics, and physiology. One of the most interesitng things to learn about in biology is animals and the way they behave. For example, did you know that some birds give hugs to their babies to keep them warm? That's so cute!</p>
 
@@ -64,6 +65,25 @@ const ContentEditor = () => {
       setIsLoading(false);
     }
   };
+  const diffChecker = (resp:string) => {
+    const text1 = editor?.getText() || '';
+    const text2 = resp;
+
+    const dmp = new DiffMatchPatch();
+    const diff = dmp.diff_main(text1, text2);
+    dmp.diff_cleanupSemantic(diff);
+    let result = '';
+    for(const [op, text] of diff){
+      if(op === 0){
+        result += text;
+      }
+      else if(op === 1){
+        result += `<span style="color: red">${text}</span>`
+      }
+    
+    }
+    return result;
+  };
 
   return (
     <div className="my-8">
@@ -81,6 +101,10 @@ const ContentEditor = () => {
         )}
       </button>
       <div>{result}</div>
+      {/* <div dangerouslySetInnerHTML={{__html: defaultContent}}></div> */}
+
+      <div dangerouslySetInnerHTML={{__html: diffChecker(result)}}></div>
+
     </div>
   );
 };

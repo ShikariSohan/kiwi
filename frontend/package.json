@@ -31,6 +31,7 @@
     "clsx": "^1.2.1",
     "core-js": "^3.32.2",
     "dexie": "^3.2.3",
+    "diff-match-patch-ts": "^0.3.0",
     "eventsource-parser": "^1.0.0",
     "firebase": "^10.4.0",
     "flowbite": "^1.8.1",
@@ -38,12 +39,9 @@
     "google-tts-api": "^2.0.2",
     "html-to-text": "^9.0.5",
     "html2canvas": "^1.4.1",
-<<<<<<< HEAD
+    "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.176.0",
-=======
-    "jspdf": "^2.5.1",
->>>>>>> 75b0114ebfdf539bc9eae79aea928f79ed55df3a
     "marked": "^9.0.1",
     "next": "13.4.19",
     "next-videos": "^1.4.1",
