@@ -40,40 +40,17 @@ export type Correction = {
 
 type Data = {
   result?: {
-    story: Correction[];
+    story: string;
+    title: string;
   };
   error?: string;
 };
 
-function getIndicesOf(
-  searchStr: string,
-  content: string,
-  caseSensitive = false
-) {
-  let searchStrLen = searchStr.length;
-  if (searchStrLen == 0) {
-    return [];
-  }
-
-  let startIndex = 0,
-    index,
-    indices = [];
-  if (!caseSensitive) {
-    content = content.toLowerCase();
-    searchStr = searchStr.toLowerCase();
-  }
-
-  while ((index = content.indexOf(searchStr, startIndex)) > -1) {
-    indices.push(index);
-    startIndex = index + searchStrLen;
-  }
-
-  return indices;
-}
 
 function generatePrompt(message: string) {
   return `generate a story from the given prompt with title for 5-6 years old boy. the story should be minimal, short in length, easy vocabulary and interesting. the output should be as the following:
-  Title: {story title}
+  Title: {story title} 
+  Story: 
   ...the story and rest
   here is the prompt provided by the user:
   ${message}`;
@@ -108,9 +85,13 @@ export default async function handler(
         const botUrl = 'http://localhost:8082/api/bot/complete';
         const axiosRes = await axios.post(botUrl, resBody);
         console.log({ data: axiosRes.data });
+        const [title, story] = axiosRes.data.split(/Title:\s*(.*?)\nStory:\s*(.*)/s).slice(1, 3);
+        
+
         return res.status(200).json({
           result: {
-            story: axiosRes.data,
+            title: title.trim(),
+            story: story.trim(),
           },
         });
     }

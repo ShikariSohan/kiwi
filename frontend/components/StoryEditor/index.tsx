@@ -5,6 +5,7 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 import LoadingDots from '../LoadingDots';
+import { title } from 'process';
 
 const defaultContent = `<p>Biology is a really unique scient to study. There are alott of different aspects to it, such as ecology, genetics, and physiology. One of the most interesitng things to learn about in biology is animals and the way they behave. For example, did you know that some birds give hugs to their babies to keep them warm? That's so cute!</p>
 
@@ -13,7 +14,7 @@ const defaultContent = `<p>Biology is a really unique scient to study. There are
 const StoryEditor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setresult] = useState('');
-
+  const [title, settitle] = useState('');
   const editor = useEditor({
     extensions: [StarterKit],
     content: defaultContent,
@@ -55,8 +56,9 @@ const StoryEditor = () => {
         alert(errorResponse?.error);
       } else {
         const data = await response.json();
+
         setresult(data.result.story);
-        console.log({ data });
+        settitle(data.result.title);
       }
     } catch (err: any) {
       alert('Failed to process your request');
@@ -71,7 +73,7 @@ const StoryEditor = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ content: result }),
+      body: JSON.stringify({ story: result, title: title }),
     });
     console.log({ response });
   };
@@ -91,6 +93,7 @@ const StoryEditor = () => {
           'Generate Story'
         )}
       </button>
+      <h1>{title}</h1>
       <div>{result}</div>
       {result && (
         <button
@@ -102,7 +105,7 @@ const StoryEditor = () => {
           {isLoading ? (
             <LoadingDots color="white" style="large" />
           ) : (
-            'Generate Story'
+            'Generate PDF'
           )}
         </button>
       )}

@@ -11,22 +11,42 @@ export default async function handler(
   const method = req.method;
   switch (method) {
     case 'POST':
-    const imagePrompt  = [
-        "A little boy running from spider",
-    ]
+    const {title,story} = req.body as {
+      title: string;
+      story: string;
+    };
+    console.log({title,story});
+    const splitStory  = splitParagraph(story, 2 ,3);
+   
+    const replyUrl = process.env.BOT_SERVICE_BASEURL+'/api/bot/complete';
+    let imagePrompt = [];
+    for(let i = 0; i < splitStory.length; i++) {
+      const imgPrompt = ` Generate only one prompt from the passage for a text-to-image model that can generate related and appropriate one image from the given prompt.  used for an AI model that hates unsafe content. The prompt should be able to with no names of any character of the story, and should be in a way that the images seem to be in a similar genre . Here is the prompt provided by the user: ${splitStory[i]}`;
+    const message: Message[] = [{ role: 'user', content: imgPrompt }];
+        const resBody = {
+          messages: message,
+          model: 'gpt-3.5-turbo',
+        };
+    const botResponse = await axios.post(replyUrl, resBody);
+    const data1 = botResponse.data;
+        imagePrompt.push({
+          prompt: data1,
+          text: splitStory[i]
+        })
+        
+      }
 
-    let description = "";
-    for (let i = 0; i < imagePrompt.length; i++) {
-      description = description + imagePrompt[i] + "\n\n";
-    }
+    
+   
 
-   const url =  await genaratePdfs(imagePrompt);
+   const url =  await genaratePdfs(imagePrompt, title);
+
    const botUrl = process.env.BOT_SERVICE_BASEURL+'/api/bot/pdf';
    const botBody = {
     url : url,
     userId: "1234",
-    title : "Hello darkness",
-    description : description
+    title : title,
+    description : story
    }
    const data = await axios.post(botUrl, botBody);
 
@@ -72,18 +92,18 @@ const generateImage = async (prompt : string) => {
     }
 }
 
-const genaratePdfs = async (prompts:any) => {
+const genaratePdfs = async (prompts:any,title:string) => {
     const doc = new jsPDF();
     doc.setFontSize(25);
     doc.setFont("times", "bold");
-    var titleSplit = doc.splitTextToSize("A cat in the cradle", 200);
+    var titleSplit = doc.splitTextToSize(title, 200);
     doc.text(titleSplit,15, 100);
     for (let i = 0; i < prompts.length; i++) {
       doc.addPage();
-      let img = await generateImage(prompts[i]);
+      let img = await generateImage(prompts[i].prompt);
       console.log({img});
      img = await urlTOBase64(img);
-      var splitPrompt = doc.splitTextToSize(prompts[i], 180);
+      var splitPrompt = doc.splitTextToSize(prompts[i].text, 180);
       doc.text(splitPrompt,15, 100);
       doc.addPage();
      
@@ -108,3 +128,40 @@ const urlTOBase64 = async (url:string) => {
 }
 
 
+function splitParagraph(text:string, minParagraphs:number, maxParagraphs:number) {
+  const sentences = text.split(/[.!?]/);
+
+  const paragraphs = [];
+  let currentParagraph = "";
+
+  for (const sentence of sentences) {
+    if (currentParagraph.length === 0) {
+      currentParagraph += sentence;
+    } else {
+      const potentialParagraph = currentParagraph + sentence;
+      if (potentialParagraph.length <= maxParagraphs) {
+        currentParagraph = potentialParagraph;
+      } else {
+        paragraphs.push(currentParagraph);
+        currentParagraph = sentence;
+      }
+    }
+  }
+
+  if (currentParagraph.length > 0) {
+    paragraphs.push(currentParagraph);
+  }
+
+  if (paragraphs.length < minParagraphs) {
+    const mergedParagraphs = [];
+    for (let i = 0; i < paragraphs.length; i += minParagraphs) {
+      mergedParagraphs.push(paragraphs.slice(i, i + minParagraphs).join(" "));
+    }
+    return mergedParagraphs.slice(0, maxParagraphs);
+  } else if (paragraphs.length > maxParagraphs) {
+ 
+    return paragraphs.slice(0, maxParagraphs);
+  } else {
+    return paragraphs;
+  }
+}
