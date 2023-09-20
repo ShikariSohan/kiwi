@@ -45,6 +45,11 @@ public class BotController {
         log.info("pdf: {}", pdf);
         pdfService.createPdf(pdf);
         return ResponseEntity.ok("Saved");
+    }
+    @GetMapping("/pdf")
+    public ResponseEntity<List<Pdf>> getAllPdf(){
+       List<Pdf> pdfs = pdfService.getAllPdf();
+        return ResponseEntity.ok(pdfs);
 
     }
 }
