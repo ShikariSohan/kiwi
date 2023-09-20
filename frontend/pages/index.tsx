@@ -1,18 +1,14 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Feature from '../components/Feature';
+import Hero from '../components/Hero';
+import Layout from '../components/Layout/Layout';
 
-const Home: NextPage = () => {
+export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>Kiwi</title>
-        <meta name="description" content="Kiwi" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      Hello Ushi
-    </div>
-  )
+    <>
+      <Layout>
+        <Hero />
+        <Feature />
+      </Layout>
+    </>
+  );
 }
-
-export default Home

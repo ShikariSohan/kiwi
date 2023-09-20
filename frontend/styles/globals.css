@@ -1,33 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: light) {
-  html {
-    color-scheme: light;
-  }
-  body {
-    color: rgb(0, 0, 0);
-    background: rgb(255, 255, 255);
-  }
-} */
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
 .mircophone-container {
   display: flex;
   justify-content: center;
@@ -106,4 +80,37 @@ a {
   background: none;
   color: white;
   width: fit-content;
+}
+/* Define your custom colors */
+.custom-btn-bg-color {
+  background-color: #a7c957;
+}
+
+.custom-btn-bg-color:hover {
+  background-color: #6c584c;
+}
+
+/* Define the hover effect */
+.custom-btn-shadow {
+  box-shadow: 0 4px 6px rgba(126, 25, 25, 0.1); /* Your custom hover shadow */
+}
+.btn-outline {
+  border: 1px solid #a7c957; /* Your custom border color */
+  color: #a7c957; /* Your custom text color */
+  background-color: white; /* Your custom background color */
+  outline: none;
+  border-radius: 999px; /* For rounded shape */
+  transition: all 0.3s; /* Adjust transition duration as needed */
+}
+
+.btn-outline:hover {
+  background-color: #a7c957;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.bg-color: {
+  background-color: #a7c957;
+}
+.text-color: {
+  color: '#aa725a';
 }
