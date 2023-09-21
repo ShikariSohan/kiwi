@@ -22,7 +22,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/chat-avatar-helper.js"
+    "components/chat-avatar-helper.js",
+    "components/Layout/Header.tsx"
   ],
   "exclude": ["node_modules"]
 }
