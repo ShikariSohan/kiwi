@@ -17,7 +17,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function AuthenticationTitle() {
   const form = useForm({
@@ -31,6 +31,7 @@ export default function AuthenticationTitle() {
   });
 
   const onSubmit = async (values: { password: string; email: string }) => {
+    console.log(values);
     try {
       const res = await axios.post('/api/login', values);
       const { token } = res.data;
@@ -41,6 +42,19 @@ export default function AuthenticationTitle() {
       console.log(err);
     }
   };
+  useEffect(() => {
+    const func = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if(token){
+          window.location.href = '/profiles';
+        } 
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    func();
+  }, []);
   return (
     <Layout>
       <Center style={{ height: '100%' }} className="bg-color">

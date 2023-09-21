@@ -27,6 +27,7 @@ export default function Profile() {
         }
        
         catch(err){
+          localStorage.removeItem("token");
           window.location.href = "/login";
         }
       }
