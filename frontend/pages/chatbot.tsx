@@ -1,9 +1,11 @@
+import Layout from '@/components/Layout/Layout';
 import { Chat } from '../components/Chat/Chat';
 import { Footer } from '../components/Layout/Footer';
 import { Navbar } from '../components/Layout/Navbar';
 import { Message } from '../types';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
+import { Center } from '@mantine/core';
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -37,14 +39,14 @@ export default function Home() {
     }
 
     const content = await response.json();
-    
+
     if (!content) {
       setLoading(false);
       throw new Error(content);
     }
 
     setLoading(false);
-    
+
     setMessages((messages) => [
       ...messages,
       {
@@ -58,7 +60,7 @@ export default function Home() {
     setMessages([
       {
         role: 'assistant',
-        content: `Hi there! I'm Chatbot UI, an AI assistant. I can help you with things like answering questions, providing information, and helping with tasks. How can I help you?`,
+        content: `Hey, I'm Kiwi 🥝, your chat buddy! Let's make things fun and easy-peasy. How can I brighten your day? 😄`,
       },
     ]);
   };
@@ -71,39 +73,32 @@ export default function Home() {
     setMessages([
       {
         role: 'assistant',
-        content: `Hi there! I'm Chatbot UI, an AI assistant. I can help you with things like answering questions, providing information, and helping with tasks. How can I help you?`,
+        content: `Hey, I'm Kiwi 🥝, your chat buddy! Let's make things fun and easy-peasy. How can I brighten your day? 😄`,
       },
     ]);
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>Chatbot UI</title>
-        <meta
-          name="description"
-          content="A simple chatbot starter kit for OpenAI's chat model using Next.js, TypeScript, and Tailwind CSS."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <div className="flex flex-col h-screen">
-        <Navbar />
-
-        <div className="flex-1 overflow-auto sm:px-10 pb-4 sm:pb-10">
-          <div className="max-w-[800px] mx-auto mt-4 sm:mt-12">
-            <Chat
-              messages={messages}
-              loading={loading}
-              onSend={handleSend}
-              onReset={handleReset}
-            />
-            <div ref={messagesEndRef} />
-          </div>
+    <Layout>
+      <Center
+        className="max-w-[800px] mx-auto"
+        style={{
+          height: '89vh',
+        }}
+      >
+        <div
+          className="overflow-y-auto max-h-[80vh] mt-15 custom-scrollbar" // Add these CSS classes for scrolling
+          style={{ width: '100%' }}
+        >
+          <Chat
+            messages={messages}
+            loading={loading}
+            onSend={handleSend}
+            onReset={handleReset}
+          />
+          <div ref={messagesEndRef} />
         </div>
-        <Footer />
-      </div>
-    </>
+      </Center>
+    </Layout>
   );
 }

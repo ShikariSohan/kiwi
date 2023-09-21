@@ -1,3 +1,5 @@
+import Layout from '@/components/Layout/Layout';
+import ButtonPrimary from '@/components/misc/ButtonPrimary';
 import {
   TextInput,
   PasswordInput,
@@ -15,6 +17,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
+import router from 'next/router';
 import React from 'react';
 
 export default function AuthenticationTitle() {
@@ -30,68 +33,74 @@ export default function AuthenticationTitle() {
     },
   });
 
-  const onSubmit = async (values: { username:string, password: string; email: string }) => {
+  const onSubmit = async (values: {
+    username: string;
+    password: string;
+    email: string;
+  }) => {
     console.log({ values });
-     try {
-      const res = await axios.post("/api/register", values);
+    try {
+      const res = await axios.post('/api/register', values);
       window.location.href = `/otp/${res.data.id}`;
-
-     }
-     catch(err){
-      alert("Error");
-       console.log(err);
-     }
+    } catch (err) {
+      alert('Error');
+      console.log(err);
+    }
 
     //redirect to otp/[id] route after that
   };
   return (
-    <BackgroundImage src="bg.jpg" style={{ height: '100vh', width: '100vw' }}>
-      <Center style={{ height: '100%' }}>
-        <Card p="xl" color="orange.1">
-          <Title align="center" sx={(theme) => ({ fontFamily: `Caveat` })}>
-            Kiwi
-          </Title>
-          <Text color="dimmed" size="sm" align="center" mt={5}>
-            Do not have an account yet?{' '}
-            <Anchor size="sm" component="button">
-              Create account
-            </Anchor>
-          </Text>
-          <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-            <Paper p={30} mt={30} radius="md">
-              <TextInput
-                label="Username"
+    <Layout>
+      <div
+        className="flex items-center justify-center"
+        style={{ height: '95vh' }}
+      >
+        <div className="bg-color-lite p-10 mt-5 rounded-lg shadow-lg">
+          <p className="text-title text-center mt-5">Create a new account</p>
+          <form onSubmit={(values) => onSubmit(values)}>
+            <div className="p-6 rounded-md">
+              <label className="text-color text-sm font-semibold mb-2">
+                Username
+              </label>
+              <br />
+              <input
+                type="text"
+                className="w-full input-border-color rounded-md py-2 px-3 text-color mb-4"
                 placeholder="your name"
                 required
                 {...form.getInputProps('username')}
               />
-              <TextInput
-                label="Email"
+
+              <label className="text-color text-sm font-semibold mb-2">
+                Email
+              </label>
+              <br />
+              <input
+                type="email"
+                className="w-full input-border-color rounded-md py-2 px-3 text-color mb-4"
                 placeholder="you@gmail.com"
                 required
-                mt="md"
                 {...form.getInputProps('email')}
               />
-              <PasswordInput
-                label="Password"
+
+              <label className="text-color text-sm font-semibold mb-2">
+                Password
+              </label>
+              <br />
+              <input
+                type="password"
+                className="w-full input-border-color rounded-md py-2 px-3 text-color mb-4"
                 placeholder="Your password"
                 required
-                mt="md"
                 {...form.getInputProps('password')}
               />
-              <Group position="apart" mt="lg">
-                <Checkbox label="Remember me" />
-                <Anchor component="button" size="sm">
-                  Forgot password?
-                </Anchor>
-              </Group>
-              <Button fullWidth mt="xl" type="submit">
-                Sign in
-              </Button>
-            </Paper>
+              <Center mt="lg">
+                <ButtonPrimary type="submit">Create</ButtonPrimary>
+              </Center>
+            </div>
           </form>
-        </Card>
-      </Center>
-    </BackgroundImage>
+        </div>
+      </div>
+    </Layout>
   );
 }

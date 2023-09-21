@@ -1,3 +1,6 @@
+import Layout from '@/components/Layout/Layout';
+import ButtonPrimary from '@/components/misc/ButtonPrimary';
+import { Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
 import Head from 'next/head';
@@ -22,93 +25,79 @@ export default function OTP() {
     const otp = values.i1 + values.i2 + values.i3 + values.i4;
     const { id } = router.query;
     try {
-      const res = await axios.post('/api/verify', { code:otp, id });
+      const res = await axios.post('/api/verify', { code: otp, id });
       window.location.href = '/login';
-    }
-    catch (err) {
+    } catch (err) {
       alert('Error');
       console.log(err);
     }
   };
   return (
-    <>
-    <Head>
-    <title>KIWI - OTP</title>
-    </Head>
-    <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
-      <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-        <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
-          <div className="flex flex-col items-center justify-center text-center space-y-2">
-            <div className="font-semibold text-3xl">
-              <p>Email Verification</p>
-            </div>
+    <Layout>
+      <div
+        className="flex items-center justify-center"
+        style={{ height: '90vh' }}
+      >
+        <div className="bg-color-lite p-10 rounded-lg shadow-lg">
+          <p className="text-title text-center mt-10">Email Verification</p>
+          <Center>
             <div className="flex flex-row text-sm font-medium text-gray-400">
               <p>We have sent a code to your email.</p>
             </div>
-          </div>
+          </Center>
 
-          <div>
-            <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-              <div className="flex flex-col space-y-16">
-                <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                  <div className="w-16 h-16 ">
-                    <input
-                      required
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      {...form.getInputProps('i1')}
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      required
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      {...form.getInputProps('i2')}
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      required
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      {...form.getInputProps('i3')}
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      required
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      {...form.getInputProps('i4')}
-                    />
-                  </div>
+          <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+            <div className="flex flex-col space-y-16 mt-10">
+              <div className="flex flex-row items-center justify-between mx-auto w-full">
+                <div className="w-16 h-16 mx-5">
+                  <input
+                    required
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    {...form.getInputProps('i1')}
+                  />
                 </div>
-
-                <div className="flex flex-col space-y-5">
-                  <div>
-                    <button
-                      className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
-                      type="submit"
-                    >
-                      Verify Account
-                    </button>
-                  </div>
-
-                  <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                    <p>Didn't recieve code?</p>{' '}
-                    <a
-                      className="flex flex-row items-center text-blue-600"
-                      href="http://"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Resend
-                    </a>
-                  </div>
+                <div className="w-16 h-16 mx-5">
+                  <input
+                    required
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    {...form.getInputProps('i2')}
+                  />
+                </div>
+                <div className="w-16 h-16 mx-5">
+                  <input
+                    required
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    {...form.getInputProps('i3')}
+                  />
+                </div>
+                <div className="w-16 h-16 mx-5">
+                  <input
+                    required
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    {...form.getInputProps('i4')}
+                  />
                 </div>
               </div>
-            </form>
-          </div>
+
+              <div className="flex flex-col space-y-5">
+                <Center>
+                  <ButtonPrimary type="submit">Verify Account</ButtonPrimary>
+                </Center>
+
+                <p className="text-dimmed text-sm text-center text-color mt-5">
+                  Did not receive the code?{' '}
+                  <button
+                    className="text-orange-500"
+                    onClick={() => router.push('/signup')}
+                  >
+                    Resend code
+                  </button>
+                </p>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
-    </>
+    </Layout>
   );
 }
