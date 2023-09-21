@@ -59,14 +59,11 @@ const AvatarBot: React.FC = () => {
         );
         // Play the video
       }
-      const u = new SpeechSynthesisUtterance(botScript);
+      const u =
+        botScript === ''
+          ? new SpeechSynthesisUtterance('Please speak again')
+          : new SpeechSynthesisUtterance(botScript);
       console.log({ voice: synth.getVoices() });
-      const dimitri = synth
-        .getVoices()
-        .find((voice) => voice.lang.includes('zh-TW'));
-      const child = synth
-        .getVoices()
-        .find((voice) => voice.name.includes('zh-TW'));
 
       if (botVideos.type === 'baby') {
         u.voice = synth
@@ -215,11 +212,7 @@ const AvatarBot: React.FC = () => {
             disabled={!botTalking}
             onClick={() => setBotTalking(false)}
             className={`hover:cursor-pointer rounded-full p-5 text-white hover:opacity-80 m-5 ${
-              !humanTalking
-                ? botTalking || loading
-                  ? 'icon-button-paused'
-                  : 'icon-button'
-                : 'icon-button-clicked'
+              !botTalking ? 'icon-button-disabled' : 'icon-button'
             } `}
           >
             <IconPlayerPause ref={microphoneRef} />

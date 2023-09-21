@@ -119,6 +119,18 @@
   font-family: 'Caveat Brush, cursive';
   font-size: 25px;
 }
+.text-word {
+  color: #6c584c;
+  font-family: 'Caveat Brush, cursive';
+  font-size: 30px;
+  font-weight: 800;
+}
+.text-normal {
+  color: #6c584c;
+  font-family: 'Caveat Brush, cursive';
+  font-size: 20px;
+}
+
 .bg-color-lite {
   background: linear-gradient(to top, #ffffff, #e3efc6);
 }
@@ -134,13 +146,13 @@
 }
 
 .icon-button {
-  background-color: #a7c957;
+  background-color: #647934;
 }
 .icon-button-clicked {
   background-color: #6c584c;
 }
 .icon-button-disabled {
-  background-color: #e3efc6;
+  background-color: #96b54e;
 }
 
 .message-background {
