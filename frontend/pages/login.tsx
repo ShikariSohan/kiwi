@@ -1,25 +1,13 @@
 import Layout from '@/components/Layout/Layout';
 import ButtonPrimary from '@/components/misc/ButtonPrimary';
-import {
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Anchor,
-  Paper,
-  Title,
-  Text,
-  Container,
-  Group,
-  Button,
-  BackgroundImage,
-  Center,
-  Card,
-} from '@mantine/core';
+import { Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function AuthenticationTitle() {
+  const router = useRouter();
   const form = useForm({
     initialValues: { password: '', email: '' },
 
@@ -43,39 +31,50 @@ export default function AuthenticationTitle() {
   };
   return (
     <Layout>
-      <Center style={{ height: '100%' }} className="bg-color">
-        <Card p="xl" color="orange.1">
-          <Text color="dimmed" size="sm" align="center" mt={5}>
+      <div
+        className="flex items-center justify-center"
+        style={{ height: '95vh' }}
+      >
+        <div className="bg-color-lite p-5 rounded-lg shadow-lg">
+          <p className="text-title text-center mt-5">Login to your account</p>
+          <p className="text-dimmed text-sm text-center text-color mt-5">
             Do not have an account yet?{' '}
-            <Anchor size="sm" component="button">
+            <button
+              className="text-orange-500"
+              onClick={() => router.push('/signup')}
+            >
               Create account
-            </Anchor>
-          </Text>
-          <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-            <Paper p={30} mt={30} radius="md">
-              <TextInput
-                label="Email"
+            </button>
+          </p>
+          <form onSubmit={(values) => onSubmit(values)}>
+            <div className="p-6 rounded-md">
+              <label className="text-color text-sm font-semibold mb-2">
+                Email
+              </label>
+              <br />
+              <input
+                type="email"
+                className="w-full input-border-color rounded-md py-2 px-3 text-color mb-4"
                 placeholder="you@gmail.com"
                 required
-                {...form.getInputProps('email')}
               />
-              <PasswordInput
-                label="Password"
+              <br />
+              <label className="text-color text-sm font-semibold mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                className="w-full input-border-color rounded-md py-2 px-3 text-color mb-4"
                 placeholder="Your password"
                 required
-                mt="md"
-                {...form.getInputProps('password')}
               />
-              <Group position="apart" mt="lg">
-                <Anchor component="button" size="sm">
-                  Forgot password?
-                </Anchor>
-              </Group>
-              <ButtonPrimary type="submit">Sign in</ButtonPrimary>
-            </Paper>
+              <Center mt="lg">
+                <ButtonPrimary type="submit">Log in</ButtonPrimary>
+              </Center>
+            </div>
           </form>
-        </Card>
-      </Center>
+        </div>
+      </div>
     </Layout>
   );
 }

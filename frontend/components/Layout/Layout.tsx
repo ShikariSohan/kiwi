@@ -6,7 +6,10 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      {children}
+      <div style={{ backgroundImage: 'url("/assets/background.png")' }}>
+        {children}
+      </div>
+
       <Footer />
     </>
   );

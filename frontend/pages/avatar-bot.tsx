@@ -1,6 +1,11 @@
+import Layout from '@/components/Layout/Layout';
 import { Message } from '@/types';
 import { Center, Loader } from '@mantine/core';
-import { IconLockPause, IconMicrophone } from '@tabler/icons-react';
+import {
+  IconLockPause,
+  IconMicrophone,
+  IconPlayerPause,
+} from '@tabler/icons-react';
 import React, { useEffect, useRef, useState } from 'react';
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -164,54 +169,64 @@ const AvatarBot: React.FC = () => {
   };
 
   return (
-    <Center style={{ height: '100vh', flexDirection: 'column' }}>
-      <video
-        ref={videoRef}
-        autoPlay={true}
-        id="v0"
-        preload="preload"
-        className=" p-3 sticky top-0"
-        muted
-        loop
-        style={{ filter: 'grayscale(0.3)', maxWidth: '70%' }}
+    <Layout>
+      <Center
+        className="bg-color-lite-rev"
+        style={{
+          width: '100vw',
+          maxHeight: '100vh',
+          flexDirection: 'column',
+          paddingTop: '7%',
+        }}
       >
-        <source
-          type="video/mp4"
-          src={`${botVideos.type}-silent-1.mp4`}
-        ></source>
-      </video>
-      <Center>
-        {loading && <Loader />}
-        <button
-          onClick={handleBotListen}
-          disabled={botTalking || loading}
-          className={`${
-            !humanTalking
-              ? botTalking || loading
-                ? 'bg-red-300'
-                : 'bg-blue-500'
-              : 'bg-red-500'
-          } `}
-        >
-          <IconMicrophone
-            size={50}
-            ref={microphoneRef}
-            className={`hover:cursor-pointer rounded-full m-10 p-2 text-white hover:opacity-80`}
-          />
-        </button>
-        <button
-          disabled={!botTalking}
-          onClick={() => setBotTalking(false)}
-          className={`${botTalking ? 'bg-cyan-500' : 'bg-red-300'} `}
-        >
-          <IconLockPause
-            size={50}
-            ref={microphoneRef}
-            className={`hover:cursor-pointer rounded-full m-10 p-2 text-white hover:opacity-80`}
-          />
-        </button>
+        <Center>
+          <video
+            ref={videoRef}
+            autoPlay={true}
+            id="v0"
+            preload="preload"
+            className="sticky top-0"
+            muted
+            loop
+          >
+            <source
+              type="video/mp4"
+              src={`${botVideos.type}-silent-1.mp4`}
+            ></source>
+          </video>
+        </Center>
+
+        <Center>
+          {loading && <Loader />}
+          <button
+            onClick={handleBotListen}
+            disabled={botTalking || loading}
+            className={`hover:cursor-pointer rounded-full p-5 text-white hover:opacity-80 m-5 ${
+              !humanTalking
+                ? botTalking || loading
+                  ? 'icon-button-disabled'
+                  : 'icon-button'
+                : 'icon-button-clicked'
+            } `}
+          >
+            <IconMicrophone ref={microphoneRef} />
+          </button>
+          <button
+            disabled={!botTalking}
+            onClick={() => setBotTalking(false)}
+            className={`hover:cursor-pointer rounded-full p-5 text-white hover:opacity-80 m-5 ${
+              !humanTalking
+                ? botTalking || loading
+                  ? 'icon-button-paused'
+                  : 'icon-button'
+                : 'icon-button-clicked'
+            } `}
+          >
+            <IconPlayerPause ref={microphoneRef} />
+          </button>
+        </Center>
       </Center>
-    </Center>
+    </Layout>
   );
 };
 

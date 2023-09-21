@@ -108,9 +108,64 @@
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.bg-color: {
+.bg-color {
   background-color: #a7c957;
 }
-.text-color: {
-  color: '#aa725a';
+.text-color {
+  color: #6c584c;
+}
+.text-title {
+  color: #6c584c;
+  font-family: 'Caveat Brush, cursive';
+  font-size: 25px;
+}
+.bg-color-lite {
+  background: linear-gradient(to top, #ffffff, #e3efc6);
+}
+.bg-color-lite-rev {
+  background: linear-gradient(to bottom, #ffffff, #e3efc6);
+}
+.input-border-color {
+  border: 1px solid #6c584c;
+}
+
+.input-border-color:focus {
+  border: 1px solid #758d3d;
+}
+
+.icon-button {
+  background-color: #a7c957;
+}
+.icon-button-clicked {
+  background-color: #6c584c;
+}
+.icon-button-disabled {
+  background-color: #e3efc6;
+}
+
+.message-background {
+  background-color: #e0fbfc;
+}
+
+.message-background-user {
+  background-color: #f9c74f;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Background color of the track */
+}
+
+/* Define the styles for the scrollbar thumb (the draggable part) */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+/* Define the styles for the scrollbar thumb when hovered */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the thumb on hover */
 }
