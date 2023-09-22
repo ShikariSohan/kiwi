@@ -4,7 +4,7 @@ import { Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React,{useEffect} from 'react';
 
 export default function AuthenticationTitle() {
   const router = useRouter();
@@ -18,8 +18,13 @@ export default function AuthenticationTitle() {
     },
   });
 
-  const onSubmit = async (values: { password: string; email: string }) => {
-    console.log(values);
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const [email, password] = event.target as any;
+    const values = {
+      email: email.value,
+      password: password.value,
+    };    
     try {
       const res = await axios.post('/api/login', values);
       const { token } = res.data;

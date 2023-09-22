@@ -143,4 +143,14 @@ public class UserController {
 
     public void deleteUser() {
     }
+    @PostMapping("/resend")
+    public ResponseEntity<Boolean> resendCode(@RequestHeader("Authorization") String token) {
+        String id = jwtUtils.validateToken(token);
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        User user = userService.getUserById(id);
+        mailService.sendMail(user.getEmail(), "Kiwi - Verification Code (Resend)", formatTheMessage(user.getCode()));
+        return ResponseEntity.ok(true);
+    }
 }

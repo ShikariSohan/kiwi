@@ -33,12 +33,14 @@ export default function AuthenticationTitle() {
     },
   });
 
-  const onSubmit = async (values: {
-    username: string;
-    password: string;
-    email: string;
-  }) => {
-    console.log({ values });
+  const onSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const [username, email, password] = event.target as any;
+    const values = {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+    };
     try {
       const res = await axios.post('/api/register', values);
       window.location.href = `/otp/${res.data.id}`;

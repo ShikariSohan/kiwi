@@ -20,6 +20,7 @@ class Bubble {
     height : number;
     width : number;
     direction : number;
+    zooming_dir : number;
     constructor(x: number, y: number,p5:p5Types,image:any,action:string) {
         this.x = x;
         this.y = y;
@@ -29,6 +30,7 @@ class Bubble {
         this.height = 50;
         this.width = 50;
         this.direction = 1;
+        this.zooming_dir = 1;
 
     }
     vibrate() {
@@ -36,8 +38,20 @@ class Bubble {
         this.y = this.y + this.p5.random(-3, 3);
     }
     zoom() {
-        this.height = this.height + 3;
-        this.width = this.width + 3;
+        if(this.x + this.width < 650 && this.zooming_dir == 1) {
+            this.height = this.height + 3;
+            this.width = this.width + 3;
+        }
+        else {
+            this.zooming_dir = 0;
+            this.height = this.height - 3;
+            this.width = this.width - 3;
+            if(this.x + this.width < 0) {
+                this.zooming_dir = 1;
+            }
+        }
+        //this.height = this.height + 3;
+        //this.width = this.width + 3;
 
     }
 

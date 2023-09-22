@@ -32,6 +32,16 @@ export default function OTP() {
       console.log(err);
     }
   };
+  const resendCode = async () => {
+    const { id } = router.query;
+    try {
+      const res = await axios.post('/api/resend', { id });
+      alert('Code sent');
+    } catch (err) {
+      alert('Error');
+      console.log(err);
+    }
+  };
   return (
     <Layout>
       <div
@@ -88,7 +98,7 @@ export default function OTP() {
                   Did not receive the code?{' '}
                   <button
                     className="text-orange-500"
-                    onClick={() => router.push('/signup')}
+                    onClick={resendCode}
                   >
                     Resend code
                   </button>
