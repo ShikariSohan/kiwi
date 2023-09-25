@@ -23,14 +23,17 @@ const Header = () => {
         }
       >
         <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
-          <div className="col-start-1 col-end-2 flex items-center">
+          <Link
+            className="col-start-1 col-end-2 flex items-center"
+            href={'/dashboard'}
+          >
             <img src="/assets/logo.png" className="h-12 w-auto" />
             <div
               style={{ fontFamily: 'Caveat Brush, cursive', fontSize: '30px' }}
             >
               Kiwi
             </div>
-          </div>
+          </Link>
           {pathname === '/' && (
             <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
               <Link

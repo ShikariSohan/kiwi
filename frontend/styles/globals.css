@@ -181,3 +181,118 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #555; /* Color of the thumb on hover */
 }
+
+/* style.css */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 5rem;
+}
+
+.card:hover {
+  background-image: linear-gradient(to bottom right, #9f7aea, #61a1e8, #4299e1);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.icon-bg {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(169, 172, 191, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 20px;
+  color: #6b7280;
+}
+
+.percentage {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4b5563;
+  margin-top: 1.5rem;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+}
+
+.subtitle svg {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-right: 0.25rem;
+}
+
+.value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4b5563;
+  margin-top: 2rem;
+}
+
+/* styles.css */
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixed-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-blue-600 {
+  color: #3b82f6;
+}
+
+.bg-blue-600 {
+  background-color: #3b82f6;
+}
+
+.transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.translate-x-0 {
+  transform: translateX(0);
+}
+
+.translate-x-full {
+  transform: translateX(-100%);
+}
+
+.navbar-text {
+  color: #6c584c;
+  font-family: 'Caveat Brush, cursive';
+  font-size: 22px;
+}
+
+/* Add more styles as needed */
