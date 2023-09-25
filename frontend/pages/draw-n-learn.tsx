@@ -2,7 +2,7 @@ import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { CanvasSketchTool } from 'react-arts';
 import { useScreenshot, createFileName } from 'use-react-screenshot';
 import axios from 'axios';
-import { Center, Container, Loader } from '@mantine/core';
+import { Center, Container } from '@mantine/core';
 import React from 'react';
 import Layout from '@/components/Layout/Layout';
 import ButtonPrimary from '@/components/misc/ButtonPrimary';
@@ -10,6 +10,7 @@ import { IconCheck, IconReload } from '@tabler/icons-react';
 import { generate } from 'random-words';
 import Sidebar from '@/components/Layout/Sidebar';
 import { notifications } from '@mantine/notifications';
+import LoadingDots from '@/components/LoadingDots';
 export default function AppShellDemo(props: any) {
   const canvasRef = useRef(null);
   const [image, takeScreenshot] = useScreenshot();
@@ -90,7 +91,6 @@ export default function AppShellDemo(props: any) {
         style={{ backgroundImage: 'url("/assets/background.png")' }}
       >
         <Center style={{ height: '100vh', width: '97vw', flexFlow: 'column' }}>
-          {loading && <Loader color="rgba(133, 69, 69, 1)" />}
           <div className="text-normal">Write down the word:</div>
           {domLoaded && (
             <div className="text-word flex items-center gap-2">
@@ -110,9 +110,18 @@ export default function AppShellDemo(props: any) {
             <CanvasSketchTool height={570} width={870} />
           </Container>
           <div style={{ marginTop: '2%' }}>
-            <ButtonPrimary onClick={onClick} disabled={loading ? true : false}>
-              Save
-            </ButtonPrimary>
+          <ButtonPrimary
+          type="button"
+          addClass="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+          onClick={onClick}
+          disabled={loading}
+        >
+          {loading ? (
+            <LoadingDots color="white" style="large" />
+          ) : (
+            'Check My Grammar'
+          )}
+        </ButtonPrimary>
           </div>
         </Center>
       </div>
