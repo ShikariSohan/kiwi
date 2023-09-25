@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import p5Types from "p5"; //Import this for typechecking and intellisense
+import { Target } from "lucide-react";
+import { set } from "lodash";
+import { steps } from "framer-motion";
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
     ssr: false,
 });
+
+
 
 
 class Tile{
@@ -35,6 +40,8 @@ let typeRadio: any;
 let autoSolveButton: any;
 let shuffleItr = 50;
 let fileInput:any;
+let reShuffleButton:any;
+let stepsArr:any[] = [];
 const PicturePuzzle = (props: any) => {
   const preload = (p5:p5Types) => {
     for(let i = 0; i < images.length; i++) {
@@ -46,6 +53,13 @@ const PicturePuzzle = (props: any) => {
   }
   const setup = (p5:p5Types, canvasParentRef:Element) => {
     cnv =  p5.createCanvas(ww,hh).parent(canvasParentRef);
+    reShuffleButton = p5.createButton("Re-Shuffle");
+    reShuffleButton.parent(canvasParentRef);
+    reShuffleButton.mousePressed(() => {
+      // if(isSolved(p5,board)) return;
+      board = shufflePuzzle(board);
+    });
+    
 
     fileInput = p5.createFileInput((file:any) => {
       if(file.type == "image") {
@@ -60,12 +74,11 @@ const PicturePuzzle = (props: any) => {
     const autoSolveButton = p5.createButton("Auto Solve");
     autoSolveButton.parent(canvasParentRef);
     autoSolveButton.mousePressed(() => {
-      let interval = setInterval(() => {
-        autoSolve(p5,board);
-        if(isSolved(p5,board)) {
-          clearInterval(interval);
-        }
-      },200);
+      if(isSolved(p5,board)) return;
+      stepsArr.reverse();
+      performStepsWithDelay(p5, board, stepsArr);
+      stepsArr = [];
+      
     });
 
     let tileSize = p5.floor(ww / cols);
@@ -145,7 +158,21 @@ const updateTiles = (p5:p5Types) => {
 }
 
  
-  
+function performStepsWithDelay(p5:p5Types, board:any, stepsArr:any, index = 0) {
+  if (index >= stepsArr.length) {
+    // All steps have been completed
+    return;
+  }
+
+  const step = stepsArr[index];
+  if(isSolved(p5,board)) return;
+  moveTile(p5, board, step[0], step[1]);
+
+  // Use setTimeout to execute the next step with a delay
+  setTimeout(() => {
+    performStepsWithDelay(p5, board, stepsArr, index + 1);
+  }, 200);
+}
 const draw = (p5:p5Types) => {
   if(typeRadio.value() == "Video") {
     console.log("Video");
@@ -199,6 +226,7 @@ function shufflePuzzle(puzzle:any) {
     for (let i = puzzle.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [puzzle[i], puzzle[j]] = [puzzle[j], puzzle[i]];
+      stepsArr.push([i,j]);
     }
     solvable = isSolvable(puzzle);
   }
@@ -233,6 +261,7 @@ const mousePressed = (p5:p5Types) => {
   let tileIndex = x + y * cols;
   let blankIndex = findBlankIndex(p5,board);
   if(isNeighbor(p5,board,blankIndex,tileIndex)) {
+    stepsArr.push([blankIndex,tileIndex]);
     moveTile(p5,board,blankIndex,tileIndex);
   }
 }
@@ -245,18 +274,29 @@ const isSolved = (p5:p5Types,board:any) => {
   return true;
 }
 const autoSolve = (p5:p5Types,board:any) => {
-  // timeoutfor 100 ms then move tile
-  if(isSolved(p5,board)) return;
-  let blankIndex = findBlankIndex(p5,board);
-  let tileIndex = -1;
-  for(let i = 0; i < board.length; i++) {
-    if(board[i] == solveState[blankIndex]) {
-      tileIndex = i;
+ let  arr = [...board];
+  let steps = [];
+  let swapped;
+  // make -1 elemnt is 15
+  for(let i = 0; i < arr.length; i++) {
+    if(arr[i] == -1) {
+      arr[i] = 15;
       break;
     }
   }
 
-  moveTile(p5,board,blankIndex,tileIndex);
+  do {
+    swapped = false;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] > arr[i + 1]) {
+        const temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+        swapped = true;
+        steps.push([i, i + 1]); 
+    }
+  } }while (swapped);
+return steps;
 }
 
 
