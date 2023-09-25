@@ -3,13 +3,16 @@
 import { useRef, useState } from 'react';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import Confetti from 'react-dom-confetti';
 
 import LoadingDots from '../LoadingDots';
-import {DiffMatchPatch} from 'diff-match-patch-ts';
+import { DiffMatchPatch } from 'diff-match-patch-ts';
+import ButtonPrimary from '../misc/ButtonPrimary';
+import { Center } from '@mantine/core';
+import { Card } from 'flowbite-react';
+import ShowConfetti from '../confetti';
 
-const defaultContent = `<p>Biology is a really unique scient to study. There are alott of different aspects to it, such as ecology, genetics, and physiology. One of the most interesitng things to learn about in biology is animals and the way they behave. For example, did you know that some birds give hugs to their babies to keep them warm? That's so cute!</p>
-
-<p>Another important aspect of biology is understanding the structure and function of different living things. Cells are the basic building blocks of all living organisms, and they are responsible for carrying out all of the processes necessary for life. Studying the biology of cells is important for understanding everything from how the body works to how diseases develop.</p>`;
+const defaultContent = `<p>Helo Kiwis! Run dis to know how it work! Write somethin!</p>`;
 
 const ContentEditor = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,9 +28,33 @@ const ContentEditor = () => {
       },
     },
   });
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  const handleClick = () => {
+    setShowConfetti(true);
+    // hide after 3 seconds
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 3000);
+  };
+
+  const config = {
+    angle: "155",
+    spread: 360,
+    startVelocity: "30",
+    elementCount: "121",
+    dragFriction: "0.07",
+    duration: "7360",
+    stagger: "3",
+    width: "29px",
+    height: "10px",
+    perspective: "500px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+  };
 
   const checkGrammar = async () => {
     const cleanText = editor?.getText();
+    handleClick()
 
     if (!cleanText) {
       console.log('content is missing: ', cleanText);
@@ -65,7 +92,7 @@ const ContentEditor = () => {
       setIsLoading(false);
     }
   };
-  const diffChecker = (resp:string) => {
+  const diffChecker = (resp: string) => {
     const text1 = editor?.getText() || '';
     const text2 = resp;
 
@@ -73,38 +100,42 @@ const ContentEditor = () => {
     const diff = dmp.diff_main(text1, text2);
     dmp.diff_cleanupSemantic(diff);
     let result = '';
-    for(const [op, text] of diff){
-      if(op === 0){
+    for (const [op, text] of diff) {
+      if (op === 0) {
         result += text;
+      } else if (op === 1) {
+        result += `<span style="color: red">${text}</span>`;
       }
-      else if(op === 1){
-        result += `<span style="color: red">${text}</span>`
-      }
-    
     }
     return result;
   };
 
   return (
     <div className="my-8">
-      <EditorContent editor={editor} />
-      <button
-        type="button"
-        className="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
-        onClick={checkGrammar}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <LoadingDots color="white" style="large" />
-        ) : (
-          'Check My Grammar'
-        )}
-      </button>
-      <div>{result}</div>
-      {/* <div dangerouslySetInnerHTML={{__html: defaultContent}}></div> */}
 
-      <div dangerouslySetInnerHTML={{__html: diffChecker(result)}}></div>
+      <Center style={{ flexDirection: 'column' }}>
+        <EditorContent editor={editor} style={{ minWidth: '70vw' }} />
+        <ButtonPrimary
+          type="button"
+          addClass="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+          onClick={checkGrammar}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <LoadingDots color="white" style="large" />
+          ) : (
+            'Check My Grammar'
+          )}
+        </ButtonPrimary>
+        {result && <Card className="mt-2" style={{ backgroundColor: 'white' }}>
+          <Center style={{flexDirection:"column"}}><h1 className='text-title mb-3'>Corrected Text </h1>
+          <div dangerouslySetInnerHTML={{ __html: diffChecker(result) }}></div></Center>
 
+        </Card>}
+        <div>
+      <Confetti active={ showConfetti } config={ config }/>
+    </div>
+      </Center>
     </div>
   );
 };

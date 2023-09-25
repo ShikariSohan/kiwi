@@ -4,11 +4,13 @@ import Layout from '../components/Layout/Layout';
 
 export default function Home() {
   return (
-    <>
+    <div>
       <Layout>
-        <Hero />
-        <Feature />
+        <div style={{ backgroundColor: '#ffffff' }}>
+          <Hero />
+          <Feature />
+        </div>
       </Layout>
-    </>
+    </div>
   );
 }
