@@ -1,5 +1,7 @@
 package org.aviato.javafest.controller;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvEntry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.imaging.ImageReadException;
 import org.aviato.javafest.model.ImageBody;
@@ -11,20 +13,23 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.Properties;
 
 @RestController
 @RequestMapping("/api")
 @Slf4j
 public class HandWrittenController {
     private static final String API_URL = "https://api-inference.huggingface.co/models/microsoft/trocr-base-handwritten";
-    @Value("${api.apikey}")
-    private static String API_TOKEN;
+
 
     @PostMapping
     public ResponseEntity<String> getHandWritten(@RequestBody ImageBody imageBody) throws IOException, ImageReadException {
         String base64Image = imageBody.getImage();
-        log.info("Image received: {}", API_TOKEN);
 
+        Dotenv dotenv = Dotenv.configure().load();
+        String API_TOKEN = dotenv.get("APIKEY");
+        log.info("API_TOKEN: {}", API_TOKEN);
         if (base64Image == null) {
             return ResponseEntity.badRequest().body("Please send a valid image");
         }
@@ -37,7 +42,7 @@ public class HandWrittenController {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<byte[]> requestEntity = new HttpEntity<>(image, headers);
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(API_URL);
-        for (int attempt = 1; attempt <= 1; attempt++) { // You can adjust the number of attempts
+        for (int attempt = 1; attempt <= 5; attempt++) { // You can adjust the number of attempts
             try {
                 ResponseEntity<String> responseEntity = restTemplate.exchange(
                         builder.toUriString(),
@@ -53,7 +58,7 @@ public class HandWrittenController {
                     return ResponseEntity.ok(response);
                 }
             } catch (HttpServerErrorException e) {
-                // Check if the error message indicates that the model is still loading
+                log.error("Error from the API: {}", e.getResponseBodyAsString());
                 if (e.getRawStatusCode() == 503) {
                     // Wait for a while before the next retry
                     try {

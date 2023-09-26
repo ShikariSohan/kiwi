@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import p5Types from "p5"; //Import this for typechecking and intellisense
-import { Target } from "lucide-react";
-import { set } from "lodash";
-import { steps } from "framer-motion";
+import picturepuzle from "./picturepuzlle.module.css";
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
     ssr: false,
 });
@@ -53,22 +51,19 @@ const PicturePuzzle = (props: any) => {
   }
   const setup = (p5:p5Types, canvasParentRef:Element) => {
     cnv =  p5.createCanvas(ww,hh).parent(canvasParentRef);
+    cnv.position(p5.height/2,p5.width/2);
+
     reShuffleButton = p5.createButton("Re-Shuffle");
     reShuffleButton.parent(canvasParentRef);
+    reShuffleButton.addClass(picturepuzle.classyButton);
     reShuffleButton.mousePressed(() => {
       // if(isSolved(p5,board)) return;
       board = shufflePuzzle(board);
     });
-    
+    let div = p5.createDiv();
+    div.parent(canvasParentRef);
+   
 
-    fileInput = p5.createFileInput((file:any) => {
-      if(file.type == "image") {
-        let img = p5.loadImage(file.data);
-        loadedImages.push(img);
-        imgSelect.option(file.name.toUpperCase());
-      }
-    });
-    fileInput.parent(canvasParentRef);
     
 
     const autoSolveButton = p5.createButton("Auto Solve");
@@ -103,6 +98,7 @@ const PicturePuzzle = (props: any) => {
     console.log(board);
     cnv.mousePressed(() => mousePressed(p5));
     imgSelect = p5.createSelect();
+    imgSelect.addClass(picturepuzle.classyDropdown);
     for(let i = 0; i < images.length; i++) {
       imgSelect.option(images[i].toUpperCase());
     }
@@ -273,31 +269,7 @@ const isSolved = (p5:p5Types,board:any) => {
   
   return true;
 }
-const autoSolve = (p5:p5Types,board:any) => {
- let  arr = [...board];
-  let steps = [];
-  let swapped;
-  // make -1 elemnt is 15
-  for(let i = 0; i < arr.length; i++) {
-    if(arr[i] == -1) {
-      arr[i] = 15;
-      break;
-    }
-  }
 
-  do {
-    swapped = false;
-    for (let i = 0; i < arr.length - 1; i++) {
-      if (arr[i] > arr[i + 1]) {
-        const temp = arr[i];
-        arr[i] = arr[i + 1];
-        arr[i + 1] = temp;
-        swapped = true;
-        steps.push([i, i + 1]); 
-    }
-  } }while (swapped);
-return steps;
-}
 
 
 
