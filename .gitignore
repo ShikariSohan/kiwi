@@ -1,2 +1,5 @@
 frontend/.env
 
+Microservices/writingService/src/main/resources/.env
+Microservices/writingService/src/main/resources/.env
+Microservices/botService/src/main/resources/secrets.properties

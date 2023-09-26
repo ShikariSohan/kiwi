@@ -1,6 +1,7 @@
 package org.aviato.javafest.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aviato.javafest.config.ConfigProperties;
 import org.aviato.javafest.model.ChatRequest;
 import org.aviato.javafest.model.ChatResponse;
 import org.aviato.javafest.model.Message;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -21,14 +23,16 @@ public class BotController {
     @Autowired
     private RestTemplate template;
     private final PdfService pdfService;
-    public BotController(PdfService pdfService) {
+    private final ConfigProperties configProperties;
+    public BotController(PdfService pdfService, ConfigProperties configProperties) {
         this.pdfService = pdfService;
+        this.configProperties = configProperties;
     }
     @PostMapping("/complete")
     public ResponseEntity<String> completeMessageFromOpenAI(@RequestBody ChatRequest chatRequest){
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String model= "gpt-3.5-turbo";
-//        ChatRequest chatRequest = new ChatRequest(model, prompt);
+       log.info("configProperties: {}", configProperties);
         ChatResponse chatGptResponse = template.postForObject(apiUrl, chatRequest, ChatResponse.class);
         if(chatGptResponse == null){
             return ResponseEntity.notFound().build();

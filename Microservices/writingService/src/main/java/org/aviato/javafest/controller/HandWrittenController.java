@@ -1,46 +1,40 @@
 package org.aviato.javafest.controller;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvEntry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
 import org.aviato.javafest.model.ImageBody;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.Properties;
 
 @RestController
 @RequestMapping("/api")
 @Slf4j
 public class HandWrittenController {
     private static final String API_URL = "https://api-inference.huggingface.co/models/microsoft/trocr-base-handwritten";
-    private static final String API_TOKEN = "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"; // Replace with your API token
+
 
     @PostMapping
     public ResponseEntity<String> getHandWritten(@RequestBody ImageBody imageBody) throws IOException, ImageReadException {
         String base64Image = imageBody.getImage();
 
-
+        Dotenv dotenv = Dotenv.configure().load();
+        String API_TOKEN = dotenv.get("APIKEY");
+        log.info("API_TOKEN: {}", API_TOKEN);
         if (base64Image == null) {
             return ResponseEntity.badRequest().body("Please send a valid image");
         }
         base64Image = base64Image.replaceAll("data:image/png;base64,", "");
         byte[] image = java.util.Base64.getDecoder().decode(base64Image);
-
-        ByteArrayInputStream bis = new ByteArrayInputStream(image);
-
-        BufferedImage bufferedImage = Imaging.getBufferedImage(bis);
-
-        ImageIO.write(bufferedImage, "png", new File("image.png"));
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + API_TOKEN);
@@ -64,7 +58,7 @@ public class HandWrittenController {
                     return ResponseEntity.ok(response);
                 }
             } catch (HttpServerErrorException e) {
-                // Check if the error message indicates that the model is still loading
+                log.error("Error from the API: {}", e.getResponseBodyAsString());
                 if (e.getRawStatusCode() == 503) {
                     // Wait for a while before the next retry
                     try {

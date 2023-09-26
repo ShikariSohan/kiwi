@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Grammar Guru</title>
+        <title>Grammar Guru | Kiwi</title>
         <meta
           name="description"
           content="An easy to use app to fix your grammar"

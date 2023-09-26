@@ -1,0 +1,27 @@
+/* CSS Styles */
+.classyButton {
+    background-color: #3498db; /* Blue background color */
+    color: #ffffff; /* White text color */
+    font-size: 18px; /* Adjust the font size */
+    border: none; /* Remove button border */
+    border-radius: 5px; /* Add some rounded corners */
+    cursor: pointer; /* Add a pointer cursor on hover */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for background and text color */
+  }
+  
+  /* Hover effect */
+  .classyButton:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+  }
+  /* Define styles for the dropdown */
+.classyDropdown {
+  /* Add your desired styles here */
+  width: 150px; /* Adjust the width */
+  padding: 5px;
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 5px;
+  background-color: #fff; /* Background color */
+  color: #333; /* Text color */
+  font-size: 16px;
+  cursor: pointer; /* Add a pointer cursor on hover */
+}

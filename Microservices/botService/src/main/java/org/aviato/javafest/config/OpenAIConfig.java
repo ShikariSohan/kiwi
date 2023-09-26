@@ -6,10 +6,17 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class OpenAIConfig {
+    private final ConfigProperties configProperties;
+
+    public OpenAIConfig(ConfigProperties configProperties) {
+        this.configProperties = configProperties;
+    }
+
     @Bean
     public RestTemplate template(){
         RestTemplate restTemplate=new RestTemplate();
-        String openaiApiKey = "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";
+
+        String openaiApiKey = configProperties.openAIApiKey();
         restTemplate.getInterceptors().add((request, body, execution) -> {
             request.getHeaders().add("Authorization", "Bearer " + openaiApiKey);
             request.getHeaders().add("Content-Type", "application/json");

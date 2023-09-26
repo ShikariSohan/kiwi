@@ -11,7 +11,39 @@ import { generate } from 'random-words';
 import Sidebar from '@/components/Layout/Sidebar';
 import { notifications } from '@mantine/notifications';
 import LoadingDots from '@/components/LoadingDots';
+import Head from 'next/head';
+import Confetti from 'react-dom-confetti';
+import { Alert } from '@mantine/core';
+import { set } from 'lodash';
+
 export default function AppShellDemo(props: any) {
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [AlertText, setAlertText] = useState('Something went wrong!');
+  const [alert, setAlert] = useState(false);
+
+
+  const handleClick = () => {
+    setShowConfetti(true);
+    // hide after 3 seconds
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 3000);
+  };
+
+  const config = {
+    angle: "155",
+    spread: 360,
+    startVelocity: "30",
+    elementCount: "121",
+    dragFriction: "0.07",
+    duration: "7360",
+    stagger: "3",
+    width: "29px",
+    height: "10px",
+    perspective: "500px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+  };
+  const [show, setShow] = useState(false);
   const canvasRef = useRef(null);
   const [image, takeScreenshot] = useScreenshot();
   const [genarated_text, setGenarated_text] = useState<string>('');
@@ -34,13 +66,7 @@ export default function AppShellDemo(props: any) {
 
   const onClick = async () => {
     setLoading(true);
-    // const id = notifications.show({
-    //   loading: true,
-    //   title: 'Loading your data',
-    //   message: 'Data will be loaded in 3 seconds, you cannot close this yet',
-    //   autoClose: false,
-    //   withCloseButton: false,
-    // });
+    setAlert(false);
     if (canvasRef.current) {
       //instead of download put your logic
       const func = async (
@@ -60,31 +86,30 @@ export default function AppShellDemo(props: any) {
             }) === mainWord[0];
 
           setLoading(false);
-          alert(
-            pred
-              ? 'You are correct!'
-              : 'Please write again, because the prediction says your text is: ' +
-                  removeNonAlphabeticCharacters({
-                    inputString: res.data[0].generated_text,
-                  })
-          );
+          if(pred) {
+            handleClick();
+          }
+          else {
+            setAlertText(`Your writing doesn't match the word! : ${removeNonAlphabeticCharacters({
+              inputString: res.data[0].generated_text,
+            })} != ${mainWord[0]}`);
+            setAlert(true);
+          }
         } catch (err) {
           console.log(err);
+          setLoading(false);
+          setAlertText('Something went wrong! Please try again');
+          setAlert(true);
         }
       };
       takeScreenshot(canvasRef.current).then((image: string) => func(image));
     }
-    // notifications.update({
-    //   id,
-    //   color: 'teal',
-    //   title: 'Data was loaded',
-    //   message: 'pred',
-    //   icon: <IconCheck />,
-    //   loading: false,
-    //   autoClose: 2000,
-    // });
   };
   return (
+    <>
+    <Head>
+      <title>Draw N Learn | Kiwi</title>
+    </Head>
     <Layout>
       <div
         className="flex-container h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"
@@ -119,13 +144,27 @@ export default function AppShellDemo(props: any) {
           {loading ? (
             <LoadingDots color="white" style="large" />
           ) : (
-            'Check My Grammar'
+            'Check My Writing'
           )}
         </ButtonPrimary>
           </div>
+          <Confetti active={ showConfetti } config={ config }/>
         </Center>
       </div>
+      {alert && (
+              <Alert  title="Bummer!" color="red" withCloseButton sx={{
+                marginLeft: '10%',
+                top: '15%',
+                position: 'fixed',
+                width: '30%',
+                right: '5%',
+            }}
+            onClose={() => setAlert(false)}
+            >
+        {AlertText}
+      </Alert>)}
     </Layout>
+    </>
   );
 }
 

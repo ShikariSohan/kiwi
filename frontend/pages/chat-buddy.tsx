@@ -22,38 +22,45 @@ export default function Home() {
 
     setMessages(updatedMessages);
     setLoading(true);
-
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        messages: updatedMessages,
-      }),
-    });
-
-    if (!response) {
+    try{
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: updatedMessages,
+        }),
+      });
+  
+      if (!response) {
+        setLoading(false);
+        throw new Error(response);
+      }
+  
+      const content = await response.json();
+  
+      if (!content) {
+        setLoading(false);
+        throw new Error(content);
+      }
+  
       setLoading(false);
-      throw new Error(response);
+  
+      setMessages((messages) => [
+        ...messages,
+        {
+          role: 'assistant',
+          content,
+        },
+      ]);
+
     }
-
-    const content = await response.json();
-
-    if (!content) {
+    catch(err) {
       setLoading(false);
-      throw new Error(content);
+      console.log(err);
     }
-
-    setLoading(false);
-
-    setMessages((messages) => [
-      ...messages,
-      {
-        role: 'assistant',
-        content,
-      },
-    ]);
+  
   };
 
   const handleReset = () => {
@@ -79,6 +86,10 @@ export default function Home() {
   }, []);
 
   return (
+    <>
+   <Head>
+      <title>Chat Buddy | Kiwi</title>
+    </Head>
     <Layout>
       <Center
         className="max-w-[800px] mx-auto"
@@ -100,5 +111,6 @@ export default function Home() {
         </div>
       </Center>
     </Layout>
+    </>
   );
 }
