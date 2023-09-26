@@ -1,6 +1,4 @@
 import Head from 'next/head';
-
-import Header from '@/components/Header';
 import ContentEditor from '@/components/ContentEditor';
 import Layout from '@/components/Layout/Layout';
 import { Center } from '@mantine/core';
@@ -9,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Grammar Guru</title>
+        <title>Grammar Guru | Kiwi</title>
         <meta
           name="description"
           content="An easy to use app to fix your grammar"

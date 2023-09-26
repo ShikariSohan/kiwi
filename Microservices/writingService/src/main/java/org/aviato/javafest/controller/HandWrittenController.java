@@ -2,20 +2,14 @@ package org.aviato.javafest.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.Imaging;
 import org.aviato.javafest.model.ImageBody;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 
 @RestController
@@ -23,12 +17,13 @@ import java.io.IOException;
 @Slf4j
 public class HandWrittenController {
     private static final String API_URL = "https://api-inference.huggingface.co/models/microsoft/trocr-base-handwritten";
-    private static final String API_TOKEN = "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"; // Replace with your API token
+    @Value("${api.apikey}")
+    private static String API_TOKEN;
 
     @PostMapping
     public ResponseEntity<String> getHandWritten(@RequestBody ImageBody imageBody) throws IOException, ImageReadException {
         String base64Image = imageBody.getImage();
-
+        log.info("Image received: {}", API_TOKEN);
 
         if (base64Image == null) {
             return ResponseEntity.badRequest().body("Please send a valid image");
@@ -36,19 +31,13 @@ public class HandWrittenController {
         base64Image = base64Image.replaceAll("data:image/png;base64,", "");
         byte[] image = java.util.Base64.getDecoder().decode(base64Image);
 
-        ByteArrayInputStream bis = new ByteArrayInputStream(image);
-
-        BufferedImage bufferedImage = Imaging.getBufferedImage(bis);
-
-        ImageIO.write(bufferedImage, "png", new File("image.png"));
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + API_TOKEN);
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<byte[]> requestEntity = new HttpEntity<>(image, headers);
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(API_URL);
-        for (int attempt = 1; attempt <= 5; attempt++) { // You can adjust the number of attempts
+        for (int attempt = 1; attempt <= 1; attempt++) { // You can adjust the number of attempts
             try {
                 ResponseEntity<String> responseEntity = restTemplate.exchange(
                         builder.toUriString(),

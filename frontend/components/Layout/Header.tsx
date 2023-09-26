@@ -8,7 +8,6 @@ const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [scrollActive, setScrollActive] = useState(false);
-  console.log({ pathname });
   useEffect(() => {
     window.addEventListener('scroll', () => {
       setScrollActive(window.scrollY > 20);

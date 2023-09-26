@@ -10,13 +10,15 @@ import { DiffMatchPatch } from 'diff-match-patch-ts';
 import ButtonPrimary from '../misc/ButtonPrimary';
 import { Center } from '@mantine/core';
 import { Card } from 'flowbite-react';
-import ShowConfetti from '../confetti';
+import { Alert } from '@mantine/core';
 
 const defaultContent = `<p>Helo Kiwis! Run dis to know how it work! Write somethin!</p>`;
 
 const ContentEditor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setresult] = useState('');
+  const [AlertText, setAlertText] = useState('Something went wrong!');
+  const [alert, setAlert] = useState(false);
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -51,20 +53,22 @@ const ContentEditor = () => {
     perspective: "500px",
     colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
   };
-
+  const [show, setShow] = useState(false);
   const checkGrammar = async () => {
     const cleanText = editor?.getText();
-    handleClick()
-
+    setAlert(false);
+    setShow(false);
     if (!cleanText) {
       console.log('content is missing: ', cleanText);
-      alert('Content is missing!');
+      setAlert(true);
+      setAlertText('Content is missing!');
       return;
     }
 
     // max word limit
     if (cleanText.split(' ')?.length > 800) {
-      alert('You may only use 800 words at once!');
+      setAlert(true);
+      setAlertText('Max word limit is 800!');
       return;
     }
 
@@ -80,14 +84,22 @@ const ContentEditor = () => {
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        alert(errorResponse?.error);
+        setAlert(true);
+        setAlertText("Failed to process your request!");
       } else {
         const data = await response.json();
         setresult(data.result.corrections);
-        console.log({ data });
+        if(matchString(data.result.corrections, cleanText)) {
+          handleClick();
+        }
+        else {
+          setShow(true);
+        }
       }
     } catch (err: any) {
-      alert('Failed to process your request');
+      console.log(err);
+      setAlert(true);
+      setAlertText("Failed to process your request!");
     } finally {
       setIsLoading(false);
     }
@@ -127,17 +139,39 @@ const ContentEditor = () => {
             'Check My Grammar'
           )}
         </ButtonPrimary>
-        {result && <Card className="mt-2" style={{ backgroundColor: 'white' }}>
+        {show && <Card className="mt-2" style={{ backgroundColor: 'white' }}>
           <Center style={{flexDirection:"column"}}><h1 className='text-title mb-3'>Corrected Text </h1>
           <div dangerouslySetInnerHTML={{ __html: diffChecker(result) }}></div></Center>
-
         </Card>}
         <div>
       <Confetti active={ showConfetti } config={ config }/>
     </div>
       </Center>
+      {alert && (
+              <Alert  title="Bummer!" color="red" withCloseButton sx={{
+                marginLeft: '10%',
+                top: '15%',
+                position: 'fixed',
+                width: '30%',
+                right: '5%',
+            }}
+            onClose={() => setAlert(false)}
+            >
+        {AlertText}
+      </Alert>)
+        }
+
     </div>
   );
 };
+
+function matchString(x: string, y: string) {
+  // remove all spaces and newlines from both strings beginning and end
+  x = x.trim().replace(/\s/g, '');
+  y = y.trim().replace(/\s/g, '');
+  console.log(x, y);
+  return x === y;
+}
+
 
 export default ContentEditor;
