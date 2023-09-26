@@ -1,6 +1,4 @@
 import Head from 'next/head';
-
-import Header from '@/components/Header';
 import ContentEditor from '@/components/ContentEditor';
 import Layout from '@/components/Layout/Layout';
 import { Center } from '@mantine/core';
@@ -18,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Center style={{ height: '90vh' }}>
+        <Center style={{ height: '89vh' }}>
           <ContentEditor />
         </Center>
       </Layout>

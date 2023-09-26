@@ -295,4 +295,22 @@
   font-size: 22px;
 }
 
-/* Add more styles as needed */
+.logo-icon {
+  animation: bounce 0.5s ease infinite; /* Add bounce animation on hover */
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px); /* Adjust the bounce height as needed */
+  }
+  60% {
+    transform: translateY(-5px); /* Adjust the bounce height as needed */
+  }
+}

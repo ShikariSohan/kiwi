@@ -1,21 +1,22 @@
 import Head from 'next/head';
-
-import Header from '@/components/Header';
 import StoryEditor from '@/components/StoryEditor';
+import Layout from '@/components/Layout/Layout';
+import { Center } from '@mantine/core';
 
 export default function Home() {
   return (
-    <div className="mx-auto my-8 flex min-h-screen max-w-5xl flex-col px-4 sm:my-16">
+    <div>
       <Head>
         <title>Storybook</title>
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      <main>
-        <StoryEditor />
-      </main>
+      <Layout>
+        <Center style={{ height: '89vh' }}>
+          <StoryEditor />
+        </Center>
+      </Layout>
     </div>
   );
 }

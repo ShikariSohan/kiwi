@@ -39,22 +39,22 @@ const ContentEditor = () => {
   };
 
   const config = {
-    angle: "155",
+    angle: '155',
     spread: 360,
-    startVelocity: "30",
-    elementCount: "121",
-    dragFriction: "0.07",
-    duration: "7360",
-    stagger: "3",
-    width: "29px",
-    height: "10px",
-    perspective: "500px",
-    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+    startVelocity: '30',
+    elementCount: '121',
+    dragFriction: '0.07',
+    duration: '7360',
+    stagger: '3',
+    width: '29px',
+    height: '10px',
+    perspective: '500px',
+    colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
   };
 
   const checkGrammar = async () => {
     const cleanText = editor?.getText();
-    handleClick()
+    handleClick();
 
     if (!cleanText) {
       console.log('content is missing: ', cleanText);
@@ -111,13 +111,15 @@ const ContentEditor = () => {
   };
 
   return (
-    <div className="my-8">
-
+    <div
+      className="custom-scrollbar my-8 overflow-auto pt-20"
+      style={{ maxHeight: '90%' }}
+    >
       <Center style={{ flexDirection: 'column' }}>
         <EditorContent editor={editor} style={{ minWidth: '70vw' }} />
         <ButtonPrimary
           type="button"
-          addClass="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+          addClass="mt-8 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
           onClick={checkGrammar}
           disabled={isLoading}
         >
@@ -127,14 +129,19 @@ const ContentEditor = () => {
             'Check My Grammar'
           )}
         </ButtonPrimary>
-        {result && <Card className="mt-2" style={{ backgroundColor: 'white' }}>
-          <Center style={{flexDirection:"column"}}><h1 className='text-title mb-3'>Corrected Text </h1>
-          <div dangerouslySetInnerHTML={{ __html: diffChecker(result) }}></div></Center>
-
-        </Card>}
+        {result && (
+          <Card className="mt-2" style={{ backgroundColor: 'white' }}>
+            <Center style={{ flexDirection: 'column' }}>
+              <h1 className="text-title mb-3">Corrected Text </h1>
+              <div
+                dangerouslySetInnerHTML={{ __html: diffChecker(result) }}
+              ></div>
+            </Center>
+          </Card>
+        )}
         <div>
-      <Confetti active={ showConfetti } config={ config }/>
-    </div>
+          <Confetti active={showConfetti} config={config} />
+        </div>
       </Center>
     </div>
   );
