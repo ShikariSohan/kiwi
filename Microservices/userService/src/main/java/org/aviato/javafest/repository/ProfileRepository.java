@@ -8,4 +8,5 @@ import java.util.List;
 public interface ProfileRepository  extends MongoRepository<Profile,String> {
 
     List<Profile> findAllByUserId(String userId);
+
 }

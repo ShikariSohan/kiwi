@@ -30,4 +30,8 @@ public class ProfileService {
     public void deleteProfileById(String id) {
         profileRepository.deleteById(id);
     }
+
+    public void updateProfileById(Profile profile) {
+        profileRepository.save(profile);
+    }
 }

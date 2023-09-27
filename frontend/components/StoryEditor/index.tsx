@@ -68,14 +68,23 @@ const StoryEditor = () => {
   };
 
   const generatePDF = async () => {
-    const response = await fetch('/api/storybook', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ story: result, title: title }),
-    });
-    console.log({ response });
+    try{
+      const response = await fetch('/api/storybook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ story: result, title: title }),
+      });
+      // redirect to dashboard
+     
+        window.location.href = '/dashboard';
+      
+    }
+    catch(err) {
+      console.log(err);
+      alert('Failed to process your request');
+    }
   };
 
   return (
