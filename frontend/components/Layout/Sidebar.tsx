@@ -19,30 +19,27 @@ export default function Sidebar() {
               strokeWidth="4"
             />
           </svg>
-          <div className="flex h-14 items-center justify-center">
-            <div className="flex-container w-64 justify-between p-4">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <img
-                  src="/assets/logo.png"
-                  className="logo-icon h-12"
-                  style={{
-                    transition: 'transform 0.3s ease-in-out', // Add a transition for smooth animation
-                  }}
-                />
-                <div
-                  style={{
-                    fontFamily: 'Caveat Brush, cursive',
-                    fontSize: '30px',
-                    color: '#000',
-                    zIndex: 10,
-                  }}
-                >
-                  Kiwi
-                </div>
-              </div>
+          <div className="ml-12 flex h-14 pt-5">
+            <img
+              src="/assets/logo.png"
+              className="logo-icon h-12"
+              style={{
+                transition: 'transform 0.3s ease-in-out', // Add a transition for smooth animation
+              }}
+            />
+            <div
+              style={{
+                fontFamily: 'Caveat Brush, cursive',
+                fontSize: '30px',
+                color: '#000',
+                zIndex: 10,
+                paddingLeft: '5px',
+              }}
+            >
+              Kiwi
             </div>
           </div>
-          <div className="flex-grow overflow-y-auto overflow-x-hidden">
+          <div className="flex-grow overflow-y-auto overflow-x-hidden pt-9">
             <ul className="flex flex-col space-y-1 py-4">
               <li className="px-5">
                 <div className="flex h-8 flex-row items-center">
@@ -56,10 +53,10 @@ export default function Sidebar() {
                   href="/draw-n-learn"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center  pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/icon1.gif"
-                      className="h-5 w-5"
+                      src="/dashboard/2.png"
+                      className=" h-7 w-7"
                       aria-hidden="true"
                     />
                   </span>
@@ -67,7 +64,7 @@ export default function Sidebar() {
                     className="text-sidebar ml-2 truncate tracking-wide"
                     style={{ zIndex: 10 }}
                   >
-                    Draw, Learn
+                    Draw & Learn
                   </span>
                 </Link>
               </li>
@@ -76,10 +73,10 @@ export default function Sidebar() {
                   href="/grammar-guru"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/icon2.gif"
-                      className="h-5 w-5"
+                      src="/dashboard/1.png"
+                      className=" h-7 w-7"
                       aria-hidden="true"
                     />
                   </span>
@@ -92,7 +89,7 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="px-5">
+              <li className="px-5 pt-5">
                 <div className="flex h-8 flex-row items-center">
                   <div className="text-sidebar-header font-light tracking-wide">
                     Creative Corner
@@ -104,10 +101,10 @@ export default function Sidebar() {
                   href="/story-magic"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/icon3.gif"
-                      className="h-5 w-5"
+                      src="/dashboard/3.png"
+                      className=" h-7 w-7"
                       aria-hidden="true"
                     />
                   </span>
@@ -124,10 +121,10 @@ export default function Sidebar() {
                   href="/talky-pal"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/icon4.gif"
-                      className="h-5 w-5"
+                      src="/dashboard/4.png"
+                      className=" h-7 w-7"
                       aria-hidden="true"
                     />
                   </span>
@@ -140,7 +137,7 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="px-5">
+              <li className="px-5 pt-5">
                 <div className="flex h-8 flex-row items-center">
                   <div className="text-sidebar-header font-light tracking-wide">
                     Play & Explore
@@ -152,10 +149,10 @@ export default function Sidebar() {
                   href="/animation"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/icon1.gif"
-                      className="h-5 w-5"
+                      src="/dashboard/5.png"
+                      className=" h-7 w-7"
                       aria-hidden="true"
                     />
                   </span>
@@ -172,10 +169,10 @@ export default function Sidebar() {
                   href="/chat-buddy"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/icon2.gif"
-                      className="h-5 w-5"
+                      src="/dashboard/6.png"
+                      className=" h-7 w-7"
                       aria-hidden="true"
                     />
                   </span>
@@ -188,7 +185,7 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="px-5">
+              <li className="px-5 pt-5">
                 <div className="flex h-8 flex-row items-center">
                   <div className="text-sidebar-header font-light tracking-wide">
                     Personalization
@@ -200,10 +197,10 @@ export default function Sidebar() {
                   href="/profile"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/icon1.gif"
-                      className="h-5 w-5"
+                      src="/dashboard/7.png"
+                      className=" h-7 w-7"
                       aria-hidden="true"
                     />
                   </span>
@@ -221,22 +218,12 @@ export default function Sidebar() {
                   href="#"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
-                  <span className="ml-4 inline-flex items-center justify-center">
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      style={{ zIndex: -5 }}
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                      ></path>
-                    </svg>
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
+                    <img
+                      src="/dashboard/8.png"
+                      className=" h-7 w-7"
+                      aria-hidden="true"
+                    />
                   </span>
                   <span
                     className="text-sidebar ml-2 truncate tracking-wide"

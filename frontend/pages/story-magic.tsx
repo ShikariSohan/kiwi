@@ -10,19 +10,20 @@ export default function Home() {
         <title>Story Magic | Kiwi</title>
       </Head>
       <Layout>
-        <Center
-          style={{
-            height: '89vh',
-            backgroundImage: 'url("/assets/story.gif")', // Your background image URL
-            backgroundSize: 'auto 10%', // Auto width, full height
-            backgroundRepeat: 'repeat-x',
-            backgroundPosition: 'left top',
-            gap: '10px',
-            margin: '90px',
-          }}
-        >
-          <StoryEditor />
-        </Center>
+        <div style={{ height: '100%', width: '100%', paddingTop: '200px' }}>
+          <Center
+            style={{
+              height: '70vh',
+              backgroundImage: 'url("/assets/story.gif")', // Your background image URL
+              backgroundSize: 'auto 12%', // Auto width, full height
+              backgroundRepeat: 'repeat-x ',
+              backgroundPosition: 'center top',
+              // margin: '90px',
+            }}
+          >
+            <StoryEditor />
+          </Center>
+        </div>
       </Layout>
     </div>
   );

@@ -68,7 +68,7 @@ const StoryEditor = () => {
   };
 
   const generatePDF = async () => {
-    try{
+    try {
       const response = await fetch('/api/storybook', {
         method: 'POST',
         headers: {
@@ -77,11 +77,9 @@ const StoryEditor = () => {
         body: JSON.stringify({ story: result, title: title }),
       });
       // redirect to dashboard
-     
-        window.location.href = '/dashboard';
-      
-    }
-    catch(err) {
+
+      window.location.href = '/dashboard';
+    } catch (err) {
       console.log(err);
       alert('Failed to process your request');
     }
@@ -90,10 +88,13 @@ const StoryEditor = () => {
   return (
     <div
       className="custom-scrollbar my-8 overflow-auto pt-20"
-      style={{ maxHeight: '90%', minWidth: '100%' }}
+      style={{ maxHeight: '70%', minWidth: '100%' }}
     >
       <Center style={{ flexDirection: 'column' }}>
-        <EditorContent editor={editor} style={{ minWidth: '50%' }} />
+        <EditorContent
+          editor={editor}
+          style={{ minWidth: '50%', backgroundColor: '#FFF' }}
+        />
         <ButtonPrimary
           type="button"
           addClass="mt-8 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"

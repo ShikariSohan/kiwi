@@ -22,7 +22,7 @@ export default function Home() {
 
     setMessages(updatedMessages);
     setLoading(true);
-    try{
+    try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -32,21 +32,21 @@ export default function Home() {
           messages: updatedMessages,
         }),
       });
-  
+
       if (!response) {
         setLoading(false);
         throw new Error(response);
       }
-  
+
       const content = await response.json();
-  
+
       if (!content) {
         setLoading(false);
         throw new Error(content);
       }
-  
+
       setLoading(false);
-  
+
       setMessages((messages) => [
         ...messages,
         {
@@ -54,13 +54,10 @@ export default function Home() {
           content,
         },
       ]);
-
-    }
-    catch(err) {
+    } catch (err) {
       setLoading(false);
       console.log(err);
     }
-  
   };
 
   const handleReset = () => {
@@ -87,30 +84,41 @@ export default function Home() {
 
   return (
     <>
-   <Head>
-      <title>Chat Buddy | Kiwi</title>
-    </Head>
-    <Layout>
-      <Center
-        className="max-w-[800px] mx-auto"
-        style={{
-          height: '89vh',
-        }}
-      >
+      <Head>
+        <title>Chat Buddy | Kiwi</title>
+      </Head>
+      <Layout>
         <div
-          className="overflow-y-auto max-h-[80vh] mt-15 custom-scrollbar" // Add these CSS classes for scrolling
-          style={{ width: '100%' }}
+          style={{
+            height: '100%',
+            width: '100%',
+            backgroundImage: 'url("/assets/owl.gif")', // Your background image URL
+            backgroundSize: 'auto 50%', // Auto width, full height
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'left 100px bottom',
+          }}
         >
-          <Chat
-            messages={messages}
-            loading={loading}
-            onSend={handleSend}
-            onReset={handleReset}
-          />
-          <div ref={messagesEndRef} />
+          <Center
+            className="mx-auto max-w-[800px]"
+            style={{
+              height: '89vh',
+            }}
+          >
+            <div
+              className="mt-15 custom-scrollbar max-h-[80vh] overflow-y-auto" // Add these CSS classes for scrolling
+              style={{ width: '100%' }}
+            >
+              <Chat
+                messages={messages}
+                loading={loading}
+                onSend={handleSend}
+                onReset={handleReset}
+              />
+              <div ref={messagesEndRef} />
+            </div>
+          </Center>
         </div>
-      </Center>
-    </Layout>
+      </Layout>
     </>
   );
 }
