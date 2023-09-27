@@ -6,10 +6,10 @@ import StarterKit from '@tiptap/starter-kit';
 
 import LoadingDots from '../LoadingDots';
 import { title } from 'process';
+import ButtonPrimary from '../misc/ButtonPrimary';
+import { Center } from '@mantine/core';
 
-const defaultContent = `<p>Biology is a really unique scient to study. There are alott of different aspects to it, such as ecology, genetics, and physiology. One of the most interesitng things to learn about in biology is animals and the way they behave. For example, did you know that some birds give hugs to their babies to keep them warm? That's so cute!</p>
-
-<p>Another important aspect of biology is understanding the structure and function of different living things. Cells are the basic building blocks of all living organisms, and they are responsible for carrying out all of the processes necessary for life. Studying the biology of cells is important for understanding everything from how the body works to how diseases develop.</p>`;
+const defaultContent = `<p>A boy and a happy lion</p>`;
 
 const StoryEditor = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -79,36 +79,43 @@ const StoryEditor = () => {
   };
 
   return (
-    <div className="my-8">
-      <EditorContent editor={editor} />
-      <button
-        type="button"
-        className="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
-        onClick={generateStory}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <LoadingDots color="white" style="large" />
-        ) : (
-          'Generate Story'
-        )}
-      </button>
-      <h1>{title}</h1>
-      <div>{result}</div>
-      {result && (
-        <button
+    <div
+      className="custom-scrollbar my-8 overflow-auto pt-20"
+      style={{ maxHeight: '90%' }}
+    >
+      <Center style={{ flexDirection: 'column' }}>
+        <EditorContent editor={editor} style={{ minWidth: '70%' }} />
+        <ButtonPrimary
           type="button"
-          className="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
-          onClick={generatePDF}
+          addClass="mt-8 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+          onClick={generateStory}
           disabled={isLoading}
         >
           {isLoading ? (
             <LoadingDots color="white" style="large" />
           ) : (
-            'Generate PDF'
+            'Generate Story'
           )}
-        </button>
-      )}
+        </ButtonPrimary>
+        <div className="text-title my-5">{title}</div>
+        <div className="text-title my-5 px-10" style={{ width: '70%' }}>
+          {result}
+        </div>
+        {result && (
+          <ButtonPrimary
+            type="button"
+            addClass="mt-8 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+            onClick={generatePDF}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <LoadingDots color="white" style="large" />
+            ) : (
+              'Generate PDF'
+            )}
+          </ButtonPrimary>
+        )}
+      </Center>
     </div>
   );
 };
