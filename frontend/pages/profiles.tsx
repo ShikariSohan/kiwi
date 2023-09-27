@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProfileModal from '@/components/profile/profile-modal';
 import Layout from '@/components/Layout/Layout';
+import Head from 'next/head';
 export default function Profile() {
   const [profiles, setProfiles] = useState<{ name: string }[]>([]);
   useEffect(() => {
@@ -32,6 +33,10 @@ export default function Profile() {
   }, []);
   const [opened, setOpened] = useState(false);
   return (
+    <>
+    <Head>
+      <title>Profiles | Kiwi</title>
+    </Head>
     <Layout>
       <div
         style={{
@@ -46,13 +51,21 @@ export default function Profile() {
         }}
       >
         <Grid style={{ minWidth: '100%' }}>
-          <Grid.Col span={2}>
+          <Grid.Col span={2}
+          style={{
+            cursor: 'pointer',
+          }}
+          >
             <AddCard setOpened={setOpened} />
           </Grid.Col>
           {profiles &&
             profiles.map((profile, key) => (
-              <Grid.Col span={2} key={key}>
-                <SingleCard name={profile.name} />
+              <Grid.Col span={2} key={key} 
+              style={{
+                cursor: 'pointer',
+              }}
+              >
+                <SingleCard name={profile.name} profile={profile} />
               </Grid.Col>
             ))}
 
@@ -63,5 +76,6 @@ export default function Profile() {
         {opened && <ProfileModal opened={opened} setOpened={setOpened} />}
       </div>
     </Layout>
+    </>
   );
 }

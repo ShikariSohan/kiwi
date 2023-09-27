@@ -14,7 +14,6 @@ import LoadingDots from '@/components/LoadingDots';
 import Head from 'next/head';
 import Confetti from 'react-dom-confetti';
 import { Alert } from '@mantine/core';
-import { set } from 'lodash';
 
 export default function AppShellDemo(props: any) {
   const [showConfetti, setShowConfetti] = useState(false);

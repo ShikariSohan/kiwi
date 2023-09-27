@@ -7,6 +7,7 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   const method = req.method;
+  console.log({ method })
   switch (method) {
     case 'GET':
       const resData = await axios.get(
@@ -43,6 +44,28 @@ export default async function handler(
         res.status(500).end();
       }
 
+      break;
+    case 'PUT':
+      const putBody = {
+        name : req.body.name,
+        age : req.body.age,
+        gender : req.body.gender,
+        id:req.body.id
+      }
+      const putUrl = process.env.USER_SERVICE_BASEURL + '/api/profile/update';
+      try {
+        const axiosRes = await axios.put(putUrl, putBody, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: req.headers.authorization,
+          },
+        });
+        const profiles = axiosRes.data;
+        res.status(200).json(profiles);
+      } catch (err) {
+        console.log(err);
+        res.status(500).end();
+      }
       break;
 
     default:

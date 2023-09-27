@@ -71,12 +71,13 @@ public class ProfileController {
         profileService.deleteProfileById(id);
         return ResponseEntity.ok().build();
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Profile> updateProfleById(@PathVariable String id, @RequestBody Profile profile, @RequestHeader("Authorization") String token){
+    @PutMapping("/update")
+    public ResponseEntity<Profile> updateProfileById(@RequestBody Profile profile, @RequestHeader("Authorization") String token){
         String userId = jwtUtils.validateToken(token);
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        String id = profile.getId();
         Profile profile1 = profileService.getProfileById(id);
         if(profile1 == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

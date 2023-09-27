@@ -1,14 +1,6 @@
 import {
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Anchor,
   Paper,
   Title,
-  Text,
-  Container,
-  Group,
-  BackgroundImage,
   Center,
   Card,
   Modal,
@@ -75,6 +67,7 @@ export default function ProfileModal({
           setOpened(false);
         }}
         centered
+
       >
         <Center style={{ height: '100%' }}>
           <Card p="xl" color="orange.1">
