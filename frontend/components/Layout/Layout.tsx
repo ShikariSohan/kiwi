@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <div style={{ backgroundImage: 'url("/assets/background.png")' }}>
+      <div style={{ backgroundImage: 'url("/assets/background.jpg")' }}>
         {children}
       </div>
 

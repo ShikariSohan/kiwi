@@ -1,11 +1,7 @@
 import Layout from '@/components/Layout/Layout';
 import { Message } from '@/types';
 import { Center, Loader } from '@mantine/core';
-import {
-  IconLockPause,
-  IconMicrophone,
-  IconPlayerPause,
-} from '@tabler/icons-react';
+import { IconMicrophone, IconPlayerPause } from '@tabler/icons-react';
 import React, { useEffect, useRef, useState } from 'react';
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -23,9 +19,6 @@ const AvatarBot: React.FC = () => {
       ? { type: 'monkey', phase: 3 }
       : { type: 'baby', phase: 4 }
   );
-  // const [botVideos, setBotVideos] = useState(
-  //        { type: 'monkey', phase: 3 }
-  //   );
 
   const { transcript, resetTranscript } = useSpeechRecognition();
 
@@ -198,7 +191,7 @@ const AvatarBot: React.FC = () => {
           <button
             onClick={handleBotListen}
             disabled={botTalking || loading}
-            className={`hover:cursor-pointer rounded-full p-5 text-white hover:opacity-80 m-5 ${
+            className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
               !humanTalking
                 ? botTalking || loading
                   ? 'icon-button-disabled'
@@ -211,7 +204,7 @@ const AvatarBot: React.FC = () => {
           <button
             disabled={!botTalking}
             onClick={() => setBotTalking(false)}
-            className={`hover:cursor-pointer rounded-full p-5 text-white hover:opacity-80 m-5 ${
+            className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
               !botTalking ? 'icon-button-disabled' : 'icon-button'
             } `}
           >

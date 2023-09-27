@@ -156,6 +156,31 @@ export default function Sidebar() {
                 </Link>
               </li>
 
+              <li className="px-5">
+                <div className="flex h-8 flex-row items-center">
+                  <div className="text-sm font-light tracking-wide">
+                    personalization
+                  </div>
+                </div>
+              </li>
+              <li>
+                <Link
+                  href="/profile"
+                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                >
+                  <span className="ml-4 inline-flex items-center justify-center">
+                    <img
+                      src="/dashboard/icon1.gif"
+                      className="h-5 w-5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span className="ml-2 truncate text-sm tracking-wide">
+                    Profile
+                  </span>
+                </Link>
+              </li>
+
               <li>
                 <a
                   href="#"

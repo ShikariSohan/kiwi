@@ -1,20 +1,34 @@
-export default function SingleCard() {
+import { Center } from '@mantine/core';
+import { useRouter } from 'next/router';
+import { ReactChild, ReactFragment, ReactPortal } from 'react';
+
+export default function SingleCard({ name }: { name: string }) {
+  const router = useRouter();
   const onClick = () => {
-    console.log('hi');
+    router.push('/dashboard');
   };
+  const imgno = Math.floor(Math.random() * 15) + 1;
   return (
-    <div className="block max-w-[18rem] rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-      <div className="relative overflow-hidden bg-cover bg-no-repeat">
-        <img
-          className="rounded-t-lg"
-          src="https://tecdn.b-cdn.net/img/new/standard/nature/182.jpg"
-          alt=""
-        />
-      </div>
-      <div className="p-6">
-        <p className="text-base text-neutral-600 dark:text-neutral-200">
-          User Name
-        </p>
+    <div
+      className="bg-white dark:bg-neutral-700 block rounded-lg"
+      onClick={onClick}
+    >
+      <div
+        className="relative overflow-hidden bg-cover bg-no-repeat"
+        data-te-ripple-init
+        data-te-ripple-color="light"
+      >
+        <Center style={{ flexDirection: 'column' }}>
+          <img
+            className="rounded-t-lg p-4"
+            style={{ width: '120px', height: '120px' }}
+            src={`/avatars/${imgno}.png`}
+            alt=""
+          />
+          <h5 className="text-neutral-800 dark:text-neutral-50 mb-2 text-xl font-medium leading-tight">
+            {name}
+          </h5>
+        </Center>
       </div>
     </div>
   );
