@@ -1,17 +1,9 @@
 import Layout from '@/components/Layout/Layout';
 import { Message } from '@/types';
 import { Center, Loader } from '@mantine/core';
-<<<<<<< HEAD
 import { IconMicrophone, IconPlayerPause } from '@tabler/icons-react';
-=======
-import {
-  IconLockPause,
-  IconMicrophone,
-  IconPlayerPause,
-} from '@tabler/icons-react';
-import Head from 'next/head';
->>>>>>> 4a056fec5893b6df4e033338f61eee351f59dcfd
 import React, { useEffect, useRef, useState } from 'react';
+import Head from 'next/head';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';

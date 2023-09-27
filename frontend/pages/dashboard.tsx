@@ -1,9 +1,11 @@
 import Sidebar from '@/components/Layout/Sidebar';
-<<<<<<< HEAD
 import PdfCard from '@/components/PdfCard';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
+import ProfileCard from '@/components/profile/ProfileCard';
+import UpdateProfile from '@/components/profile/update-profile';
 type PdfData = {
   description: string;
   id: string;
@@ -15,12 +17,23 @@ const Dashboard = () => {
   const [value, setValue] = useState('');
   const [debounced] = useDebouncedValue(value, 200, { leading: true });
   const [pdfs, setPdfs] = useState<PdfData[]>([]);
-=======
-import ButtonPrimary from '@/components/misc/ButtonPrimary';
-import Head from 'next/head';
-import Link from 'next/link';
-import { useState } from 'react';
->>>>>>> 4a056fec5893b6df4e033338f61eee351f59dcfd
+  const [profile, setProfile] = useState<any>( {
+    name: 'Loading...',
+    age:"Loading...",
+    gender:"Loading...",
+    id:"Loading...",
+  })
+ 
+  useEffect(()=>{
+    setProfile(JSON.parse(localStorage.getItem('profile')||"")||
+    {
+      name: 'Loading...',
+      age:"Loading...",
+      gender:"Loading...",
+      id:"Loading...",
+    });
+  },[])
+
 
   // Filter PDFs based on description containing the search query
   const filteredPdfs = pdfs.filter(
@@ -28,6 +41,8 @@ import { useState } from 'react';
       pdf.description.toLowerCase().includes(debounced.toLowerCase()) ||
       pdf.title.toLowerCase().includes(debounced.toLowerCase())
   );
+
+  const [modalOpened, setModalOpened] = useState(false);
 
   useEffect(() => {
     const func = async () => {
@@ -58,11 +73,15 @@ import { useState } from 'react';
   }, []);
 
   return (
-<<<<<<< HEAD
+    <>
+    <Head>
+      <title>Dashboard | Kiwi</title>
+      </Head>
     <div className="flex h-screen flex-col">
       <div className="flex">
         <Sidebar />
         <div className="custom-scrollbar bg-white flex-grow overflow-y-auto p-4">
+         <ProfileCard profile={profile} modalOpened={modalOpened} setModalOpened={setModalOpened} />
           {pdfs && (
             <div className="flex justify-end">
               <TextInput
@@ -75,22 +94,17 @@ import { useState } from 'react';
             </div>
           )}
           {filteredPdfs.map((pdf, index) => (
-            <PdfCard pdf={pdf} key={pdf.id} />
+            <PdfCard pdf={pdf} key={pdf.id} self={true} />
           ))}
         </div>
       </div>
-=======
-    <>
-    <Head>
-      <title>Dashboard | Kiwi</title>
-    </Head>
-    <div
-      className="flex-container h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"
-      style={{ backgroundImage: 'url("/assets/background.png")' }}
-    >
-      {/* Sidebar */}
-      <Sidebar />
->>>>>>> 4a056fec5893b6df4e033338f61eee351f59dcfd
+      {modalOpened && (
+        <UpdateProfile
+          profile={profile}
+          opened={modalOpened}
+        setOpened={setModalOpened}
+        />
+      )} 
     </div>
     </>
   );

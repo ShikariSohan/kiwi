@@ -14,7 +14,6 @@ import LoadingDots from '@/components/LoadingDots';
 import Head from 'next/head';
 import Confetti from 'react-dom-confetti';
 import { Alert } from '@mantine/core';
-import { set } from 'lodash';
 
 export default function AppShellDemo(props: any) {
   const [showConfetti, setShowConfetti] = useState(false);
@@ -120,7 +119,6 @@ export default function AppShellDemo(props: any) {
             // backgroundColor: '#fff',
           }}
         >
-<<<<<<< HEAD
           <Center
             style={{
               height: '100vh',
@@ -178,25 +176,6 @@ export default function AppShellDemo(props: any) {
               position: 'fixed',
               width: '30%',
               right: '5%',
-=======
-          {loading ? (
-            <LoadingDots color="white" style="large" />
-          ) : (
-            'Check My Writing'
-          )}
-        </ButtonPrimary>
-          </div>
-          <Confetti active={ showConfetti } config={ config }/>
-        </Center>
-      </div>
-      {alert && (
-              <Alert  title="Bummer!" color="red" withCloseButton sx={{
-                marginLeft: '8%',
-                bottom: '12%',
-                position: 'fixed',
-                width: '20%',
-                right: '5%',
->>>>>>> 4a056fec5893b6df4e033338f61eee351f59dcfd
             }}
             onClose={() => setAlert(false)}
           >

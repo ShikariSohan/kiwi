@@ -2,12 +2,16 @@ import { Center } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { ReactChild, ReactFragment, ReactPortal } from 'react';
 
-export default function SingleCard({ name }: { name: string }) {
+export default function SingleCard({ name,profile }: { name: string,profile:any }) {
   const router = useRouter();
+  const imgno = Math.floor(Math.random() * 15) + 1;
   const onClick = () => {
+    profile.avatar = imgno;
+    localStorage.setItem('profile', JSON.stringify(profile));
+
     router.push('/dashboard');
   };
-  const imgno = Math.floor(Math.random() * 15) + 1;
+ 
   return (
     <div
       className="bg-white dark:bg-neutral-700 block rounded-lg"
