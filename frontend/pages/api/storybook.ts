@@ -16,12 +16,12 @@ export default async function handler(
       story: string;
     };
     console.log({title,story});
-    const splitStory  = splitParagraph(story, 2 ,3);
+    const splitStory  = splitParagraph(story);
    
     const replyUrl = process.env.BOT_SERVICE_BASEURL+'/api/bot/complete';
     let imagePrompt = [];
     for(let i = 0; i < splitStory.length; i++) {
-      const imgPrompt = ` Generate only one prompt from the passage for a text-to-image model that can generate related and appropriate one image from the given prompt.  used for an AI model that hates unsafe content. The prompt should be able to with no names of any character of the story, and should be in a way that the images seem to be in a similar genre . Here is the prompt provided by the user: ${splitStory[i]}`;
+      const imgPrompt = ` Generate only one prompt from the passage for a text-to-image model that can generate related and appropriate one image from the given prompt.  used for an AI model that hates unsafe content. The prompt should be able to with no names of any character of the story, and should be in a way that the images seem to be in a similar genre.Make it more fantasy and kids theme . Here is the prompt provided by the user: ${splitStory[i]}`;
     const message: Message[] = [{ role: 'user', content: imgPrompt }];
         const resBody = {
           messages: message,
@@ -127,41 +127,32 @@ const urlTOBase64 = async (url:string) => {
     return base64;
 }
 
+function splitParagraph(paragraph:string) {
+  // Split the paragraph into sentences
+  var sentences = paragraph.split(/[.!?]/);
 
-function splitParagraph(text:string, minParagraphs:number, maxParagraphs:number) {
-  const sentences = text.split(/[.!?]/);
+  // Initialize the parts
+  var part1 = '';
+  var part2 = '';
+  var part3 = '';
 
-  const paragraphs = [];
-  let currentParagraph = "";
-
-  for (const sentence of sentences) {
-    if (currentParagraph.length === 0) {
-      currentParagraph += sentence;
+  // Distribute the sentences into the three parts
+  for (var i = 0; i < sentences.length; i++) {
+    var sentence = sentences[i].trim();
+    if (i < sentences.length / 3) {
+      part1 += sentence + '.';
+    } else if (i < (2 * sentences.length) / 3) {
+      part2 += sentence + '.';
     } else {
-      const potentialParagraph = currentParagraph + sentence;
-      if (potentialParagraph.length <= maxParagraphs) {
-        currentParagraph = potentialParagraph;
-      } else {
-        paragraphs.push(currentParagraph);
-        currentParagraph = sentence;
-      }
+      part3 += sentence + '.';
     }
   }
 
-  if (currentParagraph.length > 0) {
-    paragraphs.push(currentParagraph);
-  }
+  // Trim any extra whitespace
+  part1 = part1.trim();
+  part2 = part2.trim();
+  part3 = part3.trim();
 
-  if (paragraphs.length < minParagraphs) {
-    const mergedParagraphs = [];
-    for (let i = 0; i < paragraphs.length; i += minParagraphs) {
-      mergedParagraphs.push(paragraphs.slice(i, i + minParagraphs).join(" "));
-    }
-    return mergedParagraphs.slice(0, maxParagraphs);
-  } else if (paragraphs.length > maxParagraphs) {
- 
-    return paragraphs.slice(0, maxParagraphs);
-  } else {
-    return paragraphs;
-  }
+  // Return the three parts
+  return [part1, part2, part3];
 }

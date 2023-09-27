@@ -3,6 +3,7 @@ import ButtonPrimary from '@/components/misc/ButtonPrimary';
 import { Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
@@ -49,6 +50,10 @@ export default function AuthenticationTitle() {
     func();
   }, []);
   return (
+    <>
+   <Head>
+    <title>Sign In | Kiwi</title>
+   </Head>
     <Layout>
       <div
         className="flex items-center justify-center"
@@ -95,5 +100,6 @@ export default function AuthenticationTitle() {
         </div>
       </div>
     </Layout>
+    </>
   );
 }
