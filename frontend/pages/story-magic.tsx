@@ -1,6 +1,5 @@
 import Head from 'next/head';
 
-import Header from '@/components/Header';
 import StoryEditor from '@/components/StoryEditor';
 
 export default function Home() {
@@ -12,7 +11,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      {/* <Header /> */}
       <main>
         <StoryEditor />
       </main>

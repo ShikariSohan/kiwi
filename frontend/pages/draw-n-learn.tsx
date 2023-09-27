@@ -153,10 +153,10 @@ export default function AppShellDemo(props: any) {
       </div>
       {alert && (
               <Alert  title="Bummer!" color="red" withCloseButton sx={{
-                marginLeft: '10%',
-                top: '15%',
+                marginLeft: '8%',
+                bottom: '12%',
                 position: 'fixed',
-                width: '30%',
+                width: '20%',
                 right: '5%',
             }}
             onClose={() => setAlert(false)}
