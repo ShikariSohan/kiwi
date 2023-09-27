@@ -17,6 +17,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
+import Head from 'next/head';
 import router from 'next/router';
 import React from 'react';
 
@@ -52,6 +53,10 @@ export default function AuthenticationTitle() {
     //redirect to otp/[id] route after that
   };
   return (
+    <>
+    <Head>
+    <title>Sign In | Kiwi</title>
+   </Head>
     <Layout>
       <div
         className="flex items-center justify-center"
@@ -104,5 +109,6 @@ export default function AuthenticationTitle() {
         </div>
       </div>
     </Layout>
+    </>
   );
 }

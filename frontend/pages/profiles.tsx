@@ -36,6 +36,7 @@ export default function Profile() {
   }, []);
   const [opened, setOpened] = useState(false);
   return (
+    
     <Center style={{ height: '100vh' }}>
       <AddCard setOpened={setOpened} />
       <SingleCard />

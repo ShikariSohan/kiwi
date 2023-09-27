@@ -6,6 +6,7 @@ import {
   IconMicrophone,
   IconPlayerPause,
 } from '@tabler/icons-react';
+import Head from 'next/head';
 import React, { useEffect, useRef, useState } from 'react';
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -166,6 +167,10 @@ const AvatarBot: React.FC = () => {
   };
 
   return (
+    <>
+    <Head>
+      <title>Talky Pal | Kiwi</title>
+    </Head>
     <Layout>
       <Center
         className="bg-color-lite-rev"
@@ -220,6 +225,7 @@ const AvatarBot: React.FC = () => {
         </Center>
       </Center>
     </Layout>
+    </>
   );
 };
 

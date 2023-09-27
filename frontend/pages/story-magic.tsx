@@ -7,10 +7,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Storybook</title>
-
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Story Magic | Kiwi</title>
       </Head>
       <Layout>
         <Center style={{ height: '89vh' }}>
