@@ -32,7 +32,6 @@ export default function Profile() {
   }, []);
   const [opened, setOpened] = useState(false);
   return (
-<<<<<<< HEAD
     <Layout>
       <div
         style={{
@@ -64,13 +63,5 @@ export default function Profile() {
         {opened && <ProfileModal opened={opened} setOpened={setOpened} />}
       </div>
     </Layout>
-=======
-    
-    <Center style={{ height: '100vh' }}>
-      <AddCard setOpened={setOpened} />
-      <SingleCard />
-    {opened && <ProfileModal opened={opened} setOpened={setOpened} />}
-    </Center>
->>>>>>> 4a056fec5893b6df4e033338f61eee351f59dcfd
   );
 }

@@ -119,6 +119,17 @@
   font-family: 'Caveat Brush, cursive';
   font-size: 25px;
 }
+.text-sidebar {
+  color: #6c584c;
+  font-family: 'Caveat Brush, cursive';
+  font-size: 16px;
+}
+
+.text-sidebar-header {
+  color: #6c584c;
+  font-family: 'Caveat Brush, cursive';
+  font-size: 18px;
+}
 .text-word {
   color: #6c584c;
   font-family: 'Caveat Brush, cursive';

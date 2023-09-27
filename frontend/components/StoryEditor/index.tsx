@@ -81,10 +81,10 @@ const StoryEditor = () => {
   return (
     <div
       className="custom-scrollbar my-8 overflow-auto pt-20"
-      style={{ maxHeight: '90%' }}
+      style={{ maxHeight: '90%', minWidth: '100%' }}
     >
       <Center style={{ flexDirection: 'column' }}>
-        <EditorContent editor={editor} style={{ minWidth: '70%' }} />
+        <EditorContent editor={editor} style={{ minWidth: '50%' }} />
         <ButtonPrimary
           type="button"
           addClass="mt-8 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"

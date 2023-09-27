@@ -122,10 +122,7 @@ const ContentEditor = () => {
   };
 
   return (
-    <div
-      className="custom-scrollbar my-8 overflow-auto pt-20"
-      style={{ maxHeight: '90%' }}
-    >
+    <div className="custom-scrollbar overflow-auto">
       <Center style={{ flexDirection: 'column' }}>
         <EditorContent editor={editor} style={{ minWidth: '70vw' }} />
         <ButtonPrimary
