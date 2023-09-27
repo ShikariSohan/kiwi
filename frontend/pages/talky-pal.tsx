@@ -1,12 +1,16 @@
 import Layout from '@/components/Layout/Layout';
 import { Message } from '@/types';
 import { Center, Loader } from '@mantine/core';
+<<<<<<< HEAD
+import { IconMicrophone, IconPlayerPause } from '@tabler/icons-react';
+=======
 import {
   IconLockPause,
   IconMicrophone,
   IconPlayerPause,
 } from '@tabler/icons-react';
 import Head from 'next/head';
+>>>>>>> 4a056fec5893b6df4e033338f61eee351f59dcfd
 import React, { useEffect, useRef, useState } from 'react';
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -24,9 +28,6 @@ const AvatarBot: React.FC = () => {
       ? { type: 'monkey', phase: 3 }
       : { type: 'baby', phase: 4 }
   );
-  // const [botVideos, setBotVideos] = useState(
-  //        { type: 'monkey', phase: 3 }
-  //   );
 
   const { transcript, resetTranscript } = useSpeechRecognition();
 
@@ -203,7 +204,7 @@ const AvatarBot: React.FC = () => {
           <button
             onClick={handleBotListen}
             disabled={botTalking || loading}
-            className={`hover:cursor-pointer rounded-full p-5 text-white hover:opacity-80 m-5 ${
+            className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
               !humanTalking
                 ? botTalking || loading
                   ? 'icon-button-disabled'
@@ -216,7 +217,7 @@ const AvatarBot: React.FC = () => {
           <button
             disabled={!botTalking}
             onClick={() => setBotTalking(false)}
-            className={`hover:cursor-pointer rounded-full p-5 text-white hover:opacity-80 m-5 ${
+            className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
               !botTalking ? 'icon-button-disabled' : 'icon-button'
             } `}
           >

@@ -9,15 +9,15 @@ export default function Home() {
   const [action, setAction] = useState('');
 
   return (
-    <div className="mx-auto my-8 flex min-h-screen max-w-5xl flex-col px-4 sm:my-16">
+    <div>
       <Head>
         <title>Kiwi - Animations</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <AnimationCanvas image={image} action={action} />
-      {/* <PicturePuzzle /> */}
+      {/* <AnimationCanvas image={image} action={action} /> */}
+      <PicturePuzzle />
     </div>
   );
 }

@@ -21,7 +21,6 @@ export default function AppShellDemo(props: any) {
   const [AlertText, setAlertText] = useState('Something went wrong!');
   const [alert, setAlert] = useState(false);
 
-
   const handleClick = () => {
     setShowConfetti(true);
     // hide after 3 seconds
@@ -31,17 +30,17 @@ export default function AppShellDemo(props: any) {
   };
 
   const config = {
-    angle: "155",
+    angle: '155',
     spread: 360,
-    startVelocity: "30",
-    elementCount: "121",
-    dragFriction: "0.07",
-    duration: "7360",
-    stagger: "3",
-    width: "29px",
-    height: "10px",
-    perspective: "500px",
-    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+    startVelocity: '30',
+    elementCount: '121',
+    dragFriction: '0.07',
+    duration: '7360',
+    stagger: '3',
+    width: '29px',
+    height: '10px',
+    perspective: '500px',
+    colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
   };
   const [show, setShow] = useState(false);
   const canvasRef = useRef(null);
@@ -86,13 +85,16 @@ export default function AppShellDemo(props: any) {
             }) === mainWord[0];
 
           setLoading(false);
-          if(pred) {
+          if (pred) {
             handleClick();
-          }
-          else {
-            setAlertText(`Your writing doesn't match the word! : ${removeNonAlphabeticCharacters({
-              inputString: res.data[0].generated_text,
-            })} != ${mainWord[0]}`);
+          } else {
+            setAlertText(
+              `Your writing doesn't match the word! : ${removeNonAlphabeticCharacters(
+                {
+                  inputString: res.data[0].generated_text,
+                }
+              )} != ${mainWord[0]}`
+            );
             setAlert(true);
           }
         } catch (err) {
@@ -107,40 +109,76 @@ export default function AppShellDemo(props: any) {
   };
   return (
     <>
-    <Head>
-      <title>Draw N Learn | Kiwi</title>
-    </Head>
-    <Layout>
-      <div
-        className="flex-container h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"
-        style={{ backgroundImage: 'url("/assets/background.png")' }}
-      >
-        <Center style={{ height: '100vh', width: '97vw', flexFlow: 'column' }}>
-          <div className="text-normal">Write down the word:</div>
-          {domLoaded && (
-            <div className="text-word flex items-center gap-2">
-              {mainWord[0]}
-              <button
-                onClick={() =>
-                  setmainWord(
-                    generate({ minLength: 2, maxLength: 4, exactly: 1 })
-                  )
-                }
-              >
-                <IconReload />
-              </button>
-            </div>
-          )}
-          <Container ref={canvasRef}>
-            <CanvasSketchTool height={570} width={870} />
-          </Container>
-          <div style={{ marginTop: '2%' }}>
-          <ButtonPrimary
-          type="button"
-          addClass="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
-          onClick={onClick}
-          disabled={loading}
+      <Head>
+        <title>Draw N Learn | Kiwi</title>
+      </Head>
+      <Layout>
+        <div
+          className="flex-container text-gray-900 dark:bg-dark dark:text-light h-screen bg-gray-100 antialiased"
+          style={{
+            padding: '90px',
+            // backgroundColor: '#fff',
+          }}
         >
+<<<<<<< HEAD
+          <Center
+            style={{
+              height: '100vh',
+              width: '97vw',
+              flexFlow: 'column',
+              backgroundImage: 'url("/assets/letters.gif")', // Your background image URL
+              backgroundSize: 'auto 80%', // Auto width, full height
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'left center', // Align image to the left and top
+            }}
+          >
+            <div className="text-normal">Write down the word:</div>
+            {domLoaded && (
+              <div className="text-word flex items-center gap-2">
+                {mainWord[0]}
+                <button
+                  onClick={() =>
+                    setmainWord(
+                      generate({ minLength: 2, maxLength: 4, exactly: 1 })
+                    )
+                  }
+                >
+                  <IconReload />
+                </button>
+              </div>
+            )}
+            <Container ref={canvasRef}>
+              <CanvasSketchTool height={570} width={870} />
+            </Container>
+            <div style={{ marginTop: '2%' }}>
+              <ButtonPrimary
+                type="button"
+                addClass="mt-8 rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+                onClick={onClick}
+                disabled={loading}
+              >
+                {loading ? (
+                  <LoadingDots color="white" style="large" />
+                ) : (
+                  'Check My Writing'
+                )}
+              </ButtonPrimary>
+            </div>
+            <Confetti active={showConfetti} config={config} />
+          </Center>
+        </div>
+        {alert && (
+          <Alert
+            title="Bummer!"
+            color="red"
+            withCloseButton
+            sx={{
+              marginLeft: '10%',
+              top: '15%',
+              position: 'fixed',
+              width: '30%',
+              right: '5%',
+=======
           {loading ? (
             <LoadingDots color="white" style="large" />
           ) : (
@@ -158,12 +196,14 @@ export default function AppShellDemo(props: any) {
                 position: 'fixed',
                 width: '20%',
                 right: '5%',
+>>>>>>> 4a056fec5893b6df4e033338f61eee351f59dcfd
             }}
             onClose={() => setAlert(false)}
-            >
-        {AlertText}
-      </Alert>)}
-    </Layout>
+          >
+            {AlertText}
+          </Alert>
+        )}
+      </Layout>
     </>
   );
 }
