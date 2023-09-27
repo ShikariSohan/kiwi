@@ -3,11 +3,23 @@ export default function Sidebar() {
   return (
     <>
       <div className="bg-gray-50 flex min-h-screen flex-auto flex-shrink-0 flex-col antialiased">
-        <div
-          className="bg-white fixed left-0 top-0 flex h-full w-64 flex-col border-r"
-          style={{ backgroundColor: 'white' }}
-        >
-          <div className="flex h-14 items-center justify-center border-b">
+        <div className="bg-white fixed left-0 top-0 flex h-full w-64 flex-col ">
+          <svg
+            className="text-white absolute h-full w-full"
+            preserveAspectRatio="none"
+            viewBox="0 0 309 800"
+            fill="#f1faee"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ zIndex: -5 }}
+          >
+            {/* Your new SVG path here */}
+            <path
+              d="M268.487 0H0V800H247.32C207.957 725 207.975 492.294 268.487 367.647C329 243 314.906 53.4314 268.487 0Z"
+              stroke="#6c584c"
+              strokeWidth="4"
+            />
+          </svg>
+          <div className="flex h-14 items-center justify-center">
             <div className="flex-container w-64 justify-between p-4">
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
@@ -21,6 +33,8 @@ export default function Sidebar() {
                   style={{
                     fontFamily: 'Caveat Brush, cursive',
                     fontSize: '30px',
+                    color: '#000',
+                    zIndex: 10,
                   }}
                 >
                   Kiwi
@@ -32,7 +46,7 @@ export default function Sidebar() {
             <ul className="flex flex-col space-y-1 py-4">
               <li className="px-5">
                 <div className="flex h-8 flex-row items-center">
-                  <div className="text-sm font-light tracking-wide">
+                  <div className="text-sidebar-header tracking-wide">
                     Learning & Fun
                   </div>
                 </div>
@@ -40,7 +54,7 @@ export default function Sidebar() {
               <li>
                 <Link
                   href="/draw-n-learn"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center  pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <img
@@ -49,7 +63,10 @@ export default function Sidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Draw, Learn
                   </span>
                 </Link>
@@ -57,7 +74,7 @@ export default function Sidebar() {
               <li>
                 <Link
                   href="/grammar-guru"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <img
@@ -66,7 +83,10 @@ export default function Sidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Grammar Guru
                   </span>
                 </Link>
@@ -74,7 +94,7 @@ export default function Sidebar() {
 
               <li className="px-5">
                 <div className="flex h-8 flex-row items-center">
-                  <div className="text-sm font-light tracking-wide">
+                  <div className="text-sidebar-header font-light tracking-wide">
                     Creative Corner
                   </div>
                 </div>
@@ -82,7 +102,7 @@ export default function Sidebar() {
               <li>
                 <Link
                   href="/story-magic"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <img
@@ -91,7 +111,10 @@ export default function Sidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Magical Story
                   </span>
                 </Link>
@@ -99,7 +122,7 @@ export default function Sidebar() {
               <li>
                 <Link
                   href="/talky-pal"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <img
@@ -108,7 +131,10 @@ export default function Sidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Talky pal
                   </span>
                 </Link>
@@ -116,7 +142,7 @@ export default function Sidebar() {
 
               <li className="px-5">
                 <div className="flex h-8 flex-row items-center">
-                  <div className="text-sm font-light tracking-wide">
+                  <div className="text-sidebar-header font-light tracking-wide">
                     Play & Explore
                   </div>
                 </div>
@@ -124,7 +150,7 @@ export default function Sidebar() {
               <li>
                 <Link
                   href="/animation"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <img
@@ -133,15 +159,18 @@ export default function Sidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Animation
                   </span>
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/grammar-guru"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  href="/chat-buddy"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <img
@@ -150,7 +179,10 @@ export default function Sidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Chat Buddy
                   </span>
                 </Link>
@@ -158,15 +190,15 @@ export default function Sidebar() {
 
               <li className="px-5">
                 <div className="flex h-8 flex-row items-center">
-                  <div className="text-sm font-light tracking-wide">
-                    personalization
+                  <div className="text-sidebar-header font-light tracking-wide">
+                    Personalization
                   </div>
                 </div>
               </li>
               <li>
                 <Link
                   href="/profile"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <img
@@ -175,7 +207,10 @@ export default function Sidebar() {
                       aria-hidden="true"
                     />
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Profile
                   </span>
                 </Link>
@@ -184,7 +219,7 @@ export default function Sidebar() {
               <li>
                 <a
                   href="#"
-                  className="hover:bg-gray-50 text-gray-600 hover:text-gray-800 hover:border-indigo-500 relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 focus:outline-none"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 inline-flex items-center justify-center">
                     <svg
@@ -193,6 +228,7 @@ export default function Sidebar() {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
+                      style={{ zIndex: -5 }}
                     >
                       <path
                         stroke-linecap="round"
@@ -202,7 +238,10 @@ export default function Sidebar() {
                       ></path>
                     </svg>
                   </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
                     Logout
                   </span>
                 </a>

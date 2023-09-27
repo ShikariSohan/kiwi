@@ -1,9 +1,13 @@
 import Layout from '@/components/Layout/Layout';
 import { Message } from '@/types';
 import { Center, Loader } from '@mantine/core';
-import { IconMicrophone, IconPlayerPause } from '@tabler/icons-react';
-import React, { useEffect, useRef, useState } from 'react';
+import {
+  IconLockPause,
+  IconMicrophone,
+  IconPlayerPause,
+} from '@tabler/icons-react';
 import Head from 'next/head';
+import React, { useEffect, useRef, useState } from 'react';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
@@ -161,63 +165,62 @@ const AvatarBot: React.FC = () => {
 
   return (
     <>
-    <Head>
-      <title>Talky Pal | Kiwi</title>
-    </Head>
-    <Layout>
-      <Center
-        className="bg-color-lite-rev"
-        style={{
-          width: '100vw',
-          maxHeight: '100vh',
-          flexDirection: 'column',
-          paddingTop: '7%',
-        }}
-      >
-        <Center>
-          <video
-            ref={videoRef}
-            autoPlay={true}
-            id="v0"
-            preload="preload"
-            className="sticky top-0"
-            muted
-            loop
-          >
-            <source
-              type="video/mp4"
-              src={`${botVideos.type}-silent-1.mp4`}
-            ></source>
-          </video>
-        </Center>
+      <Head>
+        <title>Talky Pal | Kiwi</title>
+      </Head>
+      <Layout>
+        <Center
+          style={{
+            width: '100vw',
+            maxHeight: '100vh',
+            flexDirection: 'column',
+            paddingTop: '7%',
+          }}
+        >
+          <Center>
+            <video
+              ref={videoRef}
+              autoPlay={true}
+              id="v0"
+              preload="preload"
+              className="sticky top-0"
+              muted
+              loop
+            >
+              <source
+                type="video/mp4"
+                src={`${botVideos.type}-silent-1.mp4`}
+              ></source>
+            </video>
+          </Center>
 
-        <Center>
-          {loading && <Loader />}
-          <button
-            onClick={handleBotListen}
-            disabled={botTalking || loading}
-            className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
-              !humanTalking
-                ? botTalking || loading
-                  ? 'icon-button-disabled'
-                  : 'icon-button'
-                : 'icon-button-clicked'
-            } `}
-          >
-            <IconMicrophone ref={microphoneRef} />
-          </button>
-          <button
-            disabled={!botTalking}
-            onClick={() => setBotTalking(false)}
-            className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
-              !botTalking ? 'icon-button-disabled' : 'icon-button'
-            } `}
-          >
-            <IconPlayerPause ref={microphoneRef} />
-          </button>
+          <Center>
+            {loading && <Loader />}
+            <button
+              onClick={handleBotListen}
+              disabled={botTalking || loading}
+              className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
+                !humanTalking
+                  ? botTalking || loading
+                    ? 'icon-button-disabled'
+                    : 'icon-button'
+                  : 'icon-button-clicked'
+              } `}
+            >
+              <IconMicrophone ref={microphoneRef} />
+            </button>
+            <button
+              disabled={!botTalking}
+              onClick={() => setBotTalking(false)}
+              className={`text-white m-5 rounded-full p-5 hover:cursor-pointer hover:opacity-80 ${
+                !botTalking ? 'icon-button-disabled' : 'icon-button'
+              } `}
+            >
+              <IconPlayerPause ref={microphoneRef} />
+            </button>
+          </Center>
         </Center>
-      </Center>
-    </Layout>
+      </Layout>
     </>
   );
 };

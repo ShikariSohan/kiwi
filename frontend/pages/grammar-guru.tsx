@@ -16,7 +16,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Center style={{ height: '89vh' }}>
+        <Center
+          style={{
+            height: '89vh',
+            backgroundImage: 'url("/assets/grammar.gif")', // Your background image URL
+            backgroundSize: 'auto 40%', // Auto width, full height
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right bottom',
+          }}
+        >
           <ContentEditor />
         </Center>
       </Layout>
