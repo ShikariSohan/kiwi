@@ -13,15 +13,54 @@
   .classyButton:hover {
     background-color: #2980b9; /* Darker blue on hover */
   }
-  /* Define styles for the dropdown */
+.classyHeader{
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+}
+.classyRadio{
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+
+}
+.classyRadio label {
+    margin-left: 10px;
+}
 .classyDropdown {
-  /* Add your desired styles here */
-  width: 150px; /* Adjust the width */
-  padding: 5px;
-  border: 1px solid #ccc; /* Add a border */
-  border-radius: 5px;
-  background-color: #fff; /* Background color */
-  color: #333; /* Text color */
-  font-size: 16px;
-  cursor: pointer; /* Add a pointer cursor on hover */
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.classyTimer {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #3e5536;
+
+}
+.classyStartButton {
+   font-size: 20px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #3e5536;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.classyStartButton:hover {
+    background-color: #3e5536;
+    color: #ffffff;
 }

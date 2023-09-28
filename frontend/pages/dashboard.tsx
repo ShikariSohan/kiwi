@@ -35,7 +35,6 @@ const Dashboard = () => {
   },[])
 
 
-  // Filter PDFs based on description containing the search query
   const filteredPdfs = pdfs.filter(
     (pdf) =>
       pdf.description.toLowerCase().includes(debounced.toLowerCase()) ||

@@ -241,6 +241,10 @@ export default function Sidebar() {
                   <span
                     className="text-sidebar ml-2 truncate tracking-wide"
                     style={{ zIndex: 10 }}
+                    onClick={() => {
+                      localStorage.removeItem('token');
+                      window.location.href = '/';
+                    }}
                   >
                     Logout
                   </span>

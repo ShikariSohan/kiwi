@@ -4,6 +4,7 @@ import AnimationCanvas from '@/components/AnimationCanvas';
 import { Select } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import PicturePuzzle from '@/components/PicturePuzzle';
+import Layout from '@/components/Layout/Layout';
 export default function Home() {
   const [image, setImage] = useState('');
   const [action, setAction] = useState('');
@@ -11,13 +12,15 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Kiwi - Animations</title>
+        <title>Picture Puzzle | Kiwi</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      <Layout>
 
-      {/* <AnimationCanvas image={image} action={action} /> */}
+     
       <PicturePuzzle />
+      </Layout>
     </div>
   );
 }
