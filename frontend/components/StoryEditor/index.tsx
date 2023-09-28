@@ -68,6 +68,7 @@ const StoryEditor = () => {
   };
 
   const generatePDF = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch('/api/storybook', {
         method: 'POST',
@@ -77,7 +78,7 @@ const StoryEditor = () => {
         body: JSON.stringify({ story: result, title: title }),
       });
       // redirect to dashboard
-
+      setIsLoading(false);
       window.location.href = '/dashboard';
     } catch (err) {
       console.log(err);
@@ -87,8 +88,8 @@ const StoryEditor = () => {
 
   return (
     <div
-      className="custom-scrollbar my-8 overflow-auto pt-20"
-      style={{ maxHeight: '70%', minWidth: '100%' }}
+      className="custom-scrollbar overflow-auto"
+      style={{ minWidth: '100%', marginTop: '170px' }}
     >
       <Center style={{ flexDirection: 'column' }}>
         <EditorContent
@@ -107,14 +108,14 @@ const StoryEditor = () => {
             'Generate Story'
           )}
         </ButtonPrimary>
-        <div className="text-title my-5">{title}</div>
-        <div className="text-title my-5 px-10" style={{ width: '70%' }}>
+        <div className="text-title mt-5">{title}</div>
+        <div className="text-title mt-5 px-10" style={{ width: '70%' }}>
           {result}
         </div>
         {result && (
           <ButtonPrimary
             type="button"
-            addClass="mt-8 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+            addClass="mt-5 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400 mb-5"
             onClick={generatePDF}
             disabled={isLoading}
           >

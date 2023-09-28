@@ -8,6 +8,11 @@ const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [scrollActive, setScrollActive] = useState(false);
+  const [logged, setLogged] = useState<string | null>();
+  useEffect(() => {
+    const profile = localStorage.getItem('profile');
+    if (profile) setLogged(profile);
+  }, [logged]);
   useEffect(() => {
     window.addEventListener('scroll', () => {
       setScrollActive(window.scrollY > 20);
@@ -17,11 +22,11 @@ const Header = () => {
     <>
       <header
         className={
-          'fixed top-0 w-full  z-30 bg-white-500 transition-all ' +
-          (scrollActive ? ' shadow-md pt-0' : '')
+          'fixed top-0 z-30  w-full bg-white-500 transition-all ' +
+          (scrollActive ? ' pt-0 shadow-md' : '')
         }
       >
-        <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
+        <nav className="mx-auto grid max-w-screen-xl grid-flow-col px-6 py-3 sm:px-8 sm:py-4 lg:px-16">
           <Link
             className="col-start-1 col-end-2 flex items-center"
             href={'/dashboard'}
@@ -34,10 +39,10 @@ const Header = () => {
             </div>
           </Link>
           {pathname === '/' && (
-            <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
+            <div className="col-start-10 col-end-12 flex items-center justify-end font-medium">
               <Link
                 href="/login"
-                className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-green-500 transition-all"
+                className="mx-2 capitalize tracking-wide text-black-600 transition-all hover:text-green-500 sm:mx-4"
               >
                   Sign In
               </Link>
@@ -46,6 +51,19 @@ const Header = () => {
               </ButtonOutline>
             </div>
           )}
+          {/* {logged && (
+            <div className="col-start-10 col-end-12 flex items-center justify-end font-medium">
+              <ButtonOutline
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  setLogged(null);
+                  router.push('/');
+                }}
+              >
+                Logout
+              </ButtonOutline>
+            </div>
+          )} */}
         </nav>
       </header>
     </>

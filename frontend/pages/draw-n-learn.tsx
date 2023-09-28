@@ -88,12 +88,15 @@ export default function AppShellDemo(props: any) {
             handleClick();
           } else {
             setAlertText(
-              `Your writing doesn't match the word! : ${removeNonAlphabeticCharacters(
-                {
-                  inputString: res.data[0].generated_text,
-                }
-              )} != ${mainWord[0]}`
+              removeNonAlphabeticCharacters({
+                inputString: res.data[0].generated_text,
+              }) === ''
+                ? 'Please write something!😥'
+                : `You have written: ${removeNonAlphabeticCharacters({
+                    inputString: res.data[0].generated_text,
+                  })}`
             );
+
             setAlert(true);
           }
         } catch (err) {
@@ -121,7 +124,7 @@ export default function AppShellDemo(props: any) {
         >
           <Center
             style={{
-              height: '100vh',
+              height: '89vh',
               width: '97vw',
               flexFlow: 'column',
               backgroundImage: 'url("/assets/letters.gif")', // Your background image URL
@@ -167,15 +170,15 @@ export default function AppShellDemo(props: any) {
         </div>
         {alert && (
           <Alert
-            title="Bummer!"
+            title="Oh no!"
             color="red"
             withCloseButton
             sx={{
-              marginLeft: '10%',
-              top: '15%',
+              // marginLeft: '10%',
+              bottom: '1%',
               position: 'fixed',
-              width: '30%',
-              right: '5%',
+              width: '20%',
+              right: '0%',
             }}
             onClose={() => setAlert(false)}
           >

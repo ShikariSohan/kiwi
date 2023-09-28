@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 export default function Sidebar() {
   return (
     <>
@@ -185,7 +186,7 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="px-5 pt-5">
+              {/* <li className="px-5 pt-5">
                 <div className="flex h-8 flex-row items-center">
                   <div className="text-sidebar-header font-light tracking-wide">
                     Personalization
@@ -211,12 +212,16 @@ export default function Sidebar() {
                     Profile
                   </span>
                 </Link>
-              </li>
+              </li> */}
 
               <li>
-                <a
-                  href="#"
-                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
+                <Link
+                  href={'/'}
+                  onClick={() => {
+                    localStorage.removeItem('token');
+                  }}
+                  className="fixed flex h-11 flex-row items-center pr-6 focus:outline-none"
+                  style={{ marginTop: '350px' }}
                 >
                   <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
@@ -231,7 +236,7 @@ export default function Sidebar() {
                   >
                     Logout
                   </span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
