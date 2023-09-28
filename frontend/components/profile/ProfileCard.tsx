@@ -1,38 +1,39 @@
-
 import { Center } from '@mantine/core';
 import ButtonPrimary from '../misc/ButtonPrimary';
-export default function ProfileCard({profile,modalOpened,setModalOpened}: {profile:any,modalOpened:any,setModalOpened:any}) {
- 
+import { IconEdit, IconTrash } from '@tabler/icons-react';
+export default function ProfileCard({
+  profile,
+  modalOpened,
+  setModalOpened,
+}: {
+  profile: any;
+  modalOpened: any;
+  setModalOpened: any;
+}) {
   return (
     <div
-    style={{
-        backgroundColor: '#F1FAEE',
-        borderRadius: "10px",
-        marginRight: "10%",
-    }}
+      className="hover:cursor-pointer hover:opacity-80"
+      style={{ maxWidth: '150px' }}
+      onClick={() => setModalOpened(true)}
     >
-        <Center style={{ flexDirection: 'column' }}>
+      <Center className="m-2 justify-center">
+        <div className="flex items-center justify-center ">
+          <div className="mr-auto flex flex-col items-center">
+            {/* Icon and Name on the Left */}
             <img
-                className="rounded-t-lg p-4"
-                style={{ width: '120px', height: '120px' }}
-                src={`/avatars/${profile.avatar}.png`}
-                alt=""
+              className="h-20 w-20 rounded-full"
+              src={`/avatars/${profile.avatar}.png`}
+              alt=""
             />
-            <h5>
-                Name: {profile.name}
+            <h5
+              className="text-title"
+              style={{ fontFamily: 'Caveat Brush, cursive', fontSize: '19px' }}
+            >
+              {profile.name}
             </h5>
-            <h5>
-                Age: {profile.age}
-            </h5>
-            <h5>
-                Gender: {profile.gender}
-            </h5>
-        </Center>
-       <ButtonPrimary
-       onClick={() => {
-        setModalOpened(true);
-       }}
-       >Edit Profile</ButtonPrimary>
+          </div>
+        </div>
+      </Center>
     </div>
   );
 }

@@ -51,55 +51,64 @@ export default function AuthenticationTitle() {
   }, []);
   return (
     <>
-   <Head>
-    <title>Sign In | Kiwi</title>
-   </Head>
-    <Layout>
-      <div
-        className="flex items-center justify-center"
-        style={{ height: '95vh' }}
-      >
-        <div className="bg-color-lite rounded-lg p-5 shadow-lg">
-          <p className="text-title mt-5 text-center">Login to your account</p>
-          <p className="text-dimmed text-color mt-5 text-center text-sm">
-            Do not have an account yet?{' '}
-            <button
-              className="text-orange-500"
-              onClick={() => router.push('/signup')}
-            >
-              Create account
-            </button>
-          </p>
-          <form onSubmit={(values) => onSubmit(values)}>
-            <div className="rounded-md p-6">
-              <label className="text-color mb-2 text-sm font-semibold">
-                Email
-              </label>
-              <br />
-              <input
-                type="email"
-                className="input-border-color text-color mb-4 w-full rounded-md px-3 py-2"
-                placeholder="you@gmail.com"
-                required
-              />
-              <br />
-              <label className="text-color mb-2 text-sm font-semibold">
-                Password
-              </label>
-              <input
-                type="password"
-                className="input-border-color text-color mb-4 w-full rounded-md px-3 py-2"
-                placeholder="Your password"
-                required
-              />
-              <Center mt="lg">
-                <ButtonPrimary type="submit">Log in</ButtonPrimary>
-              </Center>
-            </div>
-          </form>
+      <Head>
+        <title>Sign In | Kiwi</title>
+      </Head>
+      <Layout>
+        <div
+          className="flex items-center justify-center"
+          style={{
+            height: '89vh',
+            backgroundImage: 'url("/assets/signin.gif")', // Your background image URL
+            backgroundSize: 'auto 40%', // Auto width, full height
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'left top 100px',
+          }}
+        >
+          <div
+            className="rounded-lg p-5 shadow-lg"
+            style={{ backgroundColor: '#FFF' }}
+          >
+            <p className="text-title mt-5 text-center">Login to your account</p>
+            <p className="text-dimmed text-color mt-5 text-center text-sm">
+              Do not have an account yet?{' '}
+              <button
+                className="text-orange-500"
+                onClick={() => router.push('/signup')}
+              >
+                Create account
+              </button>
+            </p>
+            <form onSubmit={(values) => onSubmit(values)}>
+              <div className="rounded-md p-6">
+                <label className="text-color mb-2 text-sm font-semibold">
+                  Email
+                </label>
+                <br />
+                <input
+                  type="email"
+                  className="input-border-color text-color mb-4 w-full rounded-md px-3 py-2"
+                  placeholder="you@gmail.com"
+                  required
+                />
+                <br />
+                <label className="text-color mb-2 text-sm font-semibold">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="input-border-color text-color mb-4 w-full rounded-md px-3 py-2"
+                  placeholder="Your password"
+                  required
+                />
+                <Center mt="lg">
+                  <ButtonPrimary type="submit">Log in</ButtonPrimary>
+                </Center>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
     </>
   );
 }

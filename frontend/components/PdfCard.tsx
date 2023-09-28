@@ -34,9 +34,9 @@ export default function PdfCard({
       radius="md"
       withBorder
       style={{
-        width: '60vw',
+        width: '70%',
         height: '10vh',
-        margin: '2%',
+        margin: '1%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',

@@ -124,7 +124,14 @@ const ContentEditor = () => {
   return (
     <div className="custom-scrollbar overflow-auto">
       <Center style={{ flexDirection: 'column' }}>
-        <EditorContent editor={editor} style={{ minWidth: '70vw' }} />
+        <EditorContent
+          editor={editor}
+          style={{
+            minWidth: '70vw',
+            backgroundColor: '#FFF',
+            maxWidth: '80vw',
+          }}
+        />
         <ButtonPrimary
           type="button"
           addClass="mt-8 px-6 py-3 transition-colors hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-400"
@@ -138,7 +145,14 @@ const ContentEditor = () => {
           )}
         </ButtonPrimary>
         {show && (
-          <Card className="mt-2" style={{ backgroundColor: 'white' }}>
+          <Card
+            className="mt-5"
+            style={{
+              backgroundColor: 'white',
+              minWidth: '70vw',
+              maxWidth: '80vw',
+            }}
+          >
             <Center style={{ flexDirection: 'column' }}>
               <h1 className="text-title mb-3">Corrected Text </h1>
               <div
