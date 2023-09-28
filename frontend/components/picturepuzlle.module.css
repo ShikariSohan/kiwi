@@ -64,3 +64,13 @@
     background-color: #3e5536;
     color: #ffffff;
 }
+
+.classySelect {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}

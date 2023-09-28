@@ -8,7 +8,7 @@ const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
 });
 import { useEffect } from "react";
 let cnv: any;
-let ww = 900;
+let ww = 700;
 let hh = ww;
 let startGame: any;
 let modeSelect:any;
@@ -94,11 +94,18 @@ const BubbleGame = (props: any) => {
   }
   const setup = (p5:p5Types, canvasParentRef:Element) => {
    cnv = p5.createCanvas(ww, hh).parent(canvasParentRef);
+    let canvasX = (p5.displayWidth - ww) / 2;
+    let canvasY = (p5.displayHeight - hh) / 2;
+    cnv.position(canvasX+150, canvasY);
+
    startGame = p5.createButton("Start");
+   startGame.position(canvasX+120+ww/2,canvasY+hh+20);
+   startGame.addClass(picturepuzle.classyStartButton);
    timer = 0;
    p5.frameRate(frameCount);
    modeSelect = p5.createSelect();
-   modeSelect.parent(canvasParentRef);
+   modeSelect.addClass(picturepuzle.classyDropdown);
+   modeSelect.position(canvasX+150,canvasY+hh+20);
    modeSelect.option("30 sec",20);
    modeSelect.option("45 sec",45);
    modeSelect.option("60 sec",60);
@@ -110,14 +117,23 @@ const BubbleGame = (props: any) => {
   
    startGame.mousePressed(()=>{
         started = true;
-        modeSelect.disable();
+        
+        startGame.hide();
+        reStart.show();
+     
         p5.loop();
    });
     startGame.parent(canvasParentRef);
     reStart = p5.createButton("Restart");
-    reStart.parent(canvasParentRef);
+    reStart.hide();
+   
+    reStart.position(canvasX+160+ww/2,canvasY+hh+20);
+    reStart.addClass(picturepuzle.classyStartButton);
+   
     reStart.mousePressed(()=>{
-      
+      reStart.hide();
+     
+      startGame.show();
       score = 0;
       missed = 0;
       started = true;
@@ -175,7 +191,7 @@ const draw = (p5:p5Types) => {
           }
       }
       let num = p5.random(6,17);
-      if(p5.frameCount % 10 == 0){
+      if(p5.frameCount % 30 == 0){
         bubbles.push(new Bubble(p5.random(p5.width),p5.random(p5.height),minBubble+num+2,num,p5));
         num = p5.random(6,17);
         bubbles.push(new Bubble(p5.random(p5.width),p5.random(p5.height),minBubble+num+2,num,p5));

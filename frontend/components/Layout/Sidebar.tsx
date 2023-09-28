@@ -235,6 +235,7 @@ export default function Sidebar() {
                     style={{ zIndex: 10 }}
                     onClick={() => {
                       localStorage.removeItem('token');
+                      localStorage.removeItem('profile');
                       window.location.href = '/';
                     }}
                   >

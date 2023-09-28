@@ -5,8 +5,7 @@ import org.aviato.javafest.config.ConfigProperties;
 import org.aviato.javafest.model.ChatRequest;
 import org.aviato.javafest.model.ChatResponse;
 import org.aviato.javafest.model.Message;
-import org.aviato.javafest.model.Pdf;
-import org.aviato.javafest.service.PdfService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +21,8 @@ import java.util.Map;
 public class BotController {
     @Autowired
     private RestTemplate template;
-    private final PdfService pdfService;
     private final ConfigProperties configProperties;
-    public BotController(PdfService pdfService, ConfigProperties configProperties) {
-        this.pdfService = pdfService;
+    public BotController( ConfigProperties configProperties) {
         this.configProperties = configProperties;
     }
     @PostMapping("/complete")
@@ -43,17 +40,5 @@ public class BotController {
         String role = chatGptResponse.getChoices().get(0).getMessage().getRole();
 
         return ResponseEntity.ok(content);
-    }
-    @PostMapping("/pdf")
-    public ResponseEntity<String> saveToDb(@RequestBody Pdf pdf){
-        log.info("pdf: {}", pdf);
-        pdfService.createPdf(pdf);
-        return ResponseEntity.ok("Saved");
-    }
-    @GetMapping("/pdf")
-    public ResponseEntity<List<Pdf>> getAllPdf(){
-       List<Pdf> pdfs = pdfService.getAllPdf();
-        return ResponseEntity.ok(pdfs);
-
     }
 }

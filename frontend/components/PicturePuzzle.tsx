@@ -30,11 +30,12 @@ let images = ['pinwheel', 'eren'];
 let loadedImages: any[] = [];
 let imgSelect: any;
 let typeRadio: any;
-let autoSolveButton: any;
-let shuffleItr = 50;
-let fileInput: any;
 let reShuffleButton: any;
 let stepsArr: any[] = [];
+let timer: any;
+let time = 0;
+let start = false;
+let elapsed = 0;
 const PicturePuzzle = (props: any) => {
   const preload = (p5: p5Types) => {
     for (let i = 0; i < images.length; i++) {
@@ -45,19 +46,18 @@ const PicturePuzzle = (props: any) => {
   };
   const setup = (p5: p5Types, canvasParentRef: Element) => {
     cnv = p5.createCanvas(ww, hh).parent(canvasParentRef);
-    console.log(p5.width, p5.height, p5.displayHeight);
-    cnv.position(p5.displayWidth / 4, p5.displayHeight / 4);
+    let canvasX = (p5.displayWidth - ww) / 2;
+    let canvasY = (p5.displayHeight - hh) / 2;
+    cnv.position(canvasX+150, canvasY);
 
-    reShuffleButton = p5.createButton('Re-Shuffle');
-    reShuffleButton.position(p5.displayWidth / 4, p5.displayHeight);
-    // reShuffleButton.parent(canvasParentRef);
-    reShuffleButton.addClass(picturepuzle.classyButton);
-    reShuffleButton.mousePressed(() => {
-      // if(isSolved(p5,board)) return;
-      board = shufflePuzzle(board);
-    });
-    let div = p5.createDiv();
-    div.parent(canvasParentRef);
+    // reShuffleButton = p5.createButton('Re-Shuffle');
+    // reShuffleButton.position(p5.displayWidth / 4, p5.displayHeight);
+    // // reShuffleButton.parent(canvasParentRef);
+    // reShuffleButton.addClass(picturepuzle.classyButton);
+    // reShuffleButton.mousePressed(() => {
+    //   // if(isSolved(p5,board)) return;
+    //   board = shufflePuzzle(board);
+    // });
 
     const autoSolveButton = p5.createButton('Auto Solve');
     autoSolveButton.position(p5.displayWidth / 5, p5.displayHeight);
@@ -86,15 +86,15 @@ const PicturePuzzle = (props: any) => {
     solveState.pop();
     solveState.push(-1);
     board.push(-1);
-    board = shufflePuzzle(board);
     console.log(board);
     cnv.mousePressed(() => mousePressed(p5));
+    //dropdown
     imgSelect = p5.createSelect();
     imgSelect.addClass(picturepuzle.classyDropdown);
     for (let i = 0; i < images.length; i++) {
       imgSelect.option(images[i].toUpperCase());
     }
-    imgSelect.parent(canvasParentRef);
+    imgSelect.position(canvasX+150, canvasY-45);
 
     imgSelect.changed(() => {
       if (typeRadio.value() == 'Video') return;
@@ -108,14 +108,17 @@ const PicturePuzzle = (props: any) => {
       }
       updateTiles(p5);
     });
+    //radio button
     typeRadio = p5.createRadio();
     typeRadio.option('Video');
     typeRadio.option('Image');
     typeRadio.selected('Image');
-    typeRadio.parent(canvasParentRef);
+    typeRadio.position(canvasX+ww+30, canvasY-30);
+    typeRadio.addClass(picturepuzle.classyRadio);
     typeRadio.changed(() => {
       if (typeRadio.value() == 'Video') {
         source = p5.createCapture(p5.VIDEO);
+        source.size(ww, hh);
         source.hide();
       } else {
         for (let i = 0; i < images.length; i++) {
@@ -128,7 +131,33 @@ const PicturePuzzle = (props: any) => {
       }
       updateTiles(p5);
     });
+    // timer 
+    timer = p5.createP('00:00');
+    timer.addClass(picturepuzle.classyTimer);
+    timer.position(canvasX+(ww/2)+140, canvasY-55);
+    // start button
+    const startButton = p5.createButton('Start');
+    startButton.addClass(picturepuzle.classyStartButton);
+    startButton.position(canvasX+(ww/2)+140, canvasY+hh+20);
+    start = false;
+    startButton.mousePressed(() => {
+      if(start) {
+        start = false;
+        startButton.html('Start');
+        board = solveState;
+        
+      }
+      else {
+        start = true;
+        startButton.html('Stop');
+        time = p5.frameCount;
+        board = shufflePuzzle(board);
+      }
+    });
+
+
   };
+
   const updateTiles = (p5: p5Types) => {
     let tileSize = p5.floor(ww / cols);
     for (let i = 0; i < tiles.length; i++) {
@@ -138,6 +167,7 @@ const PicturePuzzle = (props: any) => {
       tile.img.copy(source, x, y, tileSize, tileSize, 0, 0, tileSize, tileSize);
     }
   };
+
 
   function performStepsWithDelay(
     p5: p5Types,
@@ -160,10 +190,28 @@ const PicturePuzzle = (props: any) => {
     }, 200);
   }
   const draw = (p5: p5Types) => {
+
     if (typeRadio.value() == 'Video') {
-      console.log('Video');
       updateTiles(p5);
     }
+    if (start) {
+      elapsed = p5.frameCount - time;
+      let seconds = p5.floor(elapsed / 60);
+      let minutes = p5.floor(seconds / 60);
+      seconds = seconds % 60;
+      let timerString = '';
+      if (minutes < 10) {
+        timerString += '0';
+      }
+      timerString += minutes + ':';
+      if (seconds < 10) {
+        timerString += '0';
+      }
+      timerString += seconds;
+      timer.html(timerString);
+      console.log(timerString);
+    }
+    
 
     p5.background(244, 152, 58);
 

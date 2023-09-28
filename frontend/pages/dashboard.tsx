@@ -47,30 +47,23 @@ const Dashboard = () => {
   useEffect(() => {
     const func = async () => {
       try {
-        const res = await fetch('/api/pdfs');
+        let profile = JSON.parse(localStorage.getItem('profile') || '{}');
+        let userId = profile.id;
+        const res = await fetch('/api/pdfs?userId=' + userId,{
+          headers: {
+             'Authorization': localStorage.getItem('token') || ''},
+        });
         const data = await res.json();
         setPdfs(data);
         console.log(data);
       } catch (err) {
         console.log(err);
+        setPdfs([]);
       }
     };
     func();
   }, []);
 
-  useEffect(() => {
-    const func = async () => {
-      try {
-        const res = await fetch('/api/pdfs');
-        const data = await res.json();
-        setPdfs(data);
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    func();
-  }, []);
 
   return (
     <>

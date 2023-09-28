@@ -16,7 +16,7 @@ public class OpenAIConfig {
     public RestTemplate template(){
         RestTemplate restTemplate=new RestTemplate();
 
-        String openaiApiKey = configProperties.openAIApiKey();
+        String openaiApiKey = configProperties.APIKEY();
         restTemplate.getInterceptors().add((request, body, execution) -> {
             request.getHeaders().add("Authorization", "Bearer " + openaiApiKey);
             request.getHeaders().add("Content-Type", "application/json");

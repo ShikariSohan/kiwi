@@ -11,7 +11,7 @@ let cnv: any;
 let source: any;
 let cols = 4;
 let rows = cols;
-let ww = 400;
+let ww = 700;
 let hh = ww;
 let selectOption : any;
 let video : any;
@@ -24,17 +24,21 @@ const FunnyImage = (props: any) => {
   }
   const setup = (p5:p5Types, canvasParentRef:Element) => {
    cnv = p5.createCanvas(ww, hh).parent(canvasParentRef);
-   video  = p5.createCapture(p5.VIDEO);
+    let canvasX = (p5.displayWidth - ww) / 2;
+    let canvasY = (p5.displayHeight - hh) / 2;
+    cnv.position(canvasX+150, canvasY - 50);
+    video  = p5.createCapture(p5.VIDEO);
     video.size(ww, hh);
-    video.hide();
-   radioSelect = p5.createRadio();
-    radioSelect.option('Capture A Image');
+     video.hide();
+    radioSelect = p5.createRadio();
+    radioSelect.option('Capture From Camera');
     radioSelect.option('Use Default Image');
     radioSelect.selected('Use Default Image');
-    radioSelect.parent(canvasParentRef);
+    radioSelect.addClass(picturepuzle.classySelect);
+    radioSelect.position(canvasX+150, canvasY+hh-40);
     
 
-   selectOption = p5.createSelect();
+    selectOption = p5.createSelect();
     selectOption.parent(canvasParentRef);
     selectOption.option('original');
     selectOption.option('dottedImage');
@@ -45,9 +49,12 @@ const FunnyImage = (props: any) => {
     selectOption.option('wavey');
     selectOption.option('ascii');
     selectOption.option('blobZoom');
+    selectOption.position(canvasX+10+ww, canvasY+hh-30);
+    selectOption.addClass(picturepuzle.classyDropdown);
 
     saveImg = p5.createButton("Save Image");
-    saveImg.parent(canvasParentRef);
+    saveImg.addClass(picturepuzle.classyStartButton);
+    saveImg.position(canvasX+110+(ww/2), canvasY+hh-40);
     saveImg.mousePressed(() => {
         p5.saveCanvas(cnv, 'myCanvas', 'jpg');
     })
@@ -58,7 +65,7 @@ const FunnyImage = (props: any) => {
   }
 
 const draw = (p5:p5Types) => {
-    if(radioSelect.value() === 'Capture A Image')
+    if(radioSelect.value() === 'Capture From Camera')
     {
       source = video;
     }
@@ -174,9 +181,7 @@ const draw = (p5:p5Types) => {
                 const g = img.pixels[index + 1];
                 const b = img.pixels[index + 2];
                 const brightness = (r + g + b) / 3;
-                // calculate the distance between the mouse and the pixel
                 const distance = p5.dist(p5.mouseX, p5.mouseY, x, y);
-                // calculate the size of the circle
                 const circleSize = p5.map(distance, 0, 20, zoom, 0);
                 // draw the circle
                 p5.noStroke();

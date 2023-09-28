@@ -43,12 +43,19 @@ const StoryEditor = () => {
 
     try {
       setIsLoading(true);
+      const profile = localStorage.getItem('profile') || '';
+      const id = JSON.parse(profile)  || {
+        id :"abcs",
+        name :"abcs",
+        age:2,
+        gender:"male"
+      }
       const response = await fetch('/api/story', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: cleanText }),
+        body: JSON.stringify({ content: cleanText , profile: id}),
       });
 
       if (!response.ok) {
@@ -70,12 +77,21 @@ const StoryEditor = () => {
   const generatePDF = async () => {
     setIsLoading(true);
     try {
+      const profile =  await localStorage.getItem('profile') || '';
+      const id = JSON.parse(profile)  || {
+        id :"abcs",
+        name :"abcs",
+        age:2,
+        gender:"male"
+      }
+      const token = await localStorage.getItem('token') || '';
       const response = await fetch('/api/storybook', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          
         },
-        body: JSON.stringify({ story: result, title: title }),
+        body: JSON.stringify({ story: result, title: title, profile: id,token:token }),
       });
       // redirect to dashboard
       setIsLoading(false);
