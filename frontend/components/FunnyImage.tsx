@@ -53,8 +53,8 @@ const FunnyImage = (props: any) => {
     selectOption.addClass(picturepuzle.classyDropdown);
 
     saveImg = p5.createButton("Save Image");
-    saveImg.addClass(picturepuzle.classyStartButton);
-    saveImg.position(canvasX+110+(ww/2), canvasY+hh-40);
+    saveImg.addClass(picturepuzle.customBtn);
+    saveImg.position(canvasX+85+(ww/2), canvasY+hh-40);
     saveImg.mousePressed(() => {
         p5.saveCanvas(cnv, 'myCanvas', 'jpg');
     })
