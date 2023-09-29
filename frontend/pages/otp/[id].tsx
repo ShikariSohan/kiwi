@@ -46,10 +46,19 @@ export default function OTP() {
     <Layout>
       <div
         className="flex items-center justify-center"
-        style={{ height: '90vh' }}
+        style={{
+          height: '89vh',
+          backgroundImage: 'url("/assets/otp.gif")', // Your background image URL
+          backgroundSize: 'auto 50%', // Auto width, full height
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'right 10px bottom',
+        }}
       >
-        <div className="bg-color-lite p-10 rounded-lg shadow-lg">
-          <p className="text-title text-center mt-10">Email Verification</p>
+        <div
+          className="rounded-lg p-10 shadow-lg"
+          style={{ backgroundColor: '#FFF' }}
+        >
+          <p className="text-title mt-10 text-center">Email Verification</p>
           <Center>
             <div className="flex flex-row text-sm font-medium text-gray-400">
               <p>We have sent a code to your email.</p>
@@ -57,33 +66,33 @@ export default function OTP() {
           </Center>
 
           <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-            <div className="flex flex-col space-y-16 mt-10">
-              <div className="flex flex-row items-center justify-between mx-auto w-full">
-                <div className="w-16 h-16 mx-5">
+            <div className="mt-10 flex flex-col space-y-16">
+              <div className="mx-auto flex w-full flex-row items-center justify-between">
+                <div className="mx-5 h-16 w-16">
                   <input
                     required
-                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    className="input-border-color bg-white flex h-full w-full flex-col items-center justify-center rounded-xl px-5 text-center text-lg outline-none"
                     {...form.getInputProps('i1')}
                   />
                 </div>
-                <div className="w-16 h-16 mx-5">
+                <div className="mx-5 h-16 w-16">
                   <input
                     required
-                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    className="input-border-color bg-white flex h-full w-full flex-col items-center justify-center rounded-xl px-5 text-center text-lg outline-none"
                     {...form.getInputProps('i2')}
                   />
                 </div>
-                <div className="w-16 h-16 mx-5">
+                <div className="mx-5 h-16 w-16">
                   <input
                     required
-                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    className="input-border-color bg-white flex h-full w-full flex-col items-center justify-center rounded-xl px-5 text-center text-lg outline-none"
                     {...form.getInputProps('i3')}
                   />
                 </div>
-                <div className="w-16 h-16 mx-5">
+                <div className="mx-5 h-16 w-16">
                   <input
                     required
-                    className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl input-border-color text-lg bg-white"
+                    className="input-border-color bg-white flex h-full w-full flex-col items-center justify-center rounded-xl px-5 text-center text-lg outline-none"
                     {...form.getInputProps('i4')}
                   />
                 </div>
@@ -94,12 +103,9 @@ export default function OTP() {
                   <ButtonPrimary type="submit">Verify Account</ButtonPrimary>
                 </Center>
 
-                <p className="text-dimmed text-sm text-center text-color mt-5">
+                <p className="text-dimmed text-color mt-5 text-center text-sm">
                   Did not receive the code?{' '}
-                  <button
-                    className="text-orange-500"
-                    onClick={resendCode}
-                  >
+                  <button className="text-orange-500" onClick={resendCode}>
                     Resend code
                   </button>
                 </p>

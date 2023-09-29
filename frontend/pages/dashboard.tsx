@@ -36,11 +36,14 @@ const Dashboard = () => {
         });
   }, []);
 
-  const filteredPdfs = pdfs.filter(
-    (pdf) =>
-      pdf.description.toLowerCase().includes(debounced.toLowerCase()) ||
-      pdf.title.toLowerCase().includes(debounced.toLowerCase())
-  );
+  const filtering = (pdfs: []) => {
+    const filteredPdfs = pdfs.filter(
+      (pdf) =>
+        pdf.description.toLowerCase().includes(debounced.toLowerCase()) ||
+        pdf.title.toLowerCase().includes(debounced.toLowerCase())
+    );
+    return filteredPdfs;
+  };
 
   const [modalOpened, setModalOpened] = useState(false);
 
@@ -49,9 +52,10 @@ const Dashboard = () => {
       try {
         let profile = JSON.parse(localStorage.getItem('profile') || '{}');
         let userId = profile.id;
-        const res = await fetch('/api/pdfs?userId=' + userId,{
+        const res = await fetch('/api/pdfs?userId=' + userId, {
           headers: {
-             'Authorization': localStorage.getItem('token') || ''},
+            Authorization: localStorage.getItem('token') || '',
+          },
         });
         const data = await res.json();
         setPdfs(data);
@@ -63,7 +67,6 @@ const Dashboard = () => {
     };
     func();
   }, []);
-
 
   return (
     <>
@@ -97,11 +100,13 @@ const Dashboard = () => {
                   className="w-full max-w-md"
                 />
               )}
-              <div className="flex w-full flex-col items-center justify-center">
-                {filteredPdfs.map((pdf, index) => (
-                  <PdfCard pdf={pdf} key={pdf.id} self={true} />
-                ))}
-              </div>
+              {pdfs.length > 0 && (
+                <div className="flex w-full flex-col items-center justify-center">
+                  {filtering(pdfs).map((pdf, index) => (
+                    <PdfCard pdf={pdf} key={pdf.id} self={true} />
+                  ))}
+                </div>
+              )}
             </Center>
 
             {/* End centering */}

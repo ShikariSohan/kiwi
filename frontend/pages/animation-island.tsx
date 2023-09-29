@@ -22,21 +22,20 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Header />
-      <div 
-      style={{
-        backgroundColor: '#EEEFF2',
-        height: '95vh',
-        width: '100vw',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
+      <div
+        style={{
+          backgroundColor: '#EEEFF2',
+          height: '97vh',
+          width: '100vw',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
-      <AnimationCanvas/>
+        <AnimationCanvas />
       </div>
-     
+
       <Footer />
-    
     </div>
   );
 }

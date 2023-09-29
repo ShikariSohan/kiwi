@@ -137,34 +137,6 @@ export default function Sidebar() {
                   </span>
                 </Link>
               </li>
-
-              <li className="px-5 pt-5">
-                <div className="flex h-8 flex-row items-center">
-                  <div className="text-sidebar-header font-light tracking-wide">
-                    Play & Explore
-                  </div>
-                </div>
-              </li>
-              <li>
-                <Link
-                  href="/pop-count"
-                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
-                >
-                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
-                    <img
-                      src="/dashboard/5.png"
-                      className=" h-7 w-7"
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <span
-                    className="text-sidebar ml-2 truncate tracking-wide"
-                    style={{ zIndex: 10 }}
-                  >
-                    Pop Count
-                  </span>
-                </Link>
-              </li>
               <li>
                 <Link
                   href="/chat-buddy"
@@ -185,6 +157,35 @@ export default function Sidebar() {
                   </span>
                 </Link>
               </li>
+
+              <li className="px-5 pt-5">
+                <div className="flex h-8 flex-row items-center">
+                  <div className="text-sidebar-header font-light tracking-wide">
+                    Play & Explore
+                  </div>
+                </div>
+              </li>
+              <li>
+                <Link
+                  href="/pop-count"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
+                >
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
+                    <img
+                      src="/dashboard/10.png"
+                      className=" h-7 w-7"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
+                    Pop Count
+                  </span>
+                </Link>
+              </li>
+
               <li>
                 <Link
                   href="/picture-puzzle"
@@ -192,7 +193,7 @@ export default function Sidebar() {
                 >
                   <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/6.png"
+                      src="/dashboard/9.png"
                       className=" h-7 w-7"
                       aria-hidden="true"
                     />
@@ -212,7 +213,7 @@ export default function Sidebar() {
                 >
                   <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/6.png"
+                      src="/dashboard/11.png"
                       className=" h-7 w-7"
                       aria-hidden="true"
                     />
@@ -221,7 +222,7 @@ export default function Sidebar() {
                     className="text-sidebar ml-2 truncate tracking-wide"
                     style={{ zIndex: 10 }}
                   >
-                    Animation Island
+                    Anim-land
                   </span>
                 </Link>
               </li>
@@ -232,7 +233,7 @@ export default function Sidebar() {
                 >
                   <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
-                      src="/dashboard/6.png"
+                      src="/dashboard/12.png"
                       className=" h-7 w-7"
                       aria-hidden="true"
                     />
@@ -281,7 +282,7 @@ export default function Sidebar() {
                     localStorage.removeItem('token');
                   }}
                   className="fixed flex h-11 flex-row items-center pr-6 focus:outline-none"
-                  style={{ marginTop: '350px' }}
+                  style={{ marginTop: '200px' }}
                 >
                   <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
