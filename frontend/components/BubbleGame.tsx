@@ -108,8 +108,6 @@ const BubbleGame = (props: any) => {
         }
       }
       f();
-
-
     }
   },[currentScore])
   const preload = (p5:p5Types) => {
