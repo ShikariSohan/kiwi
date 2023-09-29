@@ -22,7 +22,7 @@ const AvatarBot: React.FC = () => {
   const [botVideos, setBotVideos] = useState(
     Math.floor(Math.random() * 2) === 1
       ? { type: 'monkey', phase: 3 }
-      : { type: 'baby', phase: 4 }
+      : { type: 'baby', phase: 3 }
   );
 
   const { transcript, resetTranscript } = useSpeechRecognition();
@@ -66,13 +66,15 @@ const AvatarBot: React.FC = () => {
       if (botVideos.type === 'baby') {
         u.voice = synth
           .getVoices()
-          .find((voice) => voice.lang.includes('zh-TW'));
+          .find((voice) => voice.lang.includes('hi-IN'));
         u.pitch = 1.3;
         u.rate = 0.9;
       } else {
         u.voice = synth
           .getVoices()
-          .find((voice) => voice.lang.includes('en-US'));
+          .find((voice) =>
+            voice.name.includes('Microsoft Mark - English (United States)')
+          );
         u.pitch = 0.7;
         u.rate = 1;
       }
@@ -172,16 +174,22 @@ const AvatarBot: React.FC = () => {
         <Center
           style={{
             width: '100vw',
-            maxHeight: '100vh',
+            height: '100vh',
             flexDirection: 'column',
-            paddingTop: '7%',
           }}
         >
-          <Center>
+          <Center
+            style={{
+              flexDirection: 'column',
+              paddingTop: '7%',
+            }}
+          >
             <video
               ref={videoRef}
               autoPlay={true}
               id="v0"
+              height={500}
+              width={1250}
               preload="preload"
               className="sticky top-0"
               muted
