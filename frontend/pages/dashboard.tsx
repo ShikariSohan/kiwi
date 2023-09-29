@@ -17,6 +17,7 @@ const Dashboard = () => {
   const [value, setValue] = useState('');
   const [debounced] = useDebouncedValue(value, 200, { leading: true });
   const [pdfs, setPdfs] = useState<PdfData[]>([]);
+  const [filteredpdf, setFilterpdf] = useState<PdfData[]>([]);
   const [profile, setProfile] = useState<any>({
     name: 'Loading...',
     age: 'Loading...',
@@ -36,15 +37,6 @@ const Dashboard = () => {
         });
   }, []);
 
-  const filtering = (pdfs: []) => {
-    const filteredPdfs = pdfs.filter(
-      (pdf) =>
-        pdf.description.toLowerCase().includes(debounced.toLowerCase()) ||
-        pdf.title.toLowerCase().includes(debounced.toLowerCase())
-    );
-    return filteredPdfs;
-  };
-
   const [modalOpened, setModalOpened] = useState(false);
 
   useEffect(() => {
@@ -58,7 +50,8 @@ const Dashboard = () => {
           },
         });
         const data = await res.json();
-        setPdfs(data);
+        if (data) setPdfs(data);
+        // setFilterpdf(data);
         console.log(data);
       } catch (err) {
         console.log(err);
@@ -67,6 +60,15 @@ const Dashboard = () => {
     };
     func();
   }, []);
+
+  useEffect(() => {
+    const fpdf = pdfs.filter(
+      (pdf) =>
+        pdf.description.toLowerCase().includes(debounced.toLowerCase()) ||
+        pdf.title.toLowerCase().includes(debounced.toLowerCase())
+    );
+    setFilterpdf(fpdf);
+  }, [debounced]);
 
   return (
     <>
@@ -100,13 +102,12 @@ const Dashboard = () => {
                   className="w-full max-w-md"
                 />
               )}
-              {pdfs.length > 0 && (
-                <div className="flex w-full flex-col items-center justify-center">
-                  {filtering(pdfs).map((pdf, index) => (
-                    <PdfCard pdf={pdf} key={pdf.id} self={true} />
+              <div className="flex w-full flex-col items-center justify-center">
+                {filteredpdf &&
+                  filteredpdf.map((pdf, index) => (
+                    <PdfCard pdf={pdf} self={true} key={index} />
                   ))}
-                </div>
-              )}
+              </div>
             </Center>
 
             {/* End centering */}

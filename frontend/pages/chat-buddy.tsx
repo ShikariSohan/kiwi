@@ -90,7 +90,7 @@ export default function Home() {
       <Layout>
         <div
           style={{
-            height: '100%',
+            height: '89%',
             width: '100%',
             backgroundImage: 'url("/assets/owl.gif")', // Your background image URL
             backgroundSize: 'auto 50%', // Auto width, full height
@@ -105,7 +105,7 @@ export default function Home() {
             }}
           >
             <div
-              className="mt-15 custom-scrollbar max-h-[80vh] overflow-y-auto" // Add these CSS classes for scrolling
+              className="t-15 custom-scrollbar max-h-[80vh] overflow-y-auto" // Add these CSS classes for scrolling
               style={{ width: '100%' }}
             >
               <Chat

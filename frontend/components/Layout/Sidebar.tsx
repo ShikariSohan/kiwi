@@ -282,7 +282,6 @@ export default function Sidebar() {
                     localStorage.removeItem('token');
                   }}
                   className="fixed flex h-11 flex-row items-center pr-6 focus:outline-none"
-                  style={{ marginTop: '200px' }}
                 >
                   <span className="ml-4 mr-4 inline-flex items-center justify-center">
                     <img
@@ -293,10 +292,10 @@ export default function Sidebar() {
                   </span>
                   <span
                     className="text-sidebar ml-2 truncate tracking-wide"
-                    style={{ zIndex: 10 }}
+                    style={{ zIndex: 10, color: 'red' }}
                     onClick={() => {
                       localStorage.removeItem('token');
-                      localStorage.removeItem('profile');
+                      // localStorage.removeItem('profile');
                       window.location.href = '/';
                     }}
                   >

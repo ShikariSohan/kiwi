@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Story Magic | Kiwi</title>
+        <title>Magical Story | Kiwi</title>
       </Head>
       <Layout>
         <div style={{ minHeight: '89vh', width: '100%', paddingTop: '100px' }}>

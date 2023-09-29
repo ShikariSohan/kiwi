@@ -188,8 +188,7 @@ const AvatarBot: React.FC = () => {
               ref={videoRef}
               autoPlay={true}
               id="v0"
-              height={500}
-              width={1250}
+              width={1100}
               preload="preload"
               className="sticky top-0"
               muted
