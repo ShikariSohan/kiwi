@@ -22,6 +22,13 @@ export default function PdfCard({
     setPlaying(true);
 
     const u = new SpeechSynthesisUtterance(pdf.description);
+    u.voice = synth
+      .getVoices()
+      .find((voice) =>
+        voice.name.includes('Microsoft Zira - English (United States)')
+      );
+    u.pitch = 1;
+    u.rate = 0.7;
     synth.speak(u);
   };
   const pause = () => {
@@ -46,9 +53,7 @@ export default function PdfCard({
   };
   return (
     <Card
-      shadow="sm"
       radius="md"
-      withBorder
       style={{
         width: '70%',
         height: '10vh',
@@ -56,7 +61,7 @@ export default function PdfCard({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#f1faee',
+        backgroundColor: '#e2ece9',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
