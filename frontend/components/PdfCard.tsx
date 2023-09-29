@@ -35,6 +35,22 @@ export default function PdfCard({
     synth.cancel();
     setPlaying(false);
   };
+  const deletePdf = async (id: string) => {
+    try {
+      const res = await fetch('/api/pdfs?pdfId=' + id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token') || '',
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Card
       radius="md"
@@ -57,7 +73,9 @@ export default function PdfCard({
 
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
         {self && (
-          <button onClick={play}>
+          <button onClick={()=>{
+            deletePdf(pdf.id);
+          }}>
             <IconTrash className="text-white icon-button right-0 h-8 w-8 rounded-full p-1 hover:cursor-pointer hover:opacity-80" />
           </button>
         )}

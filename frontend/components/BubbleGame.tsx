@@ -6,9 +6,10 @@ import { map, random, sortedIndexOf } from "lodash";
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
     ssr: false,
 });
+import axios from "axios";
 import { useEffect } from "react";
 let cnv: any;
-let ww = 900;
+let ww = 700;
 let hh = ww;
 let startGame: any;
 let modeSelect:any;
@@ -23,7 +24,7 @@ let bubbleColors = ["#ff0054","#390099","#ff5400","#ffbd00"]
 let score = 0;
 let missed = 0;
 let started = false;
-let reStart : any;
+let scoreShow:any;
 class Bubble {
     x: number;
     y: number;
@@ -60,7 +61,7 @@ class Bubble {
     shrink() {
         if(this.r > minBubble)
         {
-          this.r = this.r - 0.1;
+          this.r = this.r - 0.2;
         }
         
     }
@@ -75,12 +76,40 @@ class Bubble {
     }
 }
 const BubbleGame = (props: any) => {
-  const [highScore,setHighScore] = useState(0);
-  const [currentScore,setCurrentScore] = useState(0);
+  const [highScore,setHighScore] = useState(0.0);
+  const [currentScore,setCurrentScore] = useState(0.0);
   useEffect(()=>{
+    const token = localStorage.getItem('token') || '';
+    let profile = JSON.parse(localStorage.getItem('profile') || '{}');
+    if(!token || !profile.id) {
+      window.location.href = '/login';
+      return
+    }
     if(currentScore>highScore)
-    {
-      console.log("Need to work here");
+    {     
+      setHighScore(currentScore);
+      profile.highScore = currentScore;
+      console.log(profile);
+      localStorage.setItem('profile',JSON.stringify(profile));
+      const f = async () => {
+        try {
+          const res = await axios.put(
+            '/api/profiles',
+            profile,
+            {
+              headers: {
+                Authorization: `${token}`,
+              },
+            }
+          );
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      f();
+
+
     }
   },[currentScore])
   const preload = (p5:p5Types) => {
@@ -94,11 +123,18 @@ const BubbleGame = (props: any) => {
   }
   const setup = (p5:p5Types, canvasParentRef:Element) => {
    cnv = p5.createCanvas(ww, hh).parent(canvasParentRef);
+    let canvasX = (p5.displayWidth - ww) / 2;
+    let canvasY = (p5.displayHeight - hh) / 2 - 40;
+    cnv.position(canvasX+150, canvasY);
+
    startGame = p5.createButton("Start");
+   startGame.position(canvasX+100+ww/2,canvasY+hh+20);
+   startGame.addClass(picturepuzle.customBtn);
    timer = 0;
    p5.frameRate(frameCount);
    modeSelect = p5.createSelect();
-   modeSelect.parent(canvasParentRef);
+   modeSelect.addClass(picturepuzle.classyDropdown);
+   modeSelect.position(canvasX+150,canvasY+hh+20);
    modeSelect.option("30 sec",20);
    modeSelect.option("45 sec",45);
    modeSelect.option("60 sec",60);
@@ -109,31 +145,19 @@ const BubbleGame = (props: any) => {
    })
   
    startGame.mousePressed(()=>{
-        started = true;
-        modeSelect.disable();
-        p5.loop();
+        if(started) {
+          started = false;
+          return;
+        }
+        else {
+          started = true;
+          gameInit(p5);
+          modeSelect.disable();
+          p5.loop();
+        }
    });
-    startGame.parent(canvasParentRef);
-    reStart = p5.createButton("Restart");
-    reStart.parent(canvasParentRef);
-    reStart.mousePressed(()=>{
-      
-      score = 0;
-      missed = 0;
-      started = true;
-      let num = p5.random(6,17);
-      bubbles = [];
-      timer = p5.frameCount;
-      for(let i = 0; i < 10; i++){
-       bubbles[i] = new Bubble(p5.random(p5.width),p5.random(p5.height),minBubble+num+2,num,p5);
-   }
-      p5.frameRate(frameCount);
-      p5.loop();
-    });
-   let num = p5.random(6,17);
-   for(let i = 0; i < 10; i++){
-       bubbles[i] = new Bubble(p5.random(p5.width),p5.random(p5.height),minBubble+num+2,num,p5);
-   }
+  
+   
 
     cnv.mousePressed(()=>{
         for(let i = 0; i < bubbles.length; i++){
@@ -145,6 +169,20 @@ const BubbleGame = (props: any) => {
     });
  
   }
+function gameInit(p5:p5Types)
+{
+  score = 0;
+  missed = 0;
+  started = true;
+  let num = p5.random(6,17);
+  bubbles = [];
+  timer = p5.frameCount;
+  for(let i = 0; i < 7; i++){
+   bubbles[i] = new Bubble(p5.random(p5.width),p5.random(p5.height),minBubble+num+2,num,p5);
+}
+  p5.frameRate(frameCount);
+  p5.loop();
+}
 
 const draw = (p5:p5Types) => {
     Bg.resize(ww,hh);
@@ -175,7 +213,7 @@ const draw = (p5:p5Types) => {
           }
       }
       let num = p5.random(6,17);
-      if(p5.frameCount % 10 == 0){
+      if(p5.frameCount % 30 == 0){
         bubbles.push(new Bubble(p5.random(p5.width),p5.random(p5.height),minBubble+num+2,num,p5));
         num = p5.random(6,17);
         bubbles.push(new Bubble(p5.random(p5.width),p5.random(p5.height),minBubble+num+2,num,p5));
@@ -185,10 +223,14 @@ const draw = (p5:p5Types) => {
     }
     else {
       drawFinalScore(p5);
+      p5.noLoop();
     }
     
 };
 function drawScore(p5:p5Types) {
+ 
+  startGame.addClass(picturepuzle.classyStartButton);
+  startGame.removeClass(picturepuzle.buttonHide);
   let total = score;
   let missedScore = missed;
 
@@ -208,6 +250,7 @@ function drawScore(p5:p5Types) {
   let missedX = p5.width - 10; // 10 pixels from the right edge
   let missedY = totalY + 30; // 30 pixels below the total score
   p5.text(`Missed: ${missedScore}`, missedX, missedY);
+ 
 }
 
 function drawTimer(p5:p5Types,rem:number)
@@ -235,6 +278,8 @@ function calculateElapsedTime(frameCount:number, frameRate:number, offset:number
     return elapsedTime;
 }
 function drawFinalScore(p5:p5Types){
+  modeSelect.enable();
+  scoreShow.html("High Score: "+highScore+"%");
   p5.textAlign(p5.CENTER, p5.CENTER);
   
   for(let i = 0;i<bubbles.length;i++)

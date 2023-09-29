@@ -1,11 +1,8 @@
 package org.aviato.javafest.controller;
-
-import io.github.cdimascio.dotenv.Dotenv;
-import io.github.cdimascio.dotenv.DotenvEntry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.imaging.ImageReadException;
+import org.aviato.javafest.config.ConfigProperties;
 import org.aviato.javafest.model.ImageBody;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
@@ -13,23 +10,20 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.Optional;
-import java.util.Properties;
 
 @RestController
 @RequestMapping("/api")
 @Slf4j
 public class HandWrittenController {
     private static final String API_URL = "https://api-inference.huggingface.co/models/microsoft/trocr-base-handwritten";
-
-
+    private final ConfigProperties configProperties;
+    public HandWrittenController( ConfigProperties configProperties) {
+        this.configProperties = configProperties;
+    }
     @PostMapping
     public ResponseEntity<String> getHandWritten(@RequestBody ImageBody imageBody) throws IOException, ImageReadException {
         String base64Image = imageBody.getImage();
-
-        Dotenv dotenv = Dotenv.configure().load();
-        String API_TOKEN = dotenv.get("APIKEY");
-        log.info("API_TOKEN: {}", API_TOKEN);
+        String API_TOKEN = configProperties.APIKEY();
         if (base64Image == null) {
             return ResponseEntity.badRequest().body("Please send a valid image");
         }

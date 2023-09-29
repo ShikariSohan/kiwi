@@ -20,4 +20,12 @@ public class PdfService {
     public List<Pdf> getAllPdf() {
         return pdfRepository.findAll();
     }
+
+    public List<Pdf> getAllPdfByUserId(String userid) {
+        return pdfRepository.findAllByUserId(userid);
+    }
+
+    public void deletePdf(String id) {
+        pdfRepository.deleteById(id);
+    }
 }

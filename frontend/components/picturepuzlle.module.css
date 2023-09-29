@@ -13,15 +13,89 @@
   .classyButton:hover {
     background-color: #2980b9; /* Darker blue on hover */
   }
-  /* Define styles for the dropdown */
+.classyHeader{
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+}
+.classyRadio{
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+
+}
+.classyRadio label {
+    margin-left: 10px;
+}
 .classyDropdown {
-  /* Add your desired styles here */
-  width: 150px; /* Adjust the width */
-  padding: 5px;
-  border: 1px solid #ccc; /* Add a border */
-  border-radius: 5px;
-  background-color: #fff; /* Background color */
-  color: #333; /* Text color */
-  font-size: 16px;
-  cursor: pointer; /* Add a pointer cursor on hover */
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.classyTimer {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #3e5536;
+
+}
+.classyStartButton {
+   font-size: 20px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #3e5536;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.classyStartButton:hover {
+    background-color: #3e5536;
+    color: #ffffff;
+}
+
+.classySelect {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.scoreCard {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3e5536;
+    text-align: center;
+    padding: 2px
+}
+.customBtn {
+    padding-top: 1rem; /* py-3 */
+    padding-bottom: 1rem; /* lg:py-4 */
+    padding-left: 3rem; /* px-12 */
+    padding-right: 4rem; /* lg:px-16 */
+    color: #ffffff; /* text-white-500 */
+    font-weight: 600; /* font-semibold */
+    border-radius: 0.5rem; /* rounded-lg */
+    background-color: #a7c957;
+    box-shadow: 0 4px 6px rgba(126, 25, 25, 0.1);
+    transition: all; /* transition-all */
+    outline: none; /* outline-none */
+}
+.customBtn:hover {
+    background-color: #6c584c/* custom-btn-bg-color:hover */;
+    box-shadow: 0 4px 6px rgba(126, 25, 25, 0.1); /* custom-btn-shadow */
 }

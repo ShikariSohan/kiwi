@@ -21,7 +21,7 @@ type Data = {
 
 
 function generatePrompt(message: string) {
-  return `generate a story from the given prompt with title for 5-6 years old boy. the story should be minimal, short in length, easy vocabulary and interesting. the output should be as the following:
+  return `generate a story from the given prompt with title. the story should be minimal, short in length, easy vocabulary and interesting. the output should be as the following:
   Title: {story title} 
   Story: 
   ...the story and rest
@@ -38,13 +38,14 @@ export default async function handler(
 ) {
   try {
     const content = req.body.content;
+    const profile = req.body.profile;
 
     if (!content) {
       console.log('Missing content');
       return res.status(defaultErrorStatus).json({ error: 'Missing Content' });
     }
-
-    let prompt = generatePrompt(content);
+    let pre =    "Remeber you are dealing with a child. Age is "+ profile.age + "years old. And gender is "+ profile.gender +". ";
+    let prompt = `${pre} ${generatePrompt(content)}`;
     console.log({ prompt });
 
     const method = req.method;

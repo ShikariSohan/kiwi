@@ -1,5 +1,6 @@
 package org.aviato.javafest.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aviato.javafest.model.Profile;
 import org.aviato.javafest.service.ProfileService;
 import org.aviato.javafest.utils.JwtUtils;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("api/profile")
 public class ProfileController {
     private final ProfileService profileService;
@@ -27,6 +29,8 @@ public class ProfileController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         profile.setUserId(userId);
+        profile.setBubble("0.0");
+        profile.setPuzzle("0.0");
         profileService.createProfile(profile);
         return ResponseEntity.ok(profile);
     }
@@ -73,6 +77,7 @@ public class ProfileController {
     }
     @PutMapping("/update")
     public ResponseEntity<Profile> updateProfileById(@RequestBody Profile profile, @RequestHeader("Authorization") String token){
+        log.info("update profile",profile);
         String userId = jwtUtils.validateToken(token);
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -85,7 +90,6 @@ public class ProfileController {
         if(!profile1.getUserId().equals(userId)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        profile.setId(id);
         profile.setUserId(userId);
         profileService.updateProfileById(profile);
         return ResponseEntity.ok(profile);

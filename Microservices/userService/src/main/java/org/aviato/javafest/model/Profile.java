@@ -18,4 +18,6 @@ public class Profile {
     private String gender;
     private String avatar;
     private String userId;
+    private String puzzle;
+    private String bubble;
 }

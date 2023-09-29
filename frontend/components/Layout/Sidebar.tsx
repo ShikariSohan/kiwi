@@ -147,7 +147,7 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link
-                  href="/animation"
+                  href="/pop-count"
                   className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
                 >
                   <span className="ml-4 mr-4 inline-flex items-center justify-center">
@@ -161,7 +161,7 @@ export default function Sidebar() {
                     className="text-sidebar ml-2 truncate tracking-wide"
                     style={{ zIndex: 10 }}
                   >
-                    Animation
+                    Pop Count
                   </span>
                 </Link>
               </li>
@@ -182,6 +182,66 @@ export default function Sidebar() {
                     style={{ zIndex: 10 }}
                   >
                     Chat Buddy
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/picture-puzzle"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
+                >
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
+                    <img
+                      src="/dashboard/6.png"
+                      className=" h-7 w-7"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
+                    Picture Puzzle
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/animation-island"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
+                >
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
+                    <img
+                      src="/dashboard/6.png"
+                      className=" h-7 w-7"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
+                    Animation Island
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/fun-cam"
+                  className="hover:bg-gray-50 relative flex h-11 flex-row items-center pr-6 focus:outline-none"
+                >
+                  <span className="ml-4 mr-4 inline-flex items-center justify-center">
+                    <img
+                      src="/dashboard/6.png"
+                      className=" h-7 w-7"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span
+                    className="text-sidebar ml-2 truncate tracking-wide"
+                    style={{ zIndex: 10 }}
+                  >
+                    Fun Cam
                   </span>
                 </Link>
               </li>
@@ -233,6 +293,11 @@ export default function Sidebar() {
                   <span
                     className="text-sidebar ml-2 truncate tracking-wide"
                     style={{ zIndex: 10 }}
+                    onClick={() => {
+                      localStorage.removeItem('token');
+                      localStorage.removeItem('profile');
+                      window.location.href = '/';
+                    }}
                   >
                     Logout
                   </span>

@@ -46,15 +46,10 @@ export default async function handler(
 
       break;
     case 'PUT':
-      const putBody = {
-        name : req.body.name,
-        age : req.body.age,
-        gender : req.body.gender,
-        id:req.body.id
-      }
+     
       const putUrl = process.env.USER_SERVICE_BASEURL + '/api/profile/update';
       try {
-        const axiosRes = await axios.put(putUrl, putBody, {
+        const axiosRes = await axios.put(putUrl, req.body, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: req.headers.authorization,

@@ -5,7 +5,7 @@ import p5Types from 'p5'; //Import this for typechecking and intellisense
 const Sketch = dynamic(() => import('react-p5').then((mod) => mod.default), {
   ssr: false,
 });
-
+import picturepuzle from "./picturepuzlle.module.css";
 let x = 50;
 let y = 50;
 let cnv: any;
@@ -48,8 +48,6 @@ class Bubble {
         this.zooming_dir = 1;
       }
     }
-    //this.height = this.height + 3;
-    //this.width = this.width + 3;
   }
 
   slide() {
@@ -90,26 +88,34 @@ class Bubble {
 let button: any;
 let dropDown: any;
 let imageSelect: any;
-let startAnimation: any;
-let stopAnimation: any;
+let ww = 700;
+let hh = 700;
 const assets = ['star', 'book', 'castle', 'editor', 'trolley', 'love'];
 let loadedAssets: { image: any; name: string }[] = [];
 let capturer: any;
 
 const AnimationCanvas = (props: any) => {
   const setup = (p5: p5Types, canvasParentRef: Element) => {
-    cnv = p5.createCanvas(700, 700).parent(canvasParentRef);
+    cnv = p5.createCanvas(ww,hh).parent(canvasParentRef);
+    let canvasX = p5.displayWidth / 2 - p5.width / 2;
+    let canvasY = p5.displayHeight / 2 - p5.height / 2;
+    cnv.position(canvasX+150, canvasY-50);
+    button = p5.createButton('Save Image');
+    button.mousePressed(() => {
+      p5.saveCanvas(cnv, 'myCanvas', 'jpg');
+    }
+    );
 
-    button = p5.createButton('Add Bubble');
-    startAnimation = p5.createButton('Start Animation');
-    stopAnimation = p5.createButton('Stop Animation');
-    startAnimation.position(0, 450);
-    stopAnimation.position(0, 500);
 
     dropDown = p5.createSelect();
+    dropDown.addClass(picturepuzle.classyDropdown);
     imageSelect = p5.createSelect();
+   
     colorPicker = p5.createColorPicker('#ed225d');
-    colorPicker.position(0, 550);
+    
+    colorPicker.position(canvasX+ww+100, canvasY+hh-20);
+
+    imageSelect.option('Select Image');
     for (let i = 0; i < assets.length; i++) {
       loadedAssets.push({
         name: assets[i],
@@ -117,33 +123,47 @@ const AnimationCanvas = (props: any) => {
       });
       imageSelect.option(assets[i].toUpperCase());
     }
-    startAnimation.mousePressed(() => {});
+
+    dropDown.option('Select Action');
     dropDown.option('Vibrate');
     dropDown.option('Zoom');
     dropDown.option('Slide');
     dropDown.changed(() => {
       console.log(dropDown.value());
     });
+    dropDown.position(canvasX+150, canvasY+hh-40);
 
     imageSelect.changed(() => {
       console.log(imageSelect.value());
       console.log('HERE');
     });
-    imageSelect.position(0, 600);
-    dropDown.position(0, 650);
-    button.position(0, 700);
+    imageSelect.position(canvasX+150, canvasY+hh+10);
+    imageSelect.addClass(picturepuzle.classyDropdown);
+    
+    button.position(canvasX+(ww/2)+80, canvasY+hh-40);
     button.mousePressed(() => {
-      p5.saveCanvas(cnv, 'myCanvas', 'gif');
+      p5.saveCanvas(cnv, 'myCanvas', 'jpg');
     });
+    button.addClass(picturepuzle.customBtn);
+
+
 
     cnv.mousePressed(() => {
+      if(imageSelect.value() == 'Select Image'){
+        alert('Select Image');
+        return;
+      }
+      if(dropDown.value() == 'Select Action'){
+        alert('Select Action');
+        return;
+      }
       let img;
       for (let i = 0; i < loadedAssets.length; i++) {
         if (loadedAssets[i].name == imageSelect.value().toLowerCase()) {
           img = loadedAssets[i].image;
         }
       }
-      // check overlap with other bubbles
+    
       let overlapping = false;
       for (let i = 0; i < bubbles.length; i++) {
         let other = bubbles[i];
@@ -170,9 +190,6 @@ const AnimationCanvas = (props: any) => {
       bubbles[i].move();
       bubbles[i].show();
     }
-    const addBubble = (p5: p5Types) => {
-      p5.saveCanvas(cnv, 'myCanvas', 'jpg');
-    };
   };
 
   return <Sketch setup={setup} draw={draw} />;
