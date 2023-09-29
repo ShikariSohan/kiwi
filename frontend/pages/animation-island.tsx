@@ -25,7 +25,7 @@ export default function Home() {
       <div
         style={{
           backgroundColor: '#EEEFF2',
-          height: '97vh',
+          height: '95vh',
           width: '100vw',
           display: 'flex',
           justifyContent: 'center',

@@ -88,8 +88,8 @@ class Bubble {
 let button: any;
 let dropDown: any;
 let imageSelect: any;
-let ww = 600;
-let hh = 600;
+let ww = 700;
+let hh = 700;
 const assets = [
   'camera',
   'castle',
@@ -109,7 +109,7 @@ const AnimationCanvas = (props: any) => {
     cnv = p5.createCanvas(ww, hh).parent(canvasParentRef);
     let canvasX = p5.displayWidth / 2 - p5.width / 2;
     let canvasY = p5.displayHeight / 2 - p5.height / 2;
-    cnv.position(canvasX + 150, canvasY + 50);
+    cnv.position(canvasX + 150, canvasY - 50);
     button = p5.createButton('Save Image');
     button.mousePressed(() => {
       p5.saveCanvas(cnv, 'myCanvas', 'jpg');
@@ -121,13 +121,13 @@ const AnimationCanvas = (props: any) => {
 
     colorPicker = p5.createColorPicker('#ed225d');
 
-    colorPicker.position(canvasX + ww + 100, canvasY + hh + 60);
+    colorPicker.position(canvasX + ww + 100, canvasY + hh - 20);
 
     imageSelect.option('Select Image');
     for (let i = 0; i < assets.length; i++) {
       loadedAssets.push({
         name: assets[i],
-        image: p5.loadImage(`/preAsset/${assets[i]}.gif`),
+        image: p5.loadImage(`/animland/${assets[i]}.gif`),
       });
       imageSelect.option(assets[i].toUpperCase());
     }
@@ -139,16 +139,16 @@ const AnimationCanvas = (props: any) => {
     dropDown.changed(() => {
       console.log(dropDown.value());
     });
-    dropDown.position(canvasX + 150, canvasY + hh + 60);
+    dropDown.position(canvasX + 150, canvasY + hh - 40);
 
     imageSelect.changed(() => {
       console.log(imageSelect.value());
       console.log('HERE');
     });
-    imageSelect.position(canvasX + 150, canvasY + hh + 110);
+    imageSelect.position(canvasX + 150, canvasY + hh + 10);
     imageSelect.addClass(picturepuzle.classyDropdown);
 
-    button.position(canvasX + ww / 2 + 80, canvasY + hh + 60);
+    button.position(canvasX + ww / 2 + 80, canvasY + hh - 40);
     button.mousePressed(() => {
       p5.saveCanvas(cnv, 'myCanvas', 'jpg');
     });

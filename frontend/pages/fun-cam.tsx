@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import FunnyImage from '@/components/FunnyImage';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
-import Layout from '@/components/Layout/Layout';
 export default function Home() {
   return (
     <div>
@@ -16,21 +15,20 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Header />
-      <Layout>
-        <div
-          style={{
-            backgroundColor: '#EEEFF2',
-            height: '100vh',
-            width: '100vw',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingBottom: '5%',
-          }}
-        >
-          <FunnyImage />
-        </div>
-      </Layout>
+      <div
+        style={{
+          backgroundColor: '#EEEFF2',
+          height: '95vh',
+          width: '100vw',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <FunnyImage />
+      </div>
+
+      <Footer />
     </div>
   );
 }

@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import p5Types from 'p5'; //Import this for typechecking and intellisense
 import picturepuzle from './picturepuzlle.module.css';
 import { map, random, sortedIndexOf } from 'lodash';
-import { Center } from '@mantine/core';
 const Sketch = dynamic(() => import('react-p5').then((mod) => mod.default), {
   ssr: false,
 });
@@ -27,7 +26,7 @@ const FunnyImage = (props: any) => {
     cnv = p5.createCanvas(ww, hh).parent(canvasParentRef);
     let canvasX = (p5.displayWidth - ww) / 2;
     let canvasY = (p5.displayHeight - hh) / 2;
-    cnv.position(canvasX + 150, canvasY + 50);
+    cnv.position(canvasX + 150, canvasY - 50);
     video = p5.createCapture(p5.VIDEO);
     video.size(ww, hh);
     video.hide();
@@ -36,7 +35,7 @@ const FunnyImage = (props: any) => {
     radioSelect.option('Use Default Image');
     radioSelect.selected('Use Default Image');
     radioSelect.addClass(picturepuzle.classySelect);
-    radioSelect.position(canvasX + 150, canvasY + hh + 60);
+    radioSelect.position(canvasX + 150, canvasY + hh - 40);
 
     selectOption = p5.createSelect();
     selectOption.parent(canvasParentRef);
@@ -49,12 +48,12 @@ const FunnyImage = (props: any) => {
     selectOption.option('wavey');
     selectOption.option('ascii');
     selectOption.option('blobZoom');
-    selectOption.position(canvasX + 10 + ww, canvasY + hh + 60);
+    selectOption.position(canvasX + 10 + ww, canvasY + hh - 30);
     selectOption.addClass(picturepuzle.classyDropdown);
 
     saveImg = p5.createButton('Save Image');
     saveImg.addClass(picturepuzle.customBtn);
-    saveImg.position(canvasX + 85 + ww / 2, canvasY + hh + 60);
+    saveImg.position(canvasX + 85 + ww / 2, canvasY + hh - 40);
     saveImg.mousePressed(() => {
       p5.saveCanvas(cnv, 'myCanvas', 'jpg');
     });
@@ -217,13 +216,6 @@ const FunnyImage = (props: any) => {
     //   p5.noLoop();
   };
 
-  return (
-    <Sketch
-      setup={setup}
-      draw={draw}
-      preload={preload}
-      style={{ height: '100%', margin: '5%' }}
-    />
-  );
+  return <Sketch setup={setup} draw={draw} preload={preload} />;
 };
 export default FunnyImage;
