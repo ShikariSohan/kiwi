@@ -43,13 +43,13 @@ This microservices-based project comprises four core services: UserService, PdfS
 
 **WritingService:** This service integrates OCR functionality, accepting images and returning extracted text.  
 
-The project relies on two databases, User and Pdf, closely linked with User and Pdf services. Firebase Cloud Service is also utilized for enhanced functionality.
+The project relies on two databases, User and Pdf, closely linked with User and Pdf services. Firebase Cloud Service is also utilized for enhanced functionality.  
+
 The following diagram visually represents the end-to-end flow of the project, illustrating the interactions between services, databases, and external resources.  
-![System Architecture](https://drive.google.com/file/d/13tXPrDKg0p1VrKQSTYSN4dmstFCSWAeZ/view?usp=sharing)
+![System Architecture](https://github.com/ShikariSohan/kiwi/blob/main/systemKiwi.png)
 
-The following diagram illustrates an example of how a storybook is generated through communication with multiple services in our system.
-![System Architecture](https://drive.google.com/file/d/13tXPrDKg0p1VrKQSTYSN4dmstFCSWAeZ/view?usp=sharing)
-
+The following diagram illustrates an example of how a storybook is generated through communication with multiple services in our system.  
+![Storybook Creaton Flow](https://github.com/ShikariSohan/kiwi/blob/main/storybookFlow.png)
 The project focuses on modularity security, with authentication measures, and load balancing in place to protect user data and ensure a safe user experience.  
 
 ## Technologies and Dependecies  
@@ -66,6 +66,7 @@ The project focuses on modularity security, with authentication measures, and lo
 | Others                     | PDF Creation: [jsPDF](https://www.npmjs.com/package/jspdf)                  |
 
 
+## Installation and Configuration
 
 
 
