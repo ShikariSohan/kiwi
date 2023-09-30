@@ -23,7 +23,7 @@ import {
       initialValues: { age: profile.age, profilename: profile.name, gender: profile.gender },
       validate: {
         age: (value) =>
-          value < 2 || value > 9
+          value < 2 || value > 13
             ? 'The app runs best for kids between 2-12 years old'
             : null,
       },
@@ -40,6 +40,7 @@ import {
         if (!token) {
           window.location.href = '/login';
         } else {
+          console.log(profile.id);
           const res = await axios.put(
             '/api/profiles',
             {
@@ -54,6 +55,7 @@ import {
               },
             }
           );
+          console.log(res);
           window.location.href = '/profiles';
         }
       } catch (err) {

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 export default function Sidebar() {
+  const router = useRouter();
   return (
     <>
       <div className="bg-gray-50 flex min-h-screen flex-auto flex-shrink-0 flex-col antialiased">
@@ -296,7 +298,7 @@ export default function Sidebar() {
                     onClick={() => {
                       localStorage.removeItem('token');
                       // localStorage.removeItem('profile');
-                      window.location.href = '/';
+                      router.push('/');
                     }}
                   >
                     Logout

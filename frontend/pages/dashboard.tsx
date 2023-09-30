@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import ProfileCard from '@/components/profile/ProfileCard';
 import UpdateProfile from '@/components/profile/update-profile';
+import { set } from 'lodash';
 type PdfData = {
   description: string;
   id: string;
@@ -17,7 +18,7 @@ const Dashboard = () => {
   const [value, setValue] = useState('');
   const [debounced] = useDebouncedValue(value, 200, { leading: true });
   const [pdfs, setPdfs] = useState<PdfData[]>([]);
-  const [filteredpdf, setFilterpdf] = useState<PdfData[]>([]);
+  const [filterpdf, setFilterpdf] = useState<PdfData[]>([]); 
   const [profile, setProfile] = useState<any>({
     name: 'Loading...',
     age: 'Loading...',
@@ -26,48 +27,48 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    const prof = localStorage.getItem('profile');
-    return prof
-      ? setProfile(JSON.parse(prof))
-      : setProfile({
-          name: 'Loading...',
-          age: 'Loading...',
-          gender: 'Loading...',
-          id: 'Loading...',
-        });
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+    }
+    let profile = localStorage.getItem('profile') as any;
+
+    if (profile) {
+      setProfile(JSON.parse(profile));
+      profile = JSON.parse(profile);
+    }
+    else {
+      window.location.href = '/login';
+    }
+    const getPdfs = async () => {
+      const res = await fetch(`api/pdfs?userId=${profile.id}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      const data = await res.json();
+      console.log({data});
+      setPdfs(data);
+      setFilterpdf(data);
+    };
+    try {
+      getPdfs();
+    }
+    catch (err) {
+      console.log(err);
+    }
+    
   }, []);
 
   const [modalOpened, setModalOpened] = useState(false);
 
   useEffect(() => {
-    const func = async () => {
-      try {
-        let profile = JSON.parse(localStorage.getItem('profile') || '{}');
-        let userId = profile.id;
-        const res = await fetch('/api/pdfs?userId=' + userId, {
-          headers: {
-            Authorization: localStorage.getItem('token') || '',
-          },
-        });
-        const data = await res.json();
-        if (data) setPdfs(data);
-        // setFilterpdf(data);
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-        setPdfs([]);
-      }
-    };
-    func();
-  }, []);
-
-  useEffect(() => {
-    const fpdf = pdfs.filter(
-      (pdf) =>
-        pdf.description.toLowerCase().includes(debounced.toLowerCase()) ||
-        pdf.title.toLowerCase().includes(debounced.toLowerCase())
+    console.log({ debounced });
+    setFilterpdf(
+      pdfs.filter((pdf) => {
+        return pdf.title.toLowerCase().includes(debounced.toLowerCase()) || pdf.description.toLowerCase().includes(debounced.toLowerCase());
+      })
     );
-    setFilterpdf(fpdf);
   }, [debounced]);
 
   return (
@@ -103,8 +104,8 @@ const Dashboard = () => {
                 />
               )}
               <div className="flex w-full flex-col items-center justify-center">
-                {filteredpdf &&
-                  filteredpdf.map((pdf, index) => (
+                {filterpdf &&
+                  filterpdf.map((pdf, index) => (
                     <PdfCard pdf={pdf} self={true} key={index} />
                   ))}
               </div>

@@ -101,7 +101,9 @@ export default async function handler(
           messages: message,
           model: 'gpt-3.5-turbo',
         };
-        const botUrl = 'http://localhost:8082/api/bot/complete';
+        console.log("Here");
+        const botUrl = process.env.BOT_SERVICE_BASEURL + '/api/bot/complete';
+        
         const axiosRes = await axios.post(botUrl, resBody);
         let data = axiosRes.data;
         data = data.replace('Pretend that you are an English Grammar teacher. Correct the grammatical mistakes in this text. The output should be the corrected text only', '');

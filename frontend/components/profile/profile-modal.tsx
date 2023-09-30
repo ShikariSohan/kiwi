@@ -21,7 +21,7 @@ export default function ProfileModal({
     initialValues: { age: 2, profilename: '', gender: 'male' },
     validate: {
       age: (value) =>
-        value < 2 || value > 9
+        value < 2 || value > 13
           ? 'The app runs best for kids between 2-12 years old'
           : null,
     },

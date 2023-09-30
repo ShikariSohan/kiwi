@@ -7,6 +7,12 @@ import FunnyImage from '@/components/FunnyImage';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 export default function Home() {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+    }
+  }, []);
   return (
     <div>
       <Head>

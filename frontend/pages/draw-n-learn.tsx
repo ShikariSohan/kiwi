@@ -19,6 +19,12 @@ export default function AppShellDemo(props: any) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [AlertText, setAlertText] = useState('Something went wrong!');
   const [alert, setAlert] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+    }
+  }, []);
 
   const handleClick = () => {
     setShowConfetti(true);

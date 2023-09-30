@@ -3,3 +3,7 @@ frontend/.env
 Microservices/writingService/src/main/resources/.env
 Microservices/writingService/src/main/resources/.env
 Microservices/botService/src/main/resources/secrets.properties
+Microservices/botService/src/main/resources/secrets.properties
+Microservices/pdfServer/src/main/resources/secrets.properties
+Microservices/userService/src/main/resources/secrets.properties
+Microservices/writingService/src/main/resources/secrets.properties

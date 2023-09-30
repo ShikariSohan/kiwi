@@ -2,8 +2,15 @@ import Head from 'next/head';
 import ContentEditor from '@/components/ContentEditor';
 import Layout from '@/components/Layout/Layout';
 import { Center } from '@mantine/core';
+import { useEffect } from 'react';
 
 export default function Home() {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+    }
+  }, []);
   return (
     <>
       <Head>

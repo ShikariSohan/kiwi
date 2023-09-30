@@ -8,7 +8,8 @@ const features = [
   'Personalized Experience',
   'Generate a Visual or Audio Storybook with Chatbot Prompt',
   'Early-stage Writing Practice',
-  'Voice Modulation for Musical Fun',
+  'Funny Camera',
+  'Interactive game section',
   'Interactive Question-Answer Chatbot',
 ];
 

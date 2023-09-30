@@ -46,7 +46,7 @@ export default async function handler(
 
       break;
     case 'PUT':
-     
+     console.log("Here profile");
       const putUrl = process.env.USER_SERVICE_BASEURL + '/api/profile/update';
       try {
         const axiosRes = await axios.put(putUrl, req.body, {

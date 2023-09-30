@@ -75,20 +75,16 @@ class Bubble {
         }
     }
 }
-const BubbleGame = (props: any) => {
-  const [highScore,setHighScore] = useState(0.0);
+const BubbleGame = ({profile}:{profile:any}) => {
+  const [highScore,setHighScore] = useState(profile.bubble);
   const [currentScore,setCurrentScore] = useState(0.0);
   useEffect(()=>{
-    const token = localStorage.getItem('token') || '';
-    let profile = JSON.parse(localStorage.getItem('profile') || '{}');
-    if(!token || !profile.id) {
-      window.location.href = '/login';
-      return
-    }
     if(currentScore>highScore)
     {     
+      console.log(profile)
+      const token = localStorage.getItem('token');
       setHighScore(currentScore);
-      profile.highScore = currentScore;
+      profile.bubble = currentScore;
       console.log(profile);
       localStorage.setItem('profile',JSON.stringify(profile));
       const f = async () => {
@@ -277,7 +273,6 @@ function calculateElapsedTime(frameCount:number, frameRate:number, offset:number
 }
 function drawFinalScore(p5:p5Types){
   modeSelect.enable();
-  scoreShow.html("High Score: "+highScore+"%");
   p5.textAlign(p5.CENTER, p5.CENTER);
   
   for(let i = 0;i<bubbles.length;i++)
@@ -299,7 +294,7 @@ function drawFinalScore(p5:p5Types){
   p5.text(`Final Score: ${score}`, centerX, centerY-45);
   p5.text(`Accuracy: ${accuracy}%`, centerX, centerY ); // Adjust the vertical positioning
   p5.text(`High Score: ${highScore}%`,centerX,centerY+45)
-  setCurrentScore(accuracy)
+  setCurrentScore(accuracy.toString())
   p5.noLoop();
   
 }

@@ -1,7 +1,5 @@
 import Layout from '@/components/Layout/Layout';
 import { Chat } from '../components/Chat/Chat';
-import { Footer } from '../components/Layout/Footer';
-import { Navbar } from '../components/Layout/Navbar';
 import { Message } from '../types';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
@@ -10,8 +8,24 @@ import { Center } from '@mantine/core';
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [profile, setProfile] = useState<any>({
+    name: 'Random User',
+    age: 2,
+    gender:"male"
+  });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const profile = localStorage.getItem('profile');
+    if (profile) {
+      setProfile(JSON.parse(profile));
+    }
+    if (!token) {
+      window.location.href = '/login';
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -30,6 +44,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           messages: updatedMessages,
+          profile,
         }),
       });
 

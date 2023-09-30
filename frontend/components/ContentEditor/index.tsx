@@ -84,6 +84,7 @@ const ContentEditor = () => {
 
       if (!response.ok) {
         const errorResponse = await response.json();
+        console.log(errorResponse);
         setAlert(true);
         setAlertText('Failed to process your request!');
       } else {

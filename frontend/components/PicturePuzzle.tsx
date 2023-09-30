@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import p5Types from 'p5'; //Import this for typechecking and intellisense
 import picturepuzle from './picturepuzlle.module.css';
 const Sketch = dynamic(() => import('react-p5').then((mod) => mod.default), {
   ssr: false,
 });
-
+import axios from 'axios';
 class Tile {
   index: number;
   img: p5Types.Image;
@@ -19,7 +19,7 @@ class Tile {
 
 let cnv: any;
 let source: any;
-let cols = 4;
+let cols = 3;
 let rows = cols;
 let ww = 700;
 let hh = ww;
@@ -35,8 +35,44 @@ let stepsArr: any[] = [];
 let timer: any;
 let time = 0;
 let start = false;
-let elapsed = 0;
-const PicturePuzzle = (props: any) => {
+let fRate = 10;
+let score: any;
+const PicturePuzzle = ({profile}:{
+  profile:any
+}) => {
+  const [currentScore, setCurrentScore] = useState('0');
+  const [highScore, setHighScore] = useState('0');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+    }
+    if(currentScore > highScore){
+      setHighScore(currentScore);
+      profile.puzzle = currentScore;
+      localStorage.setItem('profile', JSON.stringify(profile));
+      const f = async () => {
+        try {
+          const res = await axios.put(
+            '/api/profiles',
+            profile,
+            {
+              headers: {
+                Authorization: `${token}`,
+              },
+            }
+          );
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      f();
+    }
+
+
+    
+  }, [currentScore]);
   const preload = (p5: p5Types) => {
     for (let i = 0; i < images.length; i++) {
       loadedImages.push(p5.loadImage(`/puzzle/${images[i]}.jpg`));
@@ -46,27 +82,17 @@ const PicturePuzzle = (props: any) => {
   };
   const setup = (p5: p5Types, canvasParentRef: Element) => {
     cnv = p5.createCanvas(ww, hh).parent(canvasParentRef);
+
     let canvasX = (p5.displayWidth - ww) / 2;
     let canvasY = (p5.displayHeight - hh) / 2;
     cnv.position(canvasX + 150, canvasY);
+    p5.frameRate(fRate);
 
-    // reShuffleButton = p5.createButton('Re-Shuffle');
-    // reShuffleButton.position(p5.displayWidth / 4, p5.displayHeight);
-    // // reShuffleButton.parent(canvasParentRef);
-    // reShuffleButton.addClass(picturepuzle.classyButton);
-    // reShuffleButton.mousePressed(() => {
-    //   // if(isSolved(p5,board)) return;
-    //   board = shufflePuzzle(board);
-    // });
+    score = p5.createP(`Lowest Time: ${profile.puzzle} sec`);
+    score.addClass(picturepuzle.classyScore);
+    score.position(canvasX + ww / 2 + 80, canvasY-50);
 
-    const autoSolveButton = p5.createButton('Auto Solve');
-    autoSolveButton.position(p5.displayWidth / 5, p5.displayHeight);
-    autoSolveButton.mousePressed(() => {
-      if (isSolved(p5, board)) return;
-      stepsArr.reverse();
-      performStepsWithDelay(p5, board, stepsArr);
-      stepsArr = [];
-    });
+
 
     let tileSize = p5.floor(ww / cols);
     for (let j = 0; j < rows; j++) {
@@ -132,9 +158,7 @@ const PicturePuzzle = (props: any) => {
       updateTiles(p5);
     });
     // timer
-    timer = p5.createP('00:00');
-    timer.addClass(picturepuzle.classyTimer);
-    timer.position(canvasX + ww / 2 + 140, canvasY - 55);
+    
     // start button
     const startButton = p5.createButton('Start');
     startButton.addClass(picturepuzle.classyStartButton);
@@ -147,7 +171,7 @@ const PicturePuzzle = (props: any) => {
         board = solveState;
       } else {
         start = true;
-        startButton.html('Stop');
+        startButton.html('Stop!');
         time = p5.frameCount;
         board = shufflePuzzle(board);
       }
@@ -164,53 +188,30 @@ const PicturePuzzle = (props: any) => {
     }
   };
 
-  function performStepsWithDelay(
-    p5: p5Types,
-    board: any,
-    stepsArr: any,
-    index = 0
-  ) {
-    if (index >= stepsArr.length) {
-      // All steps have been completed
-      return;
-    }
 
-    const step = stepsArr[index];
-    if (isSolved(p5, board)) return;
-    moveTile(p5, board, step[0], step[1]);
-
-    // Use setTimeout to execute the next step with a delay
-    setTimeout(() => {
-      performStepsWithDelay(p5, board, stepsArr, index + 1);
-    }, 200);
-  }
   const draw = (p5: p5Types) => {
     if (typeRadio.value() == 'Video') {
       updateTiles(p5);
-    }
-    if (start) {
-      elapsed = p5.frameCount - time;
-      let seconds = p5.floor(elapsed / 60);
-      let minutes = p5.floor(seconds / 60);
-      seconds = seconds % 60;
-      let timerString = '';
-      if (minutes < 10) {
-        timerString += '0';
-      }
-      timerString += minutes + ':';
-      if (seconds < 10) {
-        timerString += '0';
-      }
-      timerString += seconds;
-      timer.html(timerString);
-      console.log(timerString);
     }
 
     p5.background(244, 152, 58);
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        if (board[i + j * cols] == -1) continue;
+        if (board[i + j * cols] == -1) {
+          let x = i * (ww / cols);
+          let y = j * (hh / rows);
+          if(start){
+          let times = calculateElapsedTime(p5.frameCount, fRate, time);
+          p5.textSize(20);
+          p5.textAlign(p5.CENTER);
+          p5.textStyle(p5.BOLD);
+          p5.textFont('Georgia');
+          p5.fill(255);
+          p5.text(`${times} s`, x + ww / cols / 2, y + hh / rows / 2);
+          }
+          continue;
+        }
         let tile = tiles[board[i + j * cols]];
         p5.image(tile.img, i * (ww / cols), j * (hh / rows));
       }
@@ -223,6 +224,10 @@ const PicturePuzzle = (props: any) => {
       p5.line(0, i * (hh / rows), ww, i * (hh / rows));
     }
     if (isSolved(p5, board)) {
+      if(start){
+        let eTime = calculateElapsedTime(p5.frameCount, fRate, time);
+      setCurrentScore(eTime.toString());
+      }
       p5.textSize(32);
       p5.textAlign(p5.CENTER);
       p5.textStyle(p5.BOLD);
@@ -231,34 +236,33 @@ const PicturePuzzle = (props: any) => {
       p5.text('SOLVED', ww / 2, hh / 2);
     }
   };
-  function isSolvable(puzzle: any) {
-    let inversionCount = 0;
-    for (let i = 0; i < puzzle.length; i++) {
-      for (let j = i + 1; j < puzzle.length; j++) {
-        if (puzzle[i] > puzzle[j] && puzzle[i] !== 0 && puzzle[j] !== 0) {
-          inversionCount++;
-        }
-      }
-    }
-    return inversionCount % 2 === 0;
+  function calculateElapsedTime(frameCount:number, frameRate:number, offset:number) {
+    let elapsedTime = (frameCount - offset) / frameRate;
+    // set precision 2 decimal places
+    elapsedTime = Math.round(elapsedTime );
+    return elapsedTime;
+}
+
+
+function shufflePuzzle(board:[]) {
+  const numTiles = board.length;
+
+  // Define a function to swap two elements in the board array
+  function swap(array:[], i:number, j:number) {
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
   }
 
-  function shufflePuzzle(puzzle: any) {
-    const goalState = solveState;
-    let solvable = false;
-
-    while (!solvable) {
-      puzzle = [...goalState];
-      for (let i = puzzle.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [puzzle[i], puzzle[j]] = [puzzle[j], puzzle[i]];
-        stepsArr.push([i, j]);
-      }
-      solvable = isSolvable(puzzle);
-    }
-
-    return puzzle;
+  // Shuffle the board using Fisher-Yates algorithm
+  for (let i = numTiles - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    swap(board, i, j);
   }
+
+  return board;
+}
+
 
   const moveTile = (
     p5: p5Types,

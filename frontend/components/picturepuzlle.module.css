@@ -99,3 +99,12 @@
     background-color: #6c584c/* custom-btn-bg-color:hover */;
     box-shadow: 0 4px 6px rgba(126, 25, 25, 0.1); /* custom-btn-shadow */
 }
+
+.classyScore {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c332a;
+    text-align: center;
+    padding: 10px;
+
+}

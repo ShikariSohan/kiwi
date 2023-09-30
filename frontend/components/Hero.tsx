@@ -9,7 +9,7 @@ const Hero = ({
   listUser = [
     {
       name: "raange of the user's age",
-      number: '2-8',
+      number: '2-12',
       icon: '/assets/Icon/users.png',
     },
     {

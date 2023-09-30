@@ -68,9 +68,7 @@ export default function Profile() {
                 <SingleCard name={profile.name} profile={profile} />
               </Grid.Col>
             ))}
-
-          {/* <Skeleton height={8} radius="xl" />
-      <Skeleton height={8} mt={6} radius="xl" /> */}
+            
         </Grid>
 
         {opened && <ProfileModal opened={opened} setOpened={setOpened} />}

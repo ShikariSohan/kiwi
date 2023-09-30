@@ -18,12 +18,27 @@ const AvatarBot: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [botTalking, setBotTalking] = useState(false);
   const [humanTalking, setHumanTalking] = useState(false);
+  const [profile, setProfile] = useState<any>({
+    name: 'Random User',
+    age: 2,
+    gender:"male"
+  });
   const [botScript, setBotScript] = useState('');
   const [botVideos, setBotVideos] = useState(
     Math.floor(Math.random() * 2) === 1
       ? { type: 'monkey', phase: 3 }
       : { type: 'baby', phase: 3 }
   );
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+    }
+    const profile = localStorage.getItem('profile');
+    if (profile) {
+      setProfile(JSON.parse(profile));
+    }
+  }, []);
 
   const { transcript, resetTranscript } = useSpeechRecognition();
 
@@ -117,6 +132,7 @@ const AvatarBot: React.FC = () => {
       },
       body: JSON.stringify({
         messages: updatedMessages,
+        profile,
       }),
     });
 
