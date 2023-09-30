@@ -68,6 +68,46 @@ The project focuses on modularity security, with authentication measures, and lo
 
 ## Installation and Configuration
 
+1. **Clone the Project:**
+   - Clone the project from the [GitHub Repository](https://github.com/ShikariSohan/kiwi).
+
+2. **Configure Environment Variables:**
+   - Navigate to the project's root directory.
+   - In the "frontend" folder, update the `.env` variables with your API keys and required variables.
+
+3. **Microservice Configuration:**
+   - Go to the "microservice" folder.
+   - Update the secrets in the `secret.properties` files located in `{ServiceModule}/src/main/resources`.
+
+4. **Frontend Setup:**
+   - Open a terminal in the "frontend" folder.
+   - Install project dependencies with:
+     ```
+     yarn
+     ```
+   - Start the frontend development server with:
+     ```
+     yarn dev
+     ```
+
+5. **Backend Setup:**
+   - Install dependencies for the backend from the `pom.xml` file.
+   - Run the main files of all modules. Consider using tools like IntelliJ for building and running the system.
+
+## Conclusion
+
+The project holds great promise with scalable features and a focus on early tech education for kids, fostering creativity in a safe environment. However, it faces challenges like limited access to image generation APIs, API call restrictions, and the need for efficient models. Despite these hurdles, the project aims to shape a positive tech-savvy future for children.
+
+## Developers
+| Name | University | Session | LinkedIn | GitHub |
+|---|---|---|---|---|
+| Nowshin Alam Owishi | SUST CSE | 2018-19 | [LinkedIn](https://www.linkedin.com/in/nowshin-alam-owishi/) | [owishiboo](https://github.com/owishiboo) |
+| Moksedur Rahman Sohan | SUST CSE | 2018-19 | [LinkedIn](https://www.linkedin.com/in/moksedur-rahman-sohan-53b514217/) | [ShikariSohan](https://github.com/ShikariSohan) |
+
+Thank You.
+
+
+
 
 
 
