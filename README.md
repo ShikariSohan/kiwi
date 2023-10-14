@@ -63,9 +63,12 @@ The project focuses on modularity security, with authentication measures, and lo
 | Creativity-based Features  | OCR: [Microsoft TrOCR Model from Hugging Face](https://huggingface.co/microsoft/trocr-base-handwritten) |
 | Animation & Games          | [p5.js](https://p5js.org/)                                 |
 | Speech-related             | Speech to Text: [React-speech-recognition](https://www.npmjs.com/package/react-speech-recognition); Text to Speech: [SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) |
-| Others                     | PDF Creation: [jsPDF](https://www.npmjs.com/package/jspdf)                  |
+| Others                     | PDF Creation: [jsPDF](https://www.npmjs.com/package/jspdf)                  |                  |
 
 
+
+
+(Variations in voices differ according to the browser you are using. For example, Edge provides children's voice which is unavailable in Chrome. Visit [this](https://mdn.github.io/dom-examples/web-speech-api/speak-easy-synthesis/?fbclid=IwAR1DNKn80PJrwgA_E) from target browser to get all the supporting voices)
 ## Installation and Configuration
 
 1. **Clone the Project:**
